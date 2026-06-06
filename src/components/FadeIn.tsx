@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -20,7 +20,7 @@ export const FadeIn: React.FC<FadeInProps> = ({
   className = '',
   as = 'div',
 }) => {
-  const MotionComponent = motion[as as keyof typeof motion];
+  const MotionComponent = motion[as as 'div'] as React.ComponentType<MotionProps & { className?: string }>;
 
   return (
     <MotionComponent
