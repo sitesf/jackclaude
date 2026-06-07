@@ -6,8 +6,20 @@ import jackPortrait from '../assets/jack-portrait.png';
 import jackPortraitWebp from '../assets/jack-portrait.webp';
 
 export const HeroSection: React.FC = () => {
+  const portraitImage = (
+    <picture>
+      <source srcSet={jackPortraitWebp} type="image/webp" />
+      <img
+        src={jackPortrait}
+        alt="Jack Portrait"
+        className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square object-contain"
+        loading="lazy"
+      />
+    </picture>
+  );
+
   return (
-    <section className="h-screen w-full flex flex-col overflow-x-clip bg-[#0C0C0C]">
+    <section className="h-auto sm:h-screen w-full flex flex-col overflow-x-clip bg-[#0C0C0C]">
       {/* Navbar */}
       <FadeIn delay={0} duration={0.7} y={-20} as="nav" className="w-full px-6 md:px-10 pt-6 md:pt-8">
         <div className="flex justify-between items-center text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem]">
@@ -27,12 +39,19 @@ export const HeroSection: React.FC = () => {
       </FadeIn>
 
       {/* Main content wrapper */}
-      <div className="flex-1 flex flex-col justify-between relative">
+      <div className="flex-1 flex flex-col justify-start gap-8 py-8 sm:py-0 sm:justify-between sm:gap-0 relative">
         {/* Hero Heading */}
         <FadeIn delay={0.15} duration={0.7} y={40} as="div" className="overflow-hidden">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[14vw] sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw] mt-6 sm:mt-4 md:-mt-5">
             Hi, i&apos;m jack
           </h1>
+        </FadeIn>
+
+        {/* Mobile Portrait - sits right under the heading, in normal flow */}
+        <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="flex justify-center sm:hidden">
+          <Magnet padding={150} strength={3}>
+            {portraitImage}
+          </Magnet>
         </FadeIn>
 
         {/* Bottom bar */}
@@ -48,18 +67,10 @@ export const HeroSection: React.FC = () => {
           </FadeIn>
         </FadeIn>
 
-        {/* Hero Portrait */}
-        <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
+        {/* Desktop/Tablet Portrait - magnetic floating portrait anchored to bottom */}
+        <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="hidden sm:block absolute left-1/2 -translate-x-1/2 z-10 bottom-0">
           <Magnet padding={150} strength={3}>
-            <picture>
-              <source srcSet={jackPortraitWebp} type="image/webp" />
-              <img
-                src={jackPortrait}
-                alt="Jack Portrait"
-                className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square object-contain"
-                loading="lazy"
-              />
-            </picture>
+            {portraitImage}
           </Magnet>
         </FadeIn>
       </div>
