@@ -56,7 +56,7 @@ export const HeroSection: React.FC = () => {
               <img
                 src={jackPortrait}
                 alt="Jack Portrait"
-                className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square rounded-[40px] object-cover"
+                className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square object-contain"
                 loading="lazy"
               />
             </picture>
