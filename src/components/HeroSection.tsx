@@ -2,6 +2,8 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
+import jackPortrait from '../assets/jack-portrait.png';
+import jackPortraitWebp from '../assets/jack-portrait.webp';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -49,12 +51,15 @@ export const HeroSection: React.FC = () => {
         {/* Hero Portrait */}
         <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
           <Magnet padding={150} strength={3}>
-            <img
-              src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-              alt="Jack Portrait"
-              className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] rounded-[40px] object-cover"
-              loading="lazy"
-            />
+            <picture>
+              <source srcSet={jackPortraitWebp} type="image/webp" />
+              <img
+                src={jackPortrait}
+                alt="Jack Portrait"
+                className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square rounded-[40px] object-cover"
+                loading="lazy"
+              />
+            </picture>
           </Magnet>
         </FadeIn>
       </div>
