@@ -19,8 +19,8 @@ const gradientButtonStyle: React.CSSProperties = {
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: MapPin, label: 'Location', value: 'Romania — working worldwide' },
-  { icon: Clock, label: 'Response time', value: 'Usually within 24 hours' },
+  { icon: MapPin, label: 'Locație', value: 'România — lucrez cu clienți de oriunde' },
+  { icon: Clock, label: 'Timp de răspuns', value: 'De obicei în maximum 24 de ore' },
 ];
 
 const inputClasses =
@@ -37,8 +37,8 @@ export const ContactPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(form.subject || `New project inquiry from ${form.name}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
+    const subject = encodeURIComponent(form.subject || `Cerere proiect nou de la ${form.name}`);
+    const body = encodeURIComponent(`Nume: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
@@ -50,8 +50,8 @@ export const ContactPage: React.FC = () => {
           Contact
         </FadeIn>
         <FadeIn delay={0.2} duration={0.7} y={20} as="p" className="text-[#D7E2EA] font-light max-w-2xl mx-auto mt-8 leading-relaxed text-[clamp(1rem,2vw,1.25rem)]">
-          Have a project in mind? Tell me about it. Every collaboration starts with a
-          simple conversation &mdash; no commitment, no pressure.
+          Ai un proiect în minte? Povestește-mi despre el. Orice colaborare începe cu o
+          conversație simplă &mdash; fără obligații, fără presiune.
         </FadeIn>
       </section>
 
@@ -81,12 +81,12 @@ export const ContactPage: React.FC = () => {
 
             <FadeIn delay={0.4} duration={0.7} y={30} as="div">
               <div className="rounded-[28px] border border-[rgba(215,226,234,0.12)] p-7">
-                <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm mb-3">How it works</h3>
+                <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm mb-3">Cum funcționează</h3>
                 <ol className="text-[#D7E2EA] font-light opacity-70 leading-relaxed text-sm sm:text-base list-decimal list-inside flex flex-col gap-2">
-                  <li>You send me a short message about your project.</li>
-                  <li>We discuss goals, timeline, and budget &mdash; free of charge.</li>
-                  <li>You receive a clear offer with a fixed price.</li>
-                  <li>I design, build, and launch your website.</li>
+                  <li>Îmi trimiți un mesaj scurt despre proiectul tău.</li>
+                  <li>Discutăm obiective, termene și buget &mdash; gratuit.</li>
+                  <li>Primești o ofertă clară, cu preț fix.</li>
+                  <li>Proiectez, construiesc și lansez proiectul tău.</li>
                 </ol>
               </div>
             </FadeIn>
@@ -100,7 +100,7 @@ export const ContactPage: React.FC = () => {
                   type="text"
                   name="name"
                   required
-                  placeholder="Your name"
+                  placeholder="Numele tău"
                   value={form.name}
                   onChange={handleChange}
                   className={inputClasses}
@@ -109,26 +109,26 @@ export const ContactPage: React.FC = () => {
                   type="email"
                   name="email"
                   required
-                  placeholder="Your email"
+                  placeholder="Emailul tău"
                   value={form.email}
                   onChange={handleChange}
                   className={inputClasses}
                 />
               </div>
               <select name="subject" value={form.subject} onChange={handleChange} className={inputClasses}>
-                <option value="">What do you need?</option>
+                <option value="">De ce ai nevoie?</option>
                 <option value="Landing Page">Landing Page</option>
-                <option value="Business Website">Business Website</option>
-                <option value="Online Store">Online Store</option>
-                <option value="3D / Motion Design">3D / Motion Design</option>
-                <option value="Branding">Branding</option>
-                <option value="Something else">Something else</option>
+                <option value="Site de prezentare">Site de prezentare</option>
+                <option value="Magazin online">Magazin online</option>
+                <option value="Agent AI / Automatizare">Agent AI / Automatizare</option>
+                <option value="Branding / 3D">Branding / 3D</option>
+                <option value="Altceva">Altceva</option>
               </select>
               <textarea
                 name="message"
                 required
                 rows={7}
-                placeholder="Tell me about your project..."
+                placeholder="Povestește-mi despre proiectul tău..."
                 value={form.message}
                 onChange={handleChange}
                 className={`${inputClasses} resize-none`}
@@ -140,7 +140,7 @@ export const ContactPage: React.FC = () => {
                 className="self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
                 style={gradientButtonStyle}
               >
-                Send message
+                Trimite mesajul
               </motion.button>
             </form>
           </FadeIn>

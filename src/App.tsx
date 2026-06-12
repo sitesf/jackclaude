@@ -7,6 +7,8 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { PredictionsSection } from './components/PredictionsSection';
 import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
+import { ProjectPage } from './pages/ProjectPage';
+import { getProject } from './data/projects';
 
 const getRoute = () => window.location.hash.replace(/^#/, '') || '/';
 
@@ -22,8 +24,23 @@ function App() {
     return () => window.removeEventListener('hashchange', onHashChange);
   }, []);
 
-  if (route === '/pricing') return <PricingPage />;
+  // Ancore de pe homepage accesate din alte pagini (ex: #/#projects)
+  useEffect(() => {
+    if (route.startsWith('/#')) {
+      const id = route.slice(2);
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+  }, [route]);
+
+  if (route === '/preturi' || route === '/pricing') return <PricingPage />;
   if (route === '/contact') return <ContactPage />;
+
+  if (route.startsWith('/proiect/')) {
+    const project = getProject(route.slice('/proiect/'.length));
+    if (project) return <ProjectPage project={project} />;
+  }
 
   return (
     <div className="w-full overflow-x-clip bg-[#0C0C0C]">

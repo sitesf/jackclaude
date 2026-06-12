@@ -19,59 +19,59 @@ const plans = [
   {
     name: 'Landing Page',
     price: '290',
-    tagline: 'Perfect for launching a product, campaign, or personal brand fast.',
+    tagline: 'Perfect pentru lansarea rapidă a unui produs, a unei campanii sau a unui brand personal.',
     featured: false,
     features: [
-      'One-page custom design',
-      'Mobile-first responsive layout',
-      'Smooth scroll animations',
-      'Contact form integration',
-      'Basic on-page SEO',
-      'Delivery in 5-7 days',
-      '14 days of free support',
+      'Design personalizat, o singură pagină',
+      'Layout responsive, mobile-first',
+      'Animații fluide la scroll',
+      'Formular de contact integrat',
+      'SEO on-page de bază',
+      'Livrare în 5-7 zile',
+      '14 zile de suport gratuit',
     ],
   },
   {
-    name: 'Business Website',
+    name: 'Site de prezentare',
     price: '590',
-    tagline: 'A complete presentation website that makes your business stand out.',
+    tagline: 'Un site complet de prezentare care scoate afacerea ta din anonimat.',
     featured: true,
     features: [
-      'Up to 6 custom-designed pages',
-      'Unique visual identity & layout',
-      '3D elements & motion design',
-      'Blog / news section',
-      'Advanced on-page SEO',
-      'Google Analytics setup',
-      'Delivery in 2-3 weeks',
-      '30 days of free support',
+      'Până la 6 pagini cu design unic',
+      'Identitate vizuală personalizată',
+      'Elemente 3D & motion design',
+      'Secțiune de blog / noutăți',
+      'SEO on-page avansat',
+      'Configurare Google Analytics',
+      'Livrare în 2-3 săptămâni',
+      '30 de zile de suport gratuit',
     ],
   },
   {
-    name: 'Online Store',
+    name: 'Magazin online',
     price: '990',
-    tagline: 'A conversion-focused e-commerce experience, built to sell.',
+    tagline: 'O experiență e-commerce orientată spre conversie, construită ca să vândă.',
     featured: false,
     features: [
-      'Full e-commerce setup',
-      'Product catalog & categories',
-      'Online payments & invoicing',
-      'Order & stock management',
-      'Custom design on every page',
-      'SEO & performance optimization',
-      'Delivery in 3-5 weeks',
-      '60 days of free support',
+      'Configurare e-commerce completă',
+      'Catalog de produse & categorii',
+      'Plăți online & facturare',
+      'Gestiune comenzi & stocuri',
+      'Design personalizat pe fiecare pagină',
+      'Optimizare SEO & performanță',
+      'Livrare în 3-5 săptămâni',
+      '60 de zile de suport gratuit',
     ],
   },
 ];
 
 const addons = [
-  { name: 'Monthly maintenance', price: '€35 / month', description: 'Updates, backups, security monitoring, and small content changes.' },
-  { name: 'Logo & brand identity', price: 'from €120', description: 'Logo design, color palette, typography, and brand guidelines.' },
-  { name: 'SEO optimization', price: 'from €150', description: 'Keyword research, technical SEO audit, and content optimization.' },
-  { name: '3D visuals & animation', price: 'from €200', description: 'Custom 3D models, renders, and motion design for your brand.' },
-  { name: 'Copywriting', price: 'from €80', description: 'Persuasive, search-friendly texts written for your audience.' },
-  { name: 'Hosting & domain setup', price: '€60 / year', description: 'Fast hosting, SSL certificate, and professional email addresses.' },
+  { name: 'Mentenanță lunară', price: '€35 / lună', description: 'Actualizări, backup-uri, monitorizare de securitate și modificări mici de conținut.' },
+  { name: 'Logo & identitate de brand', price: 'de la €120', description: 'Design de logo, paletă de culori, tipografie și ghid de brand.' },
+  { name: 'Optimizare SEO', price: 'de la €150', description: 'Cercetare de cuvinte cheie, audit SEO tehnic și optimizare de conținut.' },
+  { name: 'Agent AI personalizat', price: 'de la €200', description: 'Agent AI pentru programări, vânzări sau suport — configurat pe afacerea ta.' },
+  { name: 'Copywriting', price: 'de la €80', description: 'Texte persuasive, prietenoase cu motoarele de căutare, scrise pentru publicul tău.' },
+  { name: 'Hosting & domeniu', price: '€60 / an', description: 'Hosting rapid, certificat SSL și adrese de email profesionale.' },
 ];
 
 export const PricingPage: React.FC = () => {
@@ -80,11 +80,11 @@ export const PricingPage: React.FC = () => {
       {/* Header */}
       <section className="px-5 sm:px-8 md:px-10 pt-16 sm:pt-20 md:pt-24 pb-12 text-center">
         <FadeIn delay={0} duration={0.7} y={40} as="h1" className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(3rem,12vw,160px)]">
-          Pricing
+          Prețuri
         </FadeIn>
         <FadeIn delay={0.2} duration={0.7} y={20} as="p" className="text-[#D7E2EA] font-light max-w-2xl mx-auto mt-8 leading-relaxed text-[clamp(1rem,2vw,1.25rem)]">
-          Transparent packages, no hidden costs. Every project starts with a free
-          discussion about your goals &mdash; and ends with a website you are proud of.
+          Pachete transparente, fără costuri ascunse. Fiecare proiect începe cu o
+          discuție gratuită despre obiectivele tale &mdash; și se termină cu un produs de care ești mândru.
         </FadeIn>
       </section>
 
@@ -102,7 +102,7 @@ export const PricingPage: React.FC = () => {
               >
                 {plan.featured && (
                   <span className="self-start text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white rounded-full px-4 py-1.5 mb-6" style={gradientButtonStyle}>
-                    Most popular
+                    Cel mai popular
                   </span>
                 )}
                 <h2 className="font-black uppercase tracking-tight text-2xl sm:text-3xl">{plan.name}</h2>
@@ -110,7 +110,7 @@ export const PricingPage: React.FC = () => {
                   {plan.tagline}
                 </p>
                 <div className="mt-8 flex items-end gap-2">
-                  <span className="font-light text-xl sm:text-2xl opacity-70">from</span>
+                  <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
                   <span className="font-black leading-none text-5xl sm:text-6xl">&euro;{plan.price}</span>
                 </div>
                 <ul className="mt-8 flex flex-col gap-3 flex-1">
@@ -128,7 +128,7 @@ export const PricingPage: React.FC = () => {
                   className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
                   style={gradientButtonStyle}
                 >
-                  Get started
+                  Începe acum
                 </motion.a>
               </div>
             </FadeIn>
@@ -139,7 +139,7 @@ export const PricingPage: React.FC = () => {
       {/* Add-ons */}
       <section className="w-full bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24">
         <FadeIn delay={0} duration={0.7} y={40} as="h2" className="text-[#0C0C0C] font-black uppercase text-center leading-none tracking-tight text-[clamp(2.2rem,8vw,100px)] mb-14 sm:mb-20">
-          Extra services
+          Servicii extra
         </FadeIn>
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-2">
           {addons.map((addon, idx) => (
@@ -156,7 +156,7 @@ export const PricingPage: React.FC = () => {
         {/* CTA */}
         <FadeIn delay={0.2} duration={0.7} y={30} as="div" className="flex flex-col items-center gap-6 mt-16 sm:mt-20 text-center">
           <p className="text-[#0C0C0C] font-medium text-lg sm:text-2xl max-w-xl">
-            Not sure which package fits you? Tell me about your project and I&apos;ll recommend the right one &mdash; for free.
+            Nu știi ce pachet ți se potrivește? Spune-mi despre proiectul tău și îți recomand gratuit varianta corectă.
           </p>
           <motion.a
             href="#/contact"
@@ -165,7 +165,7 @@ export const PricingPage: React.FC = () => {
             className="rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
             style={gradientButtonStyle}
           >
-            Request a free quote
+            Cere o ofertă gratuită
           </motion.a>
         </FadeIn>
       </section>

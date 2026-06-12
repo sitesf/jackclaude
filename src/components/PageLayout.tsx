@@ -6,8 +6,9 @@ interface PageLayoutProps {
 }
 
 const navLinks = [
-  { label: 'Home', href: '#/' },
-  { label: 'Pricing', href: '#/pricing' },
+  { label: 'Acasă', href: '#/' },
+  { label: 'Proiecte', href: '#/#projects' },
+  { label: 'Prețuri', href: '#/preturi' },
   { label: 'Contact', href: '#/contact' },
 ];
 
@@ -33,7 +34,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
 
       <footer className="w-full px-6 md:px-10 py-8 border-t border-[rgba(215,226,234,0.1)]">
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[#D7E2EA] opacity-60 text-xs sm:text-sm uppercase tracking-wider">
-          <span>&copy; {new Date().getFullYear()} Jack &mdash; 3D Creator &amp; Web Designer</span>
+          <span>&copy; {new Date().getFullYear()} Jack &mdash; Creator digital &amp; AI</span>
           <div className="flex gap-6">
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="hover:opacity-100 transition-opacity duration-200">
