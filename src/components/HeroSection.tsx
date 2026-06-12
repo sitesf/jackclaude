@@ -2,12 +2,12 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
-import { HeroOrb } from './HeroOrb';
+import { HeroRobot } from './HeroRobot';
 
 export const HeroSection: React.FC = () => {
   const heroVisual = (
     <Magnet padding={150} strength={3}>
-      <HeroOrb />
+      <HeroRobot />
     </Magnet>
   );
 
@@ -36,9 +36,9 @@ export const HeroSection: React.FC = () => {
         {/* Hero Heading */}
         <FadeIn delay={0.15} duration={0.7} y={40} as="div" className="overflow-hidden">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.92] w-full text-center text-[13vw] sm:text-[10.5vw] md:text-[11vw] mt-6 sm:mt-4">
-            Construiesc
+            Descoperă
             <br />
-            viitorul digital
+            NEXAS.ro
           </h1>
         </FadeIn>
 
@@ -51,7 +51,7 @@ export const HeroSection: React.FC = () => {
         <FadeIn delay={0.35} duration={0.7} y={20} as="div" className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-1">
           {/* Left text */}
           <p className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px] text-[clamp(0.75rem,1.4vw,1.5rem)]">
-            Jack — agenți AI, automatizări și site-uri care nu seamănă cu nimic altceva
+            NEXAS — agenți AI, automatizări și site-uri care nu seamănă cu nimic altceva
           </p>
 
           {/* Right button */}
