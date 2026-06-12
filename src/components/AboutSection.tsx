@@ -60,13 +60,13 @@ export const AboutSection: React.FC = () => {
       <div className="relative z-10 flex flex-col items-center gap-10 sm:gap-14 md:gap-16 max-w-2xl">
         {/* Heading */}
         <FadeIn delay={0} duration={0.7} y={40} as="h2" className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(3rem,12vw,160px)] text-center">
-          Despre mine
+          Despre NEXAS
         </FadeIn>
 
         {/* Animated paragraph */}
         <FadeIn delay={0.2} duration={0.7} y={20} as="div">
           <AnimatedText
-            text="Construiesc produse digitale care lucrează pentru tine: agenți AI, automatizări, aplicații și site-uri care nu seamănă cu nimic altceva. Îmi place să lucrez cu afaceri care vor să iasă din tipar și să arate cea mai bună versiune a lor. Hai să construim ceva incredibil împreună!"
+            text="NEXAS construiește produse digitale care lucrează pentru tine: agenți AI, automatizări, aplicații și site-uri care nu seamănă cu nimic altceva. Lucrăm cu afaceri care vor să iasă din tipar și să arate cea mai bună versiune a lor. Hai să construim ceva incredibil împreună!"
             className="text-[#D7E2EA] font-medium text-center leading-relaxed text-[clamp(1rem,2vw,1.35rem)]"
           />
         </FadeIn>

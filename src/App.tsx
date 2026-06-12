@@ -5,9 +5,12 @@ import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { PredictionsSection } from './components/PredictionsSection';
+import { SiteFooter } from './components/SiteFooter';
+import { CookieConsent } from './components/CookieConsent';
 import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
 import { ProjectPage } from './pages/ProjectPage';
+import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
 const getRoute = () => window.location.hash.replace(/^#/, '') || '/';
@@ -34,23 +37,36 @@ function App() {
     }
   }, [route]);
 
-  if (route === '/preturi' || route === '/pricing') return <PricingPage />;
-  if (route === '/contact') return <ContactPage />;
+  const renderPage = () => {
+    if (route === '/preturi' || route === '/pricing') return <PricingPage />;
+    if (route === '/contact') return <ContactPage />;
+    if (route === '/confidentialitate' || route === '/privacy') return <PrivacyPage />;
+    if (route === '/termeni') return <TermsPage />;
+    if (route === '/cookies') return <CookiesPage />;
 
-  if (route.startsWith('/proiect/')) {
-    const project = getProject(route.slice('/proiect/'.length));
-    if (project) return <ProjectPage project={project} />;
-  }
+    if (route.startsWith('/proiect/')) {
+      const project = getProject(route.slice('/proiect/'.length));
+      if (project) return <ProjectPage project={project} />;
+    }
+
+    return (
+      <div className="w-full overflow-x-clip bg-[#0C0C0C]">
+        <HeroSection />
+        <MarqueeSection />
+        <AboutSection />
+        <ServicesSection />
+        <ProjectsSection />
+        <PredictionsSection />
+        <SiteFooter />
+      </div>
+    );
+  };
 
   return (
-    <div className="w-full overflow-x-clip bg-[#0C0C0C]">
-      <HeroSection />
-      <MarqueeSection />
-      <AboutSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <PredictionsSection />
-    </div>
+    <>
+      {renderPage()}
+      <CookieConsent />
+    </>
   );
 }
 
