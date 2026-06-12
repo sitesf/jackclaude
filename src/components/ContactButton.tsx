@@ -9,7 +9,7 @@ interface ContactButtonProps {
 export const ContactButton: React.FC<ContactButtonProps> = ({ className = '', onClick }) => {
   return (
     <motion.button
-      onClick={onClick}
+      onClick={onClick ?? (() => { window.location.hash = '#/contact'; })}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className={`rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white ${className}`}
