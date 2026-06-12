@@ -4,7 +4,6 @@ import { MarqueeSection } from './components/MarqueeSection';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { ProjectsSection } from './components/ProjectsSection';
-import { PredictionsSection } from './components/PredictionsSection';
 import { SiteFooter } from './components/SiteFooter';
 import { CookieConsent } from './components/CookieConsent';
 import { PricingPage } from './pages/PricingPage';
@@ -56,7 +55,6 @@ function App() {
         <AboutSection />
         <ServicesSection />
         <ProjectsSection />
-        <PredictionsSection />
         <SiteFooter />
       </div>
     );
