@@ -26,13 +26,13 @@ export const HeroSection: React.FC = () => {
           <a href="#about" className="hover:opacity-70 transition-opacity duration-200">
             About
           </a>
-          <a href="#services" className="hover:opacity-70 transition-opacity duration-200">
+          <a href="#/pricing" className="hover:opacity-70 transition-opacity duration-200">
             Price
           </a>
           <a href="#projects" className="hover:opacity-70 transition-opacity duration-200">
             Projects
           </a>
-          <a href="#contact" className="hover:opacity-70 transition-opacity duration-200">
+          <a href="#/contact" className="hover:opacity-70 transition-opacity duration-200">
             Contact
           </a>
         </div>
