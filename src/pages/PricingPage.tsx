@@ -15,6 +15,51 @@ const gradientButtonStyle: React.CSSProperties = {
   outlineOffset: '-3px',
 };
 
+const aiPlans = [
+  {
+    name: 'Agent AI personalizat',
+    price: '200',
+    tagline: 'Agent AI pentru programări, vânzări sau suport — configurat pe afacerea ta.',
+    featured: false,
+    features: [
+      'Configurat pe serviciile și tonul tău',
+      'WhatsApp, web sau Messenger',
+      'Programări & preluare lead-uri automate',
+      'Date salvate în Google Sheets / CRM',
+      'Răspunsuri nonstop, 24/7',
+      'Exemplu: NIRO Agent',
+    ],
+  },
+  {
+    name: 'Agent AI complex',
+    price: '500',
+    tagline: 'Agent avansat cu fluxuri personalizate, integrări multiple și memorie proprie.',
+    featured: true,
+    features: [
+      'Fluxuri conversaționale personalizate',
+      'Integrări multiple: CRM, Calendar, Email',
+      'Memorie & personalitate custom',
+      'Dashboard cu rapoarte automate',
+      'Scalabil pe măsură ce crești',
+      'Exemple: ALEX, HR Dashboard',
+    ],
+  },
+  {
+    name: 'Automatizări RPA',
+    price: '1500',
+    tagline: 'Automatizări de procese cu RPA și UiPath Studio — roboți software care lucrează pentru tine.',
+    featured: false,
+    features: [
+      'Analiză & maparea proceselor tale',
+      'Roboți construiți în UiPath Studio',
+      'Automatizare facturi, rapoarte, date',
+      'Integrare cu sistemele existente',
+      'Monitorizare & mentenanță',
+      'Economie de zeci de ore lunar',
+    ],
+  },
+];
+
 const plans = [
   {
     name: 'Landing Page',
@@ -69,10 +114,56 @@ const addons = [
   { name: 'Mentenanță lunară', price: '€35 / lună', description: 'Actualizări, backup-uri, monitorizare de securitate și modificări mici de conținut.' },
   { name: 'Logo & identitate de brand', price: 'de la €120', description: 'Design de logo, paletă de culori, tipografie și ghid de brand.' },
   { name: 'Optimizare SEO', price: 'de la €150', description: 'Cercetare de cuvinte cheie, audit SEO tehnic și optimizare de conținut.' },
-  { name: 'Agent AI personalizat', price: 'de la €200', description: 'Agent AI pentru programări, vânzări sau suport — configurat pe afacerea ta.' },
   { name: 'Copywriting', price: 'de la €80', description: 'Texte persuasive, prietenoase cu motoarele de căutare, scrise pentru publicul tău.' },
   { name: 'Hosting & domeniu', price: '€60 / an', description: 'Hosting rapid, certificat SSL și adrese de email profesionale.' },
 ];
+
+const PlanGrid: React.FC<{ items: typeof plans }> = ({ items }) => (
+  <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+    {items.map((plan, idx) => (
+      <FadeIn key={plan.name} delay={idx * 0.15} duration={0.7} y={40} as="div" className="h-full">
+        <div
+          className={`h-full flex flex-col rounded-[32px] p-8 sm:p-10 border transition-transform duration-300 hover:-translate-y-2 ${
+            plan.featured
+              ? 'bg-white text-[#0C0C0C] border-white'
+              : 'bg-[#141414] text-[#D7E2EA] border-[rgba(215,226,234,0.12)]'
+          }`}
+        >
+          {plan.featured && (
+            <span className="self-start text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white rounded-full px-4 py-1.5 mb-6" style={gradientButtonStyle}>
+              Cel mai popular
+            </span>
+          )}
+          <h2 className="font-black uppercase tracking-tight text-2xl sm:text-3xl">{plan.name}</h2>
+          <p className={`mt-3 font-light leading-relaxed text-sm sm:text-base ${plan.featured ? 'opacity-70' : 'opacity-60'}`}>
+            {plan.tagline}
+          </p>
+          <div className="mt-8 flex items-end gap-2">
+            <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
+            <span className="font-black leading-none text-5xl sm:text-6xl">&euro;{plan.price}</span>
+          </div>
+          <ul className="mt-8 flex flex-col gap-3 flex-1">
+            {plan.features.map((feature) => (
+              <li key={feature} className="flex items-start gap-3 font-light text-sm sm:text-base">
+                <Check className={`w-4 h-4 mt-1 flex-shrink-0 ${plan.featured ? 'text-[#B600A8]' : 'text-[#D7E2EA]'}`} />
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <motion.a
+            href="#/contact"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
+            style={gradientButtonStyle}
+          >
+            Începe acum
+          </motion.a>
+        </div>
+      </FadeIn>
+    ))}
+  </div>
+);
 
 export const PricingPage: React.FC = () => {
   return (
@@ -88,52 +179,28 @@ export const PricingPage: React.FC = () => {
         </FadeIn>
       </section>
 
-      {/* Plans */}
+      {/* Agenți AI & Automatizări */}
       <section className="px-5 sm:px-8 md:px-10 pb-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-          {plans.map((plan, idx) => (
-            <FadeIn key={plan.name} delay={idx * 0.15} duration={0.7} y={40} as="div" className="h-full">
-              <div
-                className={`h-full flex flex-col rounded-[32px] p-8 sm:p-10 border transition-transform duration-300 hover:-translate-y-2 ${
-                  plan.featured
-                    ? 'bg-white text-[#0C0C0C] border-white'
-                    : 'bg-[#141414] text-[#D7E2EA] border-[rgba(215,226,234,0.12)]'
-                }`}
-              >
-                {plan.featured && (
-                  <span className="self-start text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white rounded-full px-4 py-1.5 mb-6" style={gradientButtonStyle}>
-                    Cel mai popular
-                  </span>
-                )}
-                <h2 className="font-black uppercase tracking-tight text-2xl sm:text-3xl">{plan.name}</h2>
-                <p className={`mt-3 font-light leading-relaxed text-sm sm:text-base ${plan.featured ? 'opacity-70' : 'opacity-60'}`}>
-                  {plan.tagline}
-                </p>
-                <div className="mt-8 flex items-end gap-2">
-                  <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
-                  <span className="font-black leading-none text-5xl sm:text-6xl">&euro;{plan.price}</span>
-                </div>
-                <ul className="mt-8 flex flex-col gap-3 flex-1">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-3 font-light text-sm sm:text-base">
-                      <Check className={`w-4 h-4 mt-1 flex-shrink-0 ${plan.featured ? 'text-[#B600A8]' : 'text-[#D7E2EA]'}`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <motion.a
-                  href="#/contact"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
-                  style={gradientButtonStyle}
-                >
-                  Începe acum
-                </motion.a>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
+        <FadeIn delay={0} duration={0.7} y={30} as="div" className="text-center mb-10 sm:mb-14">
+          <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(1.8rem,6vw,72px)]">
+            Agenți AI &amp; Automatizări
+          </h2>
+          <p className="text-[#D7E2EA] font-light max-w-2xl mx-auto mt-5 leading-relaxed text-sm sm:text-base opacity-70">
+            Specialitatea NEXAS: agenți AI și roboți software care lucrează pentru afacerea ta,
+            nonstop. Vezi exemple reale în portofoliu: NIRO, ALEX și HR Dashboard.
+          </p>
+        </FadeIn>
+        <PlanGrid items={aiPlans} />
+      </section>
+
+      {/* Site-uri & E-commerce */}
+      <section className="px-5 sm:px-8 md:px-10 pb-20">
+        <FadeIn delay={0} duration={0.7} y={30} as="div" className="text-center mb-10 sm:mb-14">
+          <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(1.8rem,6vw,72px)]">
+            Site-uri &amp; Magazine online
+          </h2>
+        </FadeIn>
+        <PlanGrid items={plans} />
       </section>
 
       {/* Add-ons */}
