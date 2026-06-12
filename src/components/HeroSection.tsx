@@ -2,20 +2,13 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { Magnet } from './Magnet';
 import { ContactButton } from './ContactButton';
-import jackPortrait from '../assets/jack-portrait.png';
-import jackPortraitWebp from '../assets/jack-portrait.webp';
+import { HeroOrb } from './HeroOrb';
 
 export const HeroSection: React.FC = () => {
-  const portraitImage = (
-    <picture>
-      <source srcSet={jackPortraitWebp} type="image/webp" />
-      <img
-        src={jackPortrait}
-        alt="Portret Jack"
-        className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-square object-contain"
-        loading="lazy"
-      />
-    </picture>
+  const heroVisual = (
+    <Magnet padding={150} strength={3}>
+      <HeroOrb />
+    </Magnet>
   );
 
   return (
@@ -42,23 +35,23 @@ export const HeroSection: React.FC = () => {
       <div className="flex-1 flex flex-col justify-start gap-8 py-8 sm:py-0 sm:justify-between sm:gap-0 relative">
         {/* Hero Heading */}
         <FadeIn delay={0.15} duration={0.7} y={40} as="div" className="overflow-hidden">
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[11vw] sm:text-[11.5vw] md:text-[12vw] lg:text-[12.5vw] mt-6 sm:mt-4 md:-mt-2">
-            Salut, sunt Jack
+          <h1 className="hero-heading font-black uppercase tracking-tight leading-[0.92] w-full text-center text-[13vw] sm:text-[10.5vw] md:text-[11vw] mt-6 sm:mt-4">
+            Construiesc
+            <br />
+            viitorul digital
           </h1>
         </FadeIn>
 
-        {/* Mobile Portrait - sits right under the heading, in normal flow */}
+        {/* Mobile visual - sits right under the heading, in normal flow */}
         <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="flex justify-center sm:hidden">
-          <Magnet padding={150} strength={3}>
-            {portraitImage}
-          </Magnet>
+          {heroVisual}
         </FadeIn>
 
         {/* Bottom bar */}
-        <FadeIn delay={0.35} duration={0.7} y={20} as="div" className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10">
+        <FadeIn delay={0.35} duration={0.7} y={20} as="div" className="flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-1">
           {/* Left text */}
           <p className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px] text-[clamp(0.75rem,1.4vw,1.5rem)]">
-            creator digital & AI, dedicat proiectelor spectaculoase și memorabile
+            Jack — agenți AI, automatizări și site-uri care nu seamănă cu nimic altceva
           </p>
 
           {/* Right button */}
@@ -67,11 +60,9 @@ export const HeroSection: React.FC = () => {
           </FadeIn>
         </FadeIn>
 
-        {/* Desktop/Tablet Portrait - magnetic floating portrait anchored to bottom */}
+        {/* Desktop/Tablet visual - magnetic digital core anchored to bottom */}
         <FadeIn delay={0.6} duration={0.7} y={30} as="div" className="hidden sm:block absolute left-1/2 -translate-x-1/2 z-10 bottom-0">
-          <Magnet padding={150} strength={3}>
-            {portraitImage}
-          </Magnet>
+          {heroVisual}
         </FadeIn>
       </div>
     </section>
