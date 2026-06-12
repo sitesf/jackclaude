@@ -54,11 +54,6 @@ export const projects: ProjectData[] = [
       { title: 'Programarea este salvată', text: 'Informațiile ajung automat în Google Sheets sau în CRM.' },
       { title: 'Service-ul confirmă rapid', text: 'Echipa vede instant toate programările într-un singur loc.' },
     ],
-    plans: [
-      { name: 'Starter', price: '500', unit: 'RON / lună', description: 'Agent AI de bază, clar și rapid de implementat.', features: ['WhatsApp AI', 'Programări automate', 'Google Sheets', 'Suport tehnic'] },
-      { name: 'Pro', price: '1000', unit: 'RON / lună', description: 'Fluxuri personalizate și răspunsuri avansate.', features: ['AI avansat', 'Flux personalizat', 'Rapoarte automate', 'Suport prioritar'], featured: true },
-      { name: 'Premium', price: '5000', unit: 'RON / lună', description: 'Automatizare completă, integrare avansată și scalare.', features: ['CRM integrat', 'API personalizat', 'Dashboard dedicat', 'Scalare completă'] },
-    ],
     ctaTitle: 'Construiește-ți propriul recepționer AI',
     ctaText: 'Automatizează programările pe WhatsApp și transformă modul în care interacționezi cu clienții.',
   },
@@ -178,11 +173,6 @@ export const projects: ProjectData[] = [
       { title: 'Configurăm Alex', text: 'Personalitate, cunoștințe și integrări — totul pe afacerea ta.' },
       { title: 'Testezi live', text: 'Rulezi conversații reale și ajustăm până e perfect.' },
       { title: 'Alex lucrează', text: 'Nonstop, fără pauze, fără concedii — și raportează tot.' },
-    ],
-    plans: [
-      { name: 'Starter', price: '500', unit: 'RON / lună', description: 'Perfect pentru cei care vor să descopere Alex.', features: ['500 mesaje / lună', '3 integrări', 'Automatizare de bază', 'Suport comunitate'] },
-      { name: 'Pro', price: '1000', unit: 'RON / lună', description: 'Pentru utilizatori avansați și echipe mici.', features: ['Mesaje nelimitate', 'Integrări nelimitate', 'Automatizare avansată', 'Suport prioritar 24/7', 'Personalitate & memorie custom'], featured: true },
-      { name: 'Enterprise', price: '5000', unit: 'RON / lună', description: 'Pentru echipe mari cu nevoi specifice.', features: ['Tot ce include Pro', 'SSO & conformitate GDPR', 'Instanță dedicată', 'Integrări personalizate', 'Garanție SLA'] },
     ],
     ctaTitle: 'Gata să-l angajezi pe Alex?',
     ctaText: 'Scrie-mi și configurăm Alex pentru afacerea ta, în mai puțin de o săptămână.',
