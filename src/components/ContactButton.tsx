@@ -24,7 +24,7 @@ export const ContactButton: React.FC<ContactButtonProps> = ({ className = '', on
         outlineOffset: '-3px',
       }}
     >
-      Contact Me
+      Contactează-mă
     </motion.button>
   );
 };

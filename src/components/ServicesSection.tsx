@@ -4,28 +4,28 @@ import { FadeIn } from './FadeIn';
 const services = [
   {
     number: '01',
-    name: '3D Modeling',
-    description: 'Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations.',
+    name: 'Agenți AI',
+    description: 'Recepționeri virtuali, asistenți de vânzări și agenți de programări care lucrează nonstop pe WhatsApp sau pe site-ul tău — ca NIRO și Alex.',
   },
   {
     number: '02',
-    name: 'Rendering',
-    description: 'High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life.',
+    name: 'Automatizări',
+    description: 'Fluxuri de lucru care rulează singure: de la publicare automată de conținut la rapoarte, integrări și pipeline-uri complete cu AI.',
   },
   {
     number: '03',
-    name: 'Motion Design',
-    description: 'Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences.',
+    name: 'Aplicații web',
+    description: 'Dashboard-uri și unelte interne construite pe fluxul tău real de lucru — recrutare, programări, statistici, orice ai nevoie.',
   },
   {
     number: '04',
-    name: 'Branding',
-    description: 'Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence.',
+    name: 'Web design',
+    description: 'Site-uri moderne, rapide și orientate spre conversie, cu atenție la layout, tipografie și experiența utilizatorului.',
   },
   {
     number: '05',
-    name: 'Web Design',
-    description: 'Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience.',
+    name: 'Branding & 3D',
+    description: 'Identități vizuale coerente — de la logo la sisteme complete de brand — plus elemente 3D și motion design care te fac de neuitat.',
   },
 ];
 
@@ -33,7 +33,7 @@ export const ServicesSection: React.FC = () => {
   return (
     <section id="services" className="w-full bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
       <FadeIn delay={0} duration={0.7} y={40} as="h2" className="text-[#0C0C0C] font-black uppercase text-center text-[clamp(3rem,12vw,160px)] leading-none tracking-tight mb-16 sm:mb-20 md:mb-28">
-        Services
+        Servicii
       </FadeIn>
 
       <div className="max-w-5xl mx-auto">
