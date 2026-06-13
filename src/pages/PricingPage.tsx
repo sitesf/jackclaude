@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
+import { CountUp } from '../components/CountUp';
 
 type Category = 'ai' | 'web';
 
@@ -152,7 +153,7 @@ const addons = [
   { name: 'Hosting & domeniu', price: '€60 / an', description: 'Hosting rapid, certificat SSL și adrese de email profesionale.' },
 ];
 
-const PlanGrid: React.FC<{ items: typeof plans }> = ({ items }) => (
+const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ items, triggerKey }) => (
   <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
     {items.map((plan, idx) => (
       <FadeIn key={plan.name} delay={idx * 0.15} duration={0.7} y={40} as="div" className="h-full">
@@ -174,7 +175,10 @@ const PlanGrid: React.FC<{ items: typeof plans }> = ({ items }) => (
           </p>
           <div className="mt-8 flex items-end gap-2">
             <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
-            <span className="font-black leading-none text-5xl sm:text-6xl">&euro;{plan.price}</span>
+            <span className="font-black leading-none text-5xl sm:text-6xl">
+              &euro;
+              <CountUp value={Number(plan.price)} triggerKey={`${triggerKey}-${plan.name}`} />
+            </span>
           </div>
           <ul className="mt-8 flex flex-col gap-3 flex-1">
             {plan.features.map((feature) => (
@@ -252,7 +256,7 @@ export const PricingPage: React.FC = () => {
                 {content.subtitle}
               </p>
             </div>
-            <PlanGrid items={content.plans} />
+            <PlanGrid items={content.plans} triggerKey={category} />
           </motion.div>
         </AnimatePresence>
       </section>
