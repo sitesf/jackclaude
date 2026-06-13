@@ -36,8 +36,8 @@ export const HeroSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Bloc CTA jos-stânga */}
-      <div className="absolute left-4 right-4 sm:right-auto sm:left-6 md:left-10 bottom-6 sm:bottom-8 md:bottom-10 z-10 max-w-sm">
+      {/* Bloc CTA jos-stânga / centru pe mobile */}
+      <div className="absolute left-4 right-4 sm:right-auto sm:left-6 md:left-10 bottom-[55%] sm:bottom-8 md:bottom-10 z-10 max-w-sm">
         <div className="flex items-center gap-2 text-[#D7E2EA] mb-3">
           <Sparkles className="w-4 h-4 text-[#B600A8]" />
           <span className="text-sm font-semibold uppercase tracking-wider">NEXAS AI</span>

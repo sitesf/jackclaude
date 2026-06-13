@@ -3,10 +3,10 @@ import { FadeIn } from './FadeIn';
 import { ChatBubbleDoodle, GearsDoodle, BrowserDoodle, SeoDoodle } from './ServiceDoodles';
 
 const doodles = [
-  { Component: ChatBubbleDoodle, sizes: 'w-[90px] sm:w-[130px] md:w-[170px]', position: 'top-[5%] left-[2%] sm:left-[3%] md:left-[5%]', delay: 0.1, x: -80 },
-  { Component: GearsDoodle, sizes: 'w-[100px] sm:w-[150px] md:w-[190px]', position: 'top-[5%] right-[2%] sm:right-[3%] md:right-[5%]', delay: 0.2, x: 80 },
-  { Component: BrowserDoodle, sizes: 'w-[100px] sm:w-[150px] md:w-[190px]', position: 'bottom-[6%] left-[2%] sm:left-[4%] md:left-[6%]', delay: 0.25, x: -80 },
-  { Component: SeoDoodle, sizes: 'w-[90px] sm:w-[130px] md:w-[170px]', position: 'bottom-[6%] right-[2%] sm:right-[4%] md:right-[6%]', delay: 0.35, x: 80 },
+  { Component: ChatBubbleDoodle, sizes: 'w-[60px] sm:w-[130px] md:w-[170px]', position: 'top-[8%] left-[1%] sm:left-[3%] md:left-[5%]', delay: 0.1, x: -80 },
+  { Component: GearsDoodle, sizes: 'w-[70px] sm:w-[150px] md:w-[190px]', position: 'top-[8%] right-[1%] sm:right-[3%] md:right-[5%]', delay: 0.2, x: 80 },
+  { Component: BrowserDoodle, sizes: 'w-[70px] sm:w-[150px] md:w-[190px]', position: 'bottom-[8%] left-[1%] sm:left-[4%] md:left-[6%]', delay: 0.25, x: -80 },
+  { Component: SeoDoodle, sizes: 'w-[60px] sm:w-[130px] md:w-[170px]', position: 'bottom-[8%] right-[1%] sm:right-[4%] md:right-[6%]', delay: 0.35, x: 80 },
 ];
 
 const services = [
@@ -42,7 +42,7 @@ export const ServicesSection: React.FC = () => {
     <section id="services" className="relative w-full bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 overflow-hidden">
       {/* Animații decorative pe colțuri */}
       {doodles.map(({ Component, sizes, position, delay, x }, idx) => (
-        <FadeIn key={idx} delay={delay} duration={0.9} x={x} y={0} as="div" className={`hidden md:block absolute ${sizes} ${position} z-0 pointer-events-none`}>
+        <FadeIn key={idx} delay={delay} duration={0.9} x={x} y={0} as="div" className={`absolute ${sizes} ${position} z-0 pointer-events-none`}>
           <Component />
         </FadeIn>
       ))}
