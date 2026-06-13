@@ -238,10 +238,25 @@ export const TermsPage: React.FC = () => (
     <Sec title="12. Reclamații și soluționarea disputelor">
       <p>
         Pentru reclamații, scrie-ne la <a href="mailto:contact@nexas.ro">contact@nexas.ro</a> — analizăm și răspundem
-        într-un termen rezonabil. Dacă ești consumator, poți consulta și informațiile puse la dispoziție de
-        Autoritatea Națională pentru Protecția Consumatorilor (<a href="https://anpc.ro" target="_blank" rel="noopener noreferrer">anpc.ro</a>), inclusiv platforma SOL pentru
-        soluționarea online a litigiilor. Acești termeni sunt guvernați de legea română; litigiile se soluționează
-        pe cale amiabilă sau de instanțele competente din România.
+        într-un termen rezonabil. Dacă ești consumator, ai la dispoziție și următoarele mecanisme:
+      </p>
+      <ul>
+        <li>
+          <strong>ANPC</strong> — Autoritatea Națională pentru Protecția Consumatorilor:{' '}
+          <a href="https://anpc.ro" target="_blank" rel="noopener noreferrer">anpc.ro</a>
+        </li>
+        <li>
+          <strong>SAL</strong> — Soluționarea Alternativă a Litigiilor:{' '}
+          <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer">anpc.ro/ce-este-sal</a>
+        </li>
+        <li>
+          <strong>SOL / ODR</strong> — platforma europeană de soluționare online a litigiilor:{' '}
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">ec.europa.eu/consumers/odr</a>
+        </li>
+      </ul>
+      <p>
+        Acești termeni sunt guvernați de legea română; litigiile se soluționează pe cale amiabilă sau de instanțele
+        competente din România.
       </p>
     </Sec>
   </LegalShell>
@@ -270,11 +285,16 @@ export const CookiesPage: React.FC = () => (
         publicitate. Se încarcă <strong>doar</strong> după ce accepți cookie-urile de analiză din banner.
       </p>
     </Sec>
-    <Sec title="4. Cookie-uri terțe (necesită consimțământ)">
-      <ul>
-        <li><strong>Google Fonts</strong> — încărcarea fonturilor; Google poate colecta date despre browser și IP.</li>
-        <li><strong>Servicii de formular / email</strong> — pot seta cookie-uri funcționale pentru prevenirea spam-ului.</li>
-      </ul>
+    <Sec title="4. Fără cookie-uri terțe de urmărire">
+      <p>
+        Site-ul NEXAS <strong>nu încarcă resurse de la terți care să-ți urmărească activitatea</strong>. Fonturile,
+        imaginile, animațiile și elementele 3D sunt găzduite local pe serverul nostru — nu se trimit cereri către
+        Google Fonts, rețele de publicitate sau alte servicii externe de tracking la simpla vizitare a site-ului.
+      </p>
+      <p>
+        Servicii externe pot fi implicate <strong>doar la acțiunea ta explicită</strong> — de exemplu, când alegi să
+        ne scrii pe WhatsApp (Meta) sau să trimiți formularul prin propriul client de email.
+      </p>
     </Sec>
     <Sec title="5. Cum îți gestionezi cookie-urile">
       <p>
