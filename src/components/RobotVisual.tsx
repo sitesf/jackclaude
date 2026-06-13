@@ -19,11 +19,14 @@ function Model() {
   });
 
   return (
-    // Centrat, apoi mărit și coborât ca să se vadă jumătatea de sus (de la piept în sus)
-    <group ref={group} scale={2.6} position={[0, -3.2, 0]}>
-      <Center>
-        <primitive object={scene} />
-      </Center>
+    // Mărit + coborât (offset în afara Center) ca să se vadă jumătatea de sus.
+    // Center așază modelul în origine; rotația se face pe loc în jurul centrului.
+    <group position={[0, -1.4, 0]} scale={1.7}>
+      <group ref={group}>
+        <Center>
+          <primitive object={scene} />
+        </Center>
+      </group>
     </group>
   );
 }
