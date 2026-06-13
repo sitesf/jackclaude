@@ -3,11 +3,9 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
-import { SplineScene } from '../components/SplineScene';
 import { Spotlight } from '../components/Spotlight';
 import { SpotlightCursor } from '../components/SpotlightCursor';
-
-const SPLINE_SCENE = 'https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode';
+import { AICore } from '../components/AICore';
 
 const CONTACT_EMAIL = 'contact@nexas.ro';
 const CONTACT_PHONE = '+40 730 858 640';
@@ -89,7 +87,7 @@ export const ContactPage: React.FC = () => {
               <div className="relative overflow-hidden rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#0a0a0a] h-[320px] sm:h-[420px] lg:h-[560px]">
                 <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="#B600A8" />
                 <SpotlightCursor size={300} color="rgba(255,255,255,0.6)" />
-                <SplineScene scene={SPLINE_SCENE} className="w-full h-full" />
+                <AICore />
                 <div className="absolute bottom-0 left-0 right-0 p-6 pt-16 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent pointer-events-none">
                   <h2 className="text-[#D7E2EA] font-black uppercase tracking-tight text-xl sm:text-2xl leading-tight">
                     Hai să construim<br />ceva incredibil
