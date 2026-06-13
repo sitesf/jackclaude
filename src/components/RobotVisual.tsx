@@ -35,11 +35,11 @@ const handleLoad = (spline: Application) => {
 };
 
 export const RobotVisual: React.FC = () => (
-  <div className="absolute inset-0 overflow-hidden" style={{ background: '#17181c' }}>
-    {/* ușor glow magenta jos */}
+  <div className="absolute inset-0 overflow-hidden" style={{ background: '#070708' }}>
+    {/* glow magenta discret jos */}
     <div
       className="absolute inset-0"
-      style={{ background: 'radial-gradient(circle at 50% 88%, rgba(182,0,168,0.18), transparent 60%)' }}
+      style={{ background: 'radial-gradient(circle at 50% 90%, rgba(182,0,168,0.14), transparent 60%)' }}
     />
     <Suspense
       fallback={
