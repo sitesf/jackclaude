@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
+import { SplineScene } from '../components/SplineScene';
+import { Spotlight } from '../components/Spotlight';
+
+const SPLINE_SCENE = 'https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode';
 
 const CONTACT_EMAIL = 'contact@nexas.ro';
 const CONTACT_PHONE = '+40 730 858 640';
@@ -78,39 +82,22 @@ export const ContactPage: React.FC = () => {
 
       <section className="px-5 sm:px-8 md:px-10 pb-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
-          {/* Contact info */}
-          <div className="lg:col-span-2 flex flex-col gap-5">
-            {contactInfo.map((item, idx) => (
-              <FadeIn key={item.label} delay={idx * 0.1} duration={0.7} y={30} as="div">
-                <div className="rounded-[28px] bg-[#141414] border border-[rgba(215,226,234,0.12)] p-6 flex items-start gap-5">
-                  <span className="rounded-full p-3" style={gradientButtonStyle}>
-                    <item.icon className="w-5 h-5 text-white" />
-                  </span>
-                  <div>
-                    <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm">{item.label}</h3>
-                    {item.href ? (
-                      <a href={item.href} className="text-[#D7E2EA] font-light opacity-70 hover:opacity-100 transition-opacity duration-200 break-all">
-                        {item.value}
-                      </a>
-                    ) : (
-                      <p className="text-[#D7E2EA] font-light opacity-70">{item.value}</p>
-                    )}
-                  </div>
+          {/* Robot 3D interactiv — sticky pe desktop */}
+          <div className="lg:col-span-2">
+            <div className="lg:sticky lg:top-28">
+              <div className="relative overflow-hidden rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#0a0a0a] h-[320px] sm:h-[420px] lg:h-[560px]">
+                <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="#B600A8" />
+                <SplineScene scene={SPLINE_SCENE} className="w-full h-full" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 pt-16 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent pointer-events-none">
+                  <h2 className="text-[#D7E2EA] font-black uppercase tracking-tight text-xl sm:text-2xl leading-tight">
+                    Hai să construim<br />ceva incredibil
+                  </h2>
+                  <p className="text-[#D7E2EA]/60 font-light text-sm mt-2 max-w-xs">
+                    Agenți AI, automatizări și produse digitale — gândite pe afacerea ta.
+                  </p>
                 </div>
-              </FadeIn>
-            ))}
-
-            <FadeIn delay={0.4} duration={0.7} y={30} as="div">
-              <div className="rounded-[28px] border border-[rgba(215,226,234,0.12)] p-7">
-                <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm mb-3">Cum funcționează</h3>
-                <ol className="text-[#D7E2EA] font-light opacity-70 leading-relaxed text-sm sm:text-base list-decimal list-inside flex flex-col gap-2">
-                  <li>Ne trimiți un mesaj scurt despre proiectul tău.</li>
-                  <li>Discutăm obiective, termene și buget &mdash; gratuit.</li>
-                  <li>Primești o ofertă clară, valabilă 14 zile.</li>
-                  <li>Proiectăm, construim și lansăm proiectul tău.</li>
-                </ol>
               </div>
-            </FadeIn>
+            </div>
           </div>
 
           {/* Form */}
@@ -191,6 +178,43 @@ export const ContactPage: React.FC = () => {
                 Trimite mesajul
               </motion.button>
             </form>
+          </FadeIn>
+        </div>
+
+        {/* Info de contact — sub formular */}
+        <div className="max-w-6xl mx-auto mt-12 sm:mt-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {contactInfo.map((item, idx) => (
+              <FadeIn key={item.label} delay={idx * 0.1} duration={0.7} y={30} as="div">
+                <div className="h-full rounded-[28px] bg-[#141414] border border-[rgba(215,226,234,0.12)] p-6 flex items-start gap-5">
+                  <span className="rounded-full p-3 flex-shrink-0" style={gradientButtonStyle}>
+                    <item.icon className="w-5 h-5 text-white" />
+                  </span>
+                  <div>
+                    <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm">{item.label}</h3>
+                    {item.href ? (
+                      <a href={item.href} className="text-[#D7E2EA] font-light opacity-70 hover:opacity-100 transition-opacity duration-200 break-all">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <p className="text-[#D7E2EA] font-light opacity-70">{item.value}</p>
+                    )}
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={0.4} duration={0.7} y={30} as="div" className="mt-5">
+            <div className="rounded-[28px] border border-[rgba(215,226,234,0.12)] p-7">
+              <h3 className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm mb-3">Cum funcționează</h3>
+              <ol className="text-[#D7E2EA] font-light opacity-70 leading-relaxed text-sm sm:text-base list-decimal list-inside grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <li>Ne trimiți un mesaj scurt despre proiectul tău.</li>
+                <li>Discutăm obiective, termene și buget &mdash; gratuit.</li>
+                <li>Primești o ofertă clară, valabilă 14 zile.</li>
+                <li>Proiectăm, construim și lansăm proiectul tău.</li>
+              </ol>
+            </div>
           </FadeIn>
         </div>
       </section>
