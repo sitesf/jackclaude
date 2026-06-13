@@ -2,57 +2,30 @@ import React from 'react';
 import { FadeIn } from './FadeIn';
 import { AnimatedText } from './AnimatedText';
 import { ContactButton } from './ContactButton';
+import { OrbDecor, CubeDecor, TorusDecor, CursorDecor } from './AboutDecor';
 
 export const AboutSection: React.FC = () => {
-  const decorativeImages = [
-    {
-      src: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png',
-      alt: 'moon',
-      sizes: 'w-[120px] sm:w-[160px] md:w-[210px]',
-      position: 'top-[4%] left-[1%] sm:left-[2%] md:left-[4%]',
-      delay: 0.1,
-      x: -80,
-    },
-    {
-      src: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png',
-      alt: '3d-object',
-      sizes: 'w-[100px] sm:w-[140px] md:w-[180px]',
-      position: 'bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%]',
-      delay: 0.25,
-      x: -80,
-    },
-    {
-      src: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png',
-      alt: 'lego',
-      sizes: 'w-[120px] sm:w-[160px] md:w-[210px]',
-      position: 'top-[4%] right-[1%] sm:right-[2%] md:right-[4%]',
-      delay: 0.15,
-      x: 80,
-    },
-    {
-      src: 'https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png',
-      alt: '3d-group',
-      sizes: 'w-[130px] sm:w-[170px] md:w-[220px]',
-      position: 'bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%]',
-      delay: 0.3,
-      x: 80,
-    },
+  const decor = [
+    { Component: OrbDecor, sizes: 'w-[120px] sm:w-[160px] md:w-[210px]', position: 'top-[4%] left-[1%] sm:left-[2%] md:left-[4%]', delay: 0.1, x: -80 },
+    { Component: TorusDecor, sizes: 'w-[100px] sm:w-[140px] md:w-[180px]', position: 'bottom-[8%] left-[3%] sm:left-[6%] md:left-[10%]', delay: 0.25, x: -80 },
+    { Component: CubeDecor, sizes: 'w-[120px] sm:w-[160px] md:w-[210px]', position: 'top-[4%] right-[1%] sm:right-[2%] md:right-[4%]', delay: 0.15, x: 80 },
+    { Component: CursorDecor, sizes: 'w-[130px] sm:w-[170px] md:w-[220px]', position: 'bottom-[8%] right-[3%] sm:right-[6%] md:right-[10%]', delay: 0.3, x: 80 },
   ];
 
   return (
     <section id="about" className="min-h-screen relative flex items-center justify-center px-5 sm:px-8 md:px-10 py-20 bg-[#0C0C0C]">
-      {/* Decorative images */}
-      {decorativeImages.map((img, idx) => (
+      {/* Forme decorative locale (originale) */}
+      {decor.map(({ Component, sizes, position, delay, x }, idx) => (
         <FadeIn
           key={idx}
-          delay={img.delay}
+          delay={delay}
           duration={0.9}
-          x={img.x}
+          x={x}
           y={0}
           as="div"
-          className={`absolute ${img.sizes} ${img.position} z-0`}
+          className={`absolute ${sizes} ${position} z-0`}
         >
-          <img src={img.src} alt={img.alt} className="w-full h-auto" loading="lazy" />
+          <Component />
         </FadeIn>
       ))}
 
