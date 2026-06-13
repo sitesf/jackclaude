@@ -99,14 +99,6 @@ export const ContactPage: React.FC = () => {
                 >
                   <RobotVisual />
                 </React.Suspense>
-                <div className="absolute bottom-0 left-0 right-0 p-6 pt-16 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent pointer-events-none">
-                  <h2 className="text-[#D7E2EA] font-black uppercase tracking-tight text-xl sm:text-2xl leading-tight">
-                    Hai să construim<br />ceva incredibil
-                  </h2>
-                  <p className="text-[#D7E2EA]/60 font-light text-sm mt-2 max-w-xs">
-                    Agenți AI, automatizări și produse digitale — gândite pe afacerea ta.
-                  </p>
-                </div>
               </div>
             </div>
           </div>

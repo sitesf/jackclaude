@@ -1,6 +1,6 @@
 import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useGLTF, Environment, ContactShadows, Center, Bounds } from '@react-three/drei';
+import { useGLTF, Environment, Center } from '@react-three/drei';
 import * as THREE from 'three';
 
 const MODEL_URL = '/jackclaude/models/nexbot.glb';
@@ -19,7 +19,8 @@ function Model() {
   });
 
   return (
-    <group ref={group}>
+    // Centrat, apoi mărit și coborât ca să se vadă jumătatea de sus (de la piept în sus)
+    <group ref={group} scale={2.6} position={[0, -3.2, 0]}>
       <Center>
         <primitive object={scene} />
       </Center>
@@ -39,17 +40,14 @@ export const RobotVisual: React.FC = () => (
           'radial-gradient(circle at 50% 42%, rgba(182,0,168,0.3), transparent 60%), radial-gradient(circle at 50% 85%, rgba(0,212,255,0.12), transparent 60%)',
       }}
     />
-    <Canvas camera={{ position: [0, 0, 6], fov: 40 }} dpr={[1, 2]} style={{ position: 'relative', zIndex: 5 }}>
+    <Canvas camera={{ position: [0, 0, 5], fov: 38 }} dpr={[1, 2]} style={{ position: 'relative', zIndex: 5 }}>
       <ambientLight intensity={0.7} />
       <directionalLight position={[5, 5, 5]} intensity={1.4} color="#ffffff" />
       <pointLight position={[-4, 2, 3]} intensity={2.2} color="#B600A8" />
       <pointLight position={[4, -1, 2]} intensity={1.6} color="#00D4FF" />
       <Suspense fallback={null}>
-        <Bounds fit clip margin={1.2}>
-          <Model />
-        </Bounds>
+        <Model />
         <Environment preset="city" />
-        <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={10} blur={2.6} far={5} color="#000000" />
       </Suspense>
     </Canvas>
   </div>
