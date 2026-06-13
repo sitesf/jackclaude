@@ -1,59 +1,52 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import robot from '../assets/robot-nexas.webp';
+import React, { Suspense, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { useGLTF, Environment, ContactShadows } from '@react-three/drei';
+import * as THREE from 'three';
 
-/**
- * Robotul NEXAS, local (webp), cu plutire continuă, halou luminos
- * și inel orbital. 100% local — fără request extern.
- */
+const MODEL_URL = '/jackclaude/models/nexbot.glb';
+
+function Model() {
+  const group = useRef<THREE.Group>(null);
+  const { scene } = useGLTF(MODEL_URL);
+
+  // Rotație lentă + ușoară urmărire a mouse-ului
+  useFrame((state) => {
+    if (!group.current) return;
+    const targetY = state.pointer.x * 0.6;
+    const targetX = -state.pointer.y * 0.25;
+    group.current.rotation.y += (targetY - group.current.rotation.y) * 0.05 + 0.003;
+    group.current.rotation.x += (targetX - group.current.rotation.x) * 0.05;
+  });
+
+  return (
+    <group ref={group}>
+      <primitive object={scene} scale={1.4} position={[0, -1.1, 0]} />
+    </group>
+  );
+}
+
+useGLTF.preload(MODEL_URL);
+
 export const RobotVisual: React.FC = () => (
-  <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+  <div className="absolute inset-0 overflow-hidden">
     {/* fundal radial */}
     <div
       className="absolute inset-0"
       style={{
         background:
-          'radial-gradient(circle at 50% 42%, rgba(182,0,168,0.32), transparent 58%), radial-gradient(circle at 50% 85%, rgba(0,212,255,0.14), transparent 60%)',
+          'radial-gradient(circle at 50% 42%, rgba(182,0,168,0.3), transparent 60%), radial-gradient(circle at 50% 85%, rgba(0,212,255,0.12), transparent 60%)',
       }}
     />
-
-    {/* halou pulsatoriu în spatele robotului */}
-    <motion.div
-      className="absolute rounded-full"
-      style={{
-        width: '62%',
-        height: '62%',
-        top: '20%',
-        background: 'radial-gradient(circle, rgba(255,91,238,0.5), rgba(108,99,255,0.18) 45%, transparent 70%)',
-        filter: 'blur(28px)',
-      }}
-      animate={{ scale: [0.92, 1.1, 0.92], opacity: [0.55, 0.9, 0.55] }}
-      transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-    />
-
-    {/* inel orbital subtil */}
-    <motion.div
-      className="absolute rounded-full border"
-      style={{
-        width: '78%',
-        height: '78%',
-        borderColor: 'rgba(0,212,255,0.45)',
-        transform: 'rotateX(72deg)',
-        boxShadow: '0 0 22px rgba(0,212,255,0.4)',
-      }}
-      animate={{ rotateZ: [0, 360] }}
-      transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
-    />
-
-    {/* robotul */}
-    <motion.img
-      src={robot}
-      alt="Robotul NEXAS"
-      className="relative z-10 h-[88%] w-auto object-contain"
-      style={{ filter: 'drop-shadow(0 18px 40px rgba(24,1,31,0.6)) drop-shadow(0 0 28px rgba(182,0,168,0.35))' }}
-      animate={{ y: [0, -14, 0] }}
-      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-      loading="lazy"
-    />
+    <Canvas camera={{ position: [0, 0.5, 5], fov: 40 }} dpr={[1, 2]} style={{ position: 'relative', zIndex: 5 }}>
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 5, 5]} intensity={1.4} color="#ffffff" />
+      <pointLight position={[-4, 2, 3]} intensity={2.2} color="#B600A8" />
+      <pointLight position={[4, -1, 2]} intensity={1.6} color="#00D4FF" />
+      <Suspense fallback={null}>
+        <Model />
+        <Environment preset="city" />
+        <ContactShadows position={[0, -1.6, 0]} opacity={0.45} scale={8} blur={2.6} far={4} color="#000000" />
+      </Suspense>
+    </Canvas>
   </div>
 );
