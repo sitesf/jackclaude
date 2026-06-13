@@ -1,97 +1,166 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { FadeIn } from './FadeIn';
-import { projects, ProjectData } from '../data/projects';
-import { projectVisuals } from './ProjectVisuals';
 
-interface ProjectCardProps {
-  project: ProjectData;
-  index: number;
-  totalCards: number;
-  scrollYProgress: any;
+interface AgentCard {
+  slug: string;
+  name: string;
+  title: string;
+  description: string;
+  accentColor: string;
+  accentLight: string;
+  icon: string;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, scrollYProgress }) => {
-  const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-  const scale = useTransform(scrollYProgress, [0, 1], [targetScale, 1]);
-  const Visual = projectVisuals[project.slug];
+const agents: AgentCard[] = [
+  {
+    slug: 'niro',
+    name: 'NIRO Agent',
+    title: 'Recepționer AI pe WhatsApp',
+    description: 'Preia automat programări, răspunde clienților instant, salvează date în CRM.',
+    accentColor: '#8F5CFF',
+    accentLight: 'rgba(143,92,255,0.2)',
+    icon: '📱',
+  },
+  {
+    slug: 'alex',
+    name: 'Alex AI',
+    title: 'Asistent AI Multifuncțional',
+    description: 'Gestionează sarcini, automatizări și conversații — integrări cu Slack, Notion, Calendar.',
+    accentColor: '#6C63FF',
+    accentLight: 'rgba(108,99,255,0.2)',
+    icon: '🤖',
+  },
+  {
+    slug: 'neo',
+    name: 'NEO Audit SEO',
+    title: 'Audit SEO Complet în Secunde',
+    description: 'Analizează site-uri, identifică probleme, generează recomandări prioritizate cu AI.',
+    accentColor: '#3B82F6',
+    accentLight: 'rgba(59,130,246,0.2)',
+    icon: '📊',
+  },
+  {
+    slug: 'hr',
+    name: 'HR Dashboard',
+    title: 'Recrutare Modernă cu AI',
+    description: 'Evaluează CV-uri automat, programează interviuri, statistici live pe fiecare post.',
+    accentColor: '#5DA9FF',
+    accentLight: 'rgba(93,169,255,0.2)',
+    icon: '👥',
+  },
+  {
+    slug: 'stiri',
+    name: 'Știri AI',
+    title: 'Portal cu Conținut Automat',
+    description: 'Redactor AI care citește sursele, selectează, traduce și publică știri zilnic singur.',
+    accentColor: '#B600A8',
+    accentLight: 'rgba(182,0,168,0.2)',
+    icon: '📰',
+  },
+];
 
-  return (
-    <motion.div
+const AgentCard: React.FC<{ agent: AgentCard }> = ({ agent }) => (
+  <motion.a
+    href={`#/proiect/${agent.slug}`}
+    className="relative flex-shrink-0 w-80 sm:w-96 h-72 sm:h-80 rounded-3xl overflow-hidden group cursor-pointer transition-transform duration-300 hover:scale-105"
+    whileHover={{ y: -8 }}
+  >
+    {/* Background gradient */}
+    <div
+      className="absolute inset-0"
       style={{
-        scale,
-        top: `${index * 24}px`,
+        background: `linear-gradient(135deg, #0C0C0C 0%, ${agent.accentLight} 100%)`,
       }}
-      className="sticky top-20 md:top-28 min-h-[80vh] flex items-center justify-center px-4 sm:px-6"
-    >
-      <a
-        href={`#/proiect/${project.slug}`}
-        className="block w-full max-w-6xl rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0C0C0C] p-5 sm:p-8 md:p-10 transition-colors duration-300 hover:border-white group"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 items-center">
-          {/* Text */}
-          <div className="flex flex-col gap-4 md:gap-5">
-            <div className="flex items-baseline gap-4">
-              <span className="text-[#D7E2EA] font-black text-[clamp(2.5rem,8vw,100px)] leading-none">
-                {project.number}
-              </span>
-              <p className="text-[#D7E2EA] font-light text-xs sm:text-sm uppercase opacity-60 tracking-widest">
-                {project.category}
-              </p>
-            </div>
-            <h3 className="text-[#D7E2EA] font-black uppercase text-[clamp(1.5rem,3.5vw,2.8rem)] leading-tight tracking-tight">
-              {project.name}
-            </h3>
-            <p className="text-[#D7E2EA]/60 font-light leading-relaxed text-sm sm:text-base max-w-md">
-              {project.tagline}
-            </p>
-            <span className="inline-flex items-center gap-3 mt-2 text-[#D7E2EA] text-xs sm:text-sm font-medium uppercase tracking-widest">
-              <span className="rounded-full border-2 border-[#D7E2EA] px-7 py-3 transition-colors duration-300 group-hover:bg-[#D7E2EA] group-hover:text-[#0C0C0C]">
-                Vezi proiectul
-              </span>
-            </span>
-          </div>
+    />
 
-          {/* Vizual generat */}
-          <div className="aspect-[4/3] w-full">{Visual && <Visual />}</div>
+    {/* Subtle pattern overlay */}
+    <div className="absolute inset-0 opacity-20">
+      <svg className="w-full h-full" viewBox="0 0 400 300" preserveAspectRatio="none">
+        <defs>
+          <pattern id={`grid-${agent.slug}`} width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke={agent.accentColor} strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="400" height="300" fill={`url(#grid-${agent.slug})`} />
+      </svg>
+    </div>
+
+    {/* Content */}
+    <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8 z-10">
+      {/* Top — Icon & Badge */}
+      <div className="flex items-start justify-between">
+        <span className="text-5xl">{agent.icon}</span>
+        <span
+          className="text-xs font-bold uppercase tracking-widest text-white px-3 py-1 rounded-full"
+          style={{ backgroundColor: agent.accentColor }}
+        >
+          Agent AI
+        </span>
+      </div>
+
+      {/* Bottom — Text */}
+      <div className="flex flex-col gap-3">
+        <div>
+          <h3 className="text-xl sm:text-2xl font-black uppercase leading-tight text-white">
+            {agent.name}
+          </h3>
+          <p className="text-xs sm:text-sm font-medium uppercase tracking-widest text-white/70 mt-1">
+            {agent.title}
+          </p>
         </div>
-      </a>
-    </motion.div>
-  );
-};
+        <p className="text-xs sm:text-sm font-light leading-relaxed text-white/75 line-clamp-2">
+          {agent.description}
+        </p>
+        <div className="flex items-center gap-2 text-white/90 text-xs font-semibold uppercase tracking-widest pt-2">
+          <span>Descoperă</span>
+          <span className="text-lg">→</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Hover glow */}
+    <div
+      className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl -z-10"
+      style={{ backgroundColor: agent.accentColor }}
+    />
+  </motion.a>
+);
 
 export const ProjectsSection: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
+  const scrollContainerRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <section
-      ref={containerRef}
-      id="projects"
-      className="relative bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 pt-20 sm:pt-24 md:pt-32 pb-20"
-    >
-      <FadeIn delay={0} duration={0.7} y={40} as="h2" className="hero-heading font-black uppercase text-center text-[clamp(3rem,12vw,160px)] leading-none tracking-tight mb-6">
-        Proiecte
-      </FadeIn>
-      <FadeIn delay={0.15} duration={0.7} y={20} as="p" className="text-center text-[#D7E2EA]/50 font-light max-w-xl mx-auto px-6 mb-16 sm:mb-24">
-        Cinci produse reale, construite de la zero: agenți AI, automatizări și platforme web. Apasă pe oricare pentru detalii complete.
+    <section id="projects" className="w-full bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32">
+      <FadeIn delay={0} duration={0.7} y={40} as="h2" className="text-[#D7E2EA] font-black uppercase text-center text-[clamp(2.5rem,10vw,120px)] leading-none tracking-tight mb-16 sm:mb-20">
+        Agenți AI & Platforme
       </FadeIn>
 
       <div className="relative">
-        {projects.map((project, idx) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            index={idx}
-            totalCards={projects.length}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
-        {/* Spacer pentru scroll */}
-        <div className="h-[250vh]" />
+        {/* Scroll container */}
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-hide"
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {agents.map((agent, idx) => (
+            <FadeIn key={agent.slug} delay={idx * 0.1} duration={0.7} x={40} y={0} as="div">
+              <AgentCard agent={agent} />
+            </FadeIn>
+          ))}
+        </div>
+
+        {/* Fade edges pe desktop */}
+        <div className="hidden sm:block absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-[#0C0C0C] to-transparent pointer-events-none" />
+        <div className="hidden sm:block absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-[#0C0C0C] to-transparent pointer-events-none" />
+      </div>
+
+      {/* Info text */}
+      <div className="text-center mt-12 sm:mt-16">
+        <p className="text-[#D7E2EA] font-light text-sm sm:text-base opacity-60 max-w-2xl mx-auto">
+          Scroll orizontal ca să descoperi toți agenții și platformele construite de NEXAS.
+          Fiecare poate fi personalizat pe fluxul tău de lucru.
+        </p>
       </div>
     </section>
   );
