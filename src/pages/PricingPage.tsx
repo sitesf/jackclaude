@@ -1,8 +1,42 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
+
+type Category = 'ai' | 'web';
+
+const PricingSwitch: React.FC<{ value: Category; onChange: (v: Category) => void }> = ({ value, onChange }) => {
+  const options: { id: Category; label: string }[] = [
+    { id: 'ai', label: 'Agenți AI' },
+    { id: 'web', label: 'Site-uri' },
+  ];
+  return (
+    <div className="flex justify-center">
+      <div className="relative flex w-fit rounded-full bg-[#141414] border border-[rgba(215,226,234,0.15)] p-1">
+        {options.map((opt) => (
+          <button
+            key={opt.id}
+            onClick={() => onChange(opt.id)}
+            className={`relative z-10 h-10 sm:h-12 rounded-full px-5 sm:px-8 text-sm sm:text-base font-medium uppercase tracking-wider transition-colors duration-200 ${
+              value === opt.id ? 'text-white' : 'text-[#D7E2EA]/60 hover:text-[#D7E2EA]'
+            }`}
+          >
+            {value === opt.id && (
+              <motion.span
+                layoutId="pricing-switch"
+                className="absolute inset-0 rounded-full"
+                style={gradientButtonStyle}
+                transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+              />
+            )}
+            <span className="relative">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const gradientButtonStyle: React.CSSProperties = {
   background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
@@ -166,6 +200,23 @@ const PlanGrid: React.FC<{ items: typeof plans }> = ({ items }) => (
 );
 
 export const PricingPage: React.FC = () => {
+  const [category, setCategory] = useState<Category>('ai');
+
+  const content = {
+    ai: {
+      title: 'Agenți AI & Automatizări',
+      subtitle:
+        'Specialitatea NEXAS: agenți AI și roboți software care lucrează pentru afacerea ta, nonstop. Vezi exemple reale în portofoliu: NIRO, ALEX și HR Dashboard.',
+      plans: aiPlans,
+    },
+    web: {
+      title: 'Site-uri & Magazine online',
+      subtitle:
+        'Site-uri moderne, rapide și orientate spre conversie — de la landing pages la magazine online complete.',
+      plans,
+    },
+  }[category];
+
   return (
     <PageLayout>
       {/* Header */}
@@ -179,28 +230,31 @@ export const PricingPage: React.FC = () => {
         </FadeIn>
       </section>
 
-      {/* Agenți AI & Automatizări */}
+      {/* Toggle + pachete */}
       <section className="px-5 sm:px-8 md:px-10 pb-20">
-        <FadeIn delay={0} duration={0.7} y={30} as="div" className="text-center mb-10 sm:mb-14">
-          <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(1.8rem,6vw,72px)]">
-            Agenți AI &amp; Automatizări
-          </h2>
-          <p className="text-[#D7E2EA] font-light max-w-2xl mx-auto mt-5 leading-relaxed text-sm sm:text-base opacity-70">
-            Specialitatea NEXAS: agenți AI și roboți software care lucrează pentru afacerea ta,
-            nonstop. Vezi exemple reale în portofoliu: NIRO, ALEX și HR Dashboard.
-          </p>
+        <FadeIn delay={0} duration={0.7} y={20} as="div" className="mb-12 sm:mb-16">
+          <PricingSwitch value={category} onChange={setCategory} />
         </FadeIn>
-        <PlanGrid items={aiPlans} />
-      </section>
 
-      {/* Site-uri & E-commerce */}
-      <section className="px-5 sm:px-8 md:px-10 pb-20">
-        <FadeIn delay={0} duration={0.7} y={30} as="div" className="text-center mb-10 sm:mb-14">
-          <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(1.8rem,6vw,72px)]">
-            Site-uri &amp; Magazine online
-          </h2>
-        </FadeIn>
-        <PlanGrid items={plans} />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={category}
+            initial={{ opacity: 0, y: 20, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -20, filter: 'blur(8px)' }}
+            transition={{ duration: 0.4 }}
+          >
+            <div className="text-center mb-10 sm:mb-14">
+              <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[clamp(1.8rem,6vw,72px)]">
+                {content.title}
+              </h2>
+              <p className="text-[#D7E2EA] font-light max-w-2xl mx-auto mt-5 leading-relaxed text-sm sm:text-base opacity-70">
+                {content.subtitle}
+              </p>
+            </div>
+            <PlanGrid items={content.plans} />
+          </motion.div>
+        </AnimatePresence>
       </section>
 
       {/* Add-ons */}
