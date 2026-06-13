@@ -6,13 +6,13 @@ const Spline = lazy(() => import('@splinetool/react-spline'));
 const SCENE_URL = '/jackclaude/models/nexbot.splinecode';
 
 export const RobotVisual: React.FC = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    {/* fundal radial */}
+  <div className="absolute inset-0 overflow-hidden" style={{ background: '#17181c' }}>
+    {/* fundal antracit + ușor glow magenta jos */}
     <div
       className="absolute inset-0"
       style={{
         background:
-          'radial-gradient(circle at 50% 42%, rgba(182,0,168,0.3), transparent 60%), radial-gradient(circle at 50% 85%, rgba(0,212,255,0.12), transparent 60%)',
+          'radial-gradient(circle at 50% 88%, rgba(182,0,168,0.18), transparent 60%)',
       }}
     />
     <Suspense
