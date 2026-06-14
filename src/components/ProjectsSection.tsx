@@ -129,16 +129,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, s
           <div className="w-full">
             <div className="relative rounded-[20px] overflow-hidden border border-white/15 bg-[#070708] shadow-2xl">
               {/* bara de browser */}
-              <div className="flex items-center gap-2 px-3 py-2 bg-[#15161a] border-b border-white/10">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-                <div className="ml-2 flex-1 rounded-md bg-white/5 px-3 py-1 text-[9px] font-mono text-[#D7E2EA]/50 truncate">
+              <div className="flex items-center px-3 py-2 bg-[#15161a] border-b border-white/10">
+                <div className="flex-1 rounded-md bg-white/5 px-3 py-1 text-[9px] font-mono text-[#D7E2EA]/50 truncate">
                   nexas.ro/{project.slug}
                 </div>
-                <span className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-[#28c840]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#28c840] animate-pulse" /> Live
-                </span>
               </div>
 
               {/* ecranul: mockup-ul se „derulează" la scroll */}
