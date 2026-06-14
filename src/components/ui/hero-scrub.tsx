@@ -1,19 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import { ChevronDown } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
 /* Tunables                                                            */
 /* ------------------------------------------------------------------ */
-const SECTION_VH = 600;            // total scrollable height (longer = slower, more cinematic)
-const SCRUB = 0.6;                 // ScrollTrigger smooth scrub
-const INITIAL_BATCH = 20;          // frames preloaded immediately
-const BATCH_SIZE = 20;             // frames per lazy batch
-const BATCH_INTERVAL = 80;         // ms between lazy batches
-const FALLBACK_MS = 4500;          // give up + show static bg after this
-const FRAME_END = 0.92;            // frames play across 0..FRAME_END, CTA owns the tail
+const START_FRAME = 34;       // 0-indexed -> 0035.webp = clean lateral hero shot
+const PLAY_DURATION = 14;     // seconds for the full cinematic (longer = slower zoom)
+const INITIAL_BATCH = 20;
+const BATCH_SIZE = 20;
+const BATCH_INTERVAL = 80;
+const FALLBACK_MS = 4500;
 
 export type HeroScrubProps = {
   frameCount: number;
@@ -51,22 +48,24 @@ export function HeroScrub({
   ctaHref = "https://nexas.ro",
 }: HeroScrubProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const ctaBtnRef = useRef<HTMLAnchorElement>(null);
+  const hintRef = useRef<HTMLDivElement>(null);
 
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const lastDrawnRef = useRef<number>(-1);
+
+  const startIdx = Math.min(START_FRAME, Math.max(0, frameCount - 1));
 
   const [ready, setReady] = useState(false);
   const [framesOk, setFramesOk] = useState(frameCount > 0);
   const reduced = usePrefersReducedMotion();
 
   /* ---------------------------------------------------------------- */
-  /* Image loading                                                    */
+  /* Image loading — load forward from the lateral start frame first. */
   /* ---------------------------------------------------------------- */
   useEffect(() => {
     if (frameCount <= 0) {
@@ -78,16 +77,20 @@ export function HeroScrub({
     const images: HTMLImageElement[] = new Array(frameCount);
     imagesRef.current = images;
 
-    const onFirstReady = (img: HTMLImageElement) => {
-      if (cancelled) return;
+    // Priority order: start frame → end, then backfill the earlier frames.
+    const order: number[] = [];
+    for (let i = startIdx; i < frameCount; i++) order.push(i);
+    for (let i = startIdx - 1; i >= 0; i--) order.push(i);
+
+    const drawInitial = (img: HTMLImageElement) => {
       const canvas = canvasRef.current;
       if (canvas && img.naturalWidth && img.naturalHeight) {
         canvas.width = img.naturalWidth;
         canvas.height = img.naturalHeight;
         const ctx = canvas.getContext("2d");
         ctxRef.current = ctx;
-        ctx?.drawImage(img, 0, 0);
-        lastDrawnRef.current = 0;
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+        lastDrawnRef.current = startIdx;
       }
       setReady(true);
     };
@@ -97,34 +100,33 @@ export function HeroScrub({
       if (!cancelled && errored >= 5) setFramesOk(false);
     };
 
-    const loadOne = (i: number) => {
+    const loadOne = (i: number, priority: boolean) => {
       const img = new window.Image();
       img.decoding = "async";
-      if (i < INITIAL_BATCH) {
+      if (priority) {
         (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "high";
       }
       img.onerror = onErr;
-      if (i === 0) img.onload = () => onFirstReady(img);
+      if (i === startIdx) img.onload = () => { if (!cancelled) drawInitial(img); };
       img.src = frameUrl(i);
       images[i] = img;
     };
 
-    const initial = Math.min(INITIAL_BATCH, frameCount);
-    for (let i = 0; i < initial; i++) loadOne(i);
+    let pos = 0;
+    const initial = Math.min(INITIAL_BATCH, order.length);
+    for (; pos < initial; pos++) loadOne(order[pos], true);
 
-    let cursor = initial;
     let timer: ReturnType<typeof setTimeout> | null = null;
     const loadNext = () => {
       if (cancelled) return;
-      const end = Math.min(frameCount, cursor + BATCH_SIZE);
-      for (let i = cursor; i < end; i++) loadOne(i);
-      cursor = end;
-      if (cursor < frameCount) timer = setTimeout(loadNext, BATCH_INTERVAL);
+      const end = Math.min(order.length, pos + BATCH_SIZE);
+      for (; pos < end; pos++) loadOne(order[pos], false);
+      if (pos < order.length) timer = setTimeout(loadNext, BATCH_INTERVAL);
     };
     timer = setTimeout(loadNext, BATCH_INTERVAL);
 
     const fallback = window.setTimeout(() => {
-      if (!cancelled && !images[0]?.complete) setFramesOk(false);
+      if (!cancelled && !images[startIdx]?.complete) setFramesOk(false);
     }, FALLBACK_MS);
 
     return () => {
@@ -132,252 +134,230 @@ export function HeroScrub({
       if (timer) clearTimeout(timer);
       window.clearTimeout(fallback);
     };
-  }, [frameCount, frameUrl]);
+  }, [frameCount, frameUrl, startIdx]);
 
   /* ---------------------------------------------------------------- */
-  /* Reduced motion: draw the first frame, no animation.              */
+  /* Reduced motion: just show the lateral frame.                     */
   /* ---------------------------------------------------------------- */
   useEffect(() => {
     if (!reduced || !ready) return;
-    const img = imagesRef.current[0];
+    const img = imagesRef.current[startIdx];
     const canvas = canvasRef.current;
     if (img && canvas && img.complete) {
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
     }
-  }, [reduced, ready]);
+  }, [reduced, ready, startIdx]);
 
   /* ---------------------------------------------------------------- */
-  /* Entry animation                                                  */
+  /* Entry fade                                                       */
   /* ---------------------------------------------------------------- */
   useEffect(() => {
     if (reduced) return;
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
-      tl.from(bgRef.current, { opacity: 0, duration: 1.2, ease: "power2.out" }, 0);
-      tl.from(canvasRef.current, { opacity: 0, duration: 1.2, ease: "power2.out" }, 0.2);
+      gsap.from(bgRef.current, { opacity: 0, duration: 1.2, ease: "power2.out" });
+      gsap.from(canvasRef.current, { opacity: 0, duration: 1.4, ease: "power2.out", delay: 0.2 });
     }, sectionRef);
     return () => ctx.revert();
   }, [reduced]);
 
   /* ---------------------------------------------------------------- */
-  /* Scroll-driven cinematic scrub (full-bleed frames + tail CTA)     */
+  /* Cinematic playback — starts on first scroll / touch only.        */
+  /* Plays frames at a constant film-like cadence (no scroll scrub),  */
+  /* so the motion is smooth regardless of how the user scrolls.      */
   /* ---------------------------------------------------------------- */
   useEffect(() => {
     if (reduced || !ready || !framesOk) return;
-    const section = sectionRef.current;
-    if (!section) return;
 
-    const ctx = gsap.context(() => {
-      const isLoaded = (i: number) => {
-        const img = imagesRef.current[i];
-        return !!img && img.complete && img.naturalWidth > 0;
-      };
+    const isLoaded = (i: number) => {
+      const img = imagesRef.current[i];
+      return !!img && img.complete && img.naturalWidth > 0;
+    };
 
-      const drawFrame = (index: number) => {
-        const canvas = canvasRef.current;
-        const ctx2 = ctxRef.current ?? canvas?.getContext("2d") ?? null;
-        if (!canvas || !ctx2) return;
-        ctxRef.current = ctx2;
-
-        let useIdx = index;
-        if (!isLoaded(useIdx)) {
-          let found = -1;
-          for (let d = 1; d < frameCount; d++) {
-            if (useIdx - d >= 0 && isLoaded(useIdx - d)) { found = useIdx - d; break; }
-            if (useIdx + d < frameCount && isLoaded(useIdx + d)) { found = useIdx + d; break; }
-          }
-          if (found === -1) return;
-          useIdx = found;
+    const drawFrame = (index: number) => {
+      const canvas = canvasRef.current;
+      const ctx2 = ctxRef.current ?? canvas?.getContext("2d") ?? null;
+      if (!canvas || !ctx2) return;
+      ctxRef.current = ctx2;
+      let useIdx = index;
+      if (!isLoaded(useIdx)) {
+        let found = -1;
+        for (let d = 1; d < frameCount; d++) {
+          if (useIdx - d >= 0 && isLoaded(useIdx - d)) { found = useIdx - d; break; }
+          if (useIdx + d < frameCount && isLoaded(useIdx + d)) { found = useIdx + d; break; }
         }
-        if (lastDrawnRef.current === useIdx) return;
-        const img = imagesRef.current[useIdx];
-        if (!img) return;
-        ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
-        lastDrawnRef.current = useIdx;
-      };
-
-      const setCtaO = gsap.quickSetter(ctaRef.current, "opacity") as (v: number) => void;
-
-      const render = (p: number) => {
-        const mapped = norm(p, 0, FRAME_END);
-        const frameIdx = Math.min(frameCount - 1, Math.floor(mapped * frameCount));
-        drawFrame(frameIdx);
-
-        if (ctaText) {
-          const o = norm(p, 0.92, 0.99);
-          setCtaO(o);
-          const btn = ctaBtnRef.current;
-          if (btn) btn.style.pointerEvents = o > 0.5 ? "auto" : "none";
-        }
-      };
-
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: SCRUB,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => render(self.progress),
-      });
-
-      render(0);
-
-      if (document.fonts?.ready) {
-        document.fonts.ready.then(() => ScrollTrigger.refresh());
-      } else {
-        ScrollTrigger.refresh();
+        if (found === -1) return;
+        useIdx = found;
       }
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, [ready, framesOk, reduced, frameCount, ctaText]);
-
-  /* ---------------------------------------------------------------- */
-  /* Auto-play: gently auto-scroll through the sequence on load.      */
-  /* Any touch / wheel / key / pointer hands control back to user.    */
-  /* ---------------------------------------------------------------- */
-  useEffect(() => {
-    if (reduced || !ready || !framesOk) return;
-    const section = sectionRef.current;
-    if (!section) return;
-    // Only auto-play when the visitor is at the very top of the page.
-    if (window.scrollY > window.innerHeight * 0.4) return;
-
-    let killed = false;
-    const proxy = { y: window.scrollY };
-    // Drive scroll up to ~92% of the section (end of the car sequence).
-    const targetY = () =>
-      section.offsetTop + (section.offsetHeight - window.innerHeight) * FRAME_END;
-
-    const tween = gsap.to(proxy, {
-      y: targetY,
-      duration: 15,
-      ease: "power1.inOut",
-      delay: 1.1,
-      onUpdate: () => {
-        if (!killed) window.scrollTo(0, proxy.y);
-      },
-    });
-
-    const stop = () => {
-      if (killed) return;
-      killed = true;
-      tween.kill();
-      remove();
+      if (lastDrawnRef.current === useIdx) return;
+      const img = imagesRef.current[useIdx];
+      if (!img) return;
+      ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
+      lastDrawnRef.current = useIdx;
     };
+
+    const setCtaO = ctaText
+      ? (gsap.quickSetter(ctaRef.current, "opacity") as (v: number) => void)
+      : null;
+
+    let started = false;
+    let finished = false;
+    let tween: gsap.core.Tween | null = null;
+    const frameObj = { f: startIdx };
+
+    const preventTouch = (e: TouchEvent) => { if (!finished) e.preventDefault(); };
+    const lock = () => {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("touchmove", preventTouch, { passive: false });
+    };
+    const unlock = () => {
+      finished = true;
+      document.body.style.overflow = "";
+      window.removeEventListener("touchmove", preventTouch);
+    };
+
+    lock();
+    drawFrame(startIdx);
+
+    const start = () => {
+      if (started) return;
+      started = true;
+      hintRef.current && gsap.to(hintRef.current, { opacity: 0, duration: 0.4 });
+
+      tween = gsap.to(frameObj, {
+        f: frameCount - 1,
+        duration: PLAY_DURATION,
+        ease: "none",
+        onUpdate: () => {
+          drawFrame(Math.round(frameObj.f));
+          if (setCtaO) {
+            const p = norm(frameObj.f, startIdx, frameCount - 1);
+            setCtaO(norm(p, 0.9, 1));
+          }
+        },
+        onComplete: () => {
+          unlock();
+          const btn = ctaBtnRef.current;
+          if (btn) btn.style.pointerEvents = "auto";
+        },
+      });
+    };
+
+    const onWheel = () => start();
+    const onTouchStart = () => start();
     const onKey = (e: KeyboardEvent) => {
-      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].includes(e.key)) stop();
+      if (["ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) start();
     };
-    const remove = () => {
-      window.removeEventListener("wheel", stop);
-      window.removeEventListener("touchstart", stop);
-      window.removeEventListener("pointerdown", stop);
-      window.removeEventListener("keydown", onKey);
-    };
-    window.addEventListener("wheel", stop, { passive: true });
-    window.addEventListener("touchstart", stop, { passive: true });
-    window.addEventListener("pointerdown", stop, { passive: true });
+
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("keydown", onKey);
 
     return () => {
-      killed = true;
-      tween.kill();
-      remove();
+      tween?.kill();
+      unlock();
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("keydown", onKey);
     };
-  }, [ready, framesOk, reduced]);
+  }, [ready, framesOk, reduced, frameCount, startIdx, ctaText]);
 
   return (
     <section
       ref={sectionRef}
-      className={`relative w-full overflow-clip text-white ${bgClassName}`}
-      style={{ height: `${SECTION_VH}vh` }}
+      className={`relative h-[100svh] w-full overflow-hidden text-white ${bgClassName}`}
       aria-label="Cinematic Lamborghini Temerario showcase"
     >
+      {/* background fill (also the static fallback) */}
       <div
-        ref={stickyRef}
-        className="sticky top-0 h-[100svh] w-full overflow-hidden"
-      >
-        {/* background fill (also the static fallback) */}
-        <div
-          ref={bgRef}
+        ref={bgRef}
+        aria-hidden
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundColor: framesOk ? "#000" : accentHex,
+          backgroundImage: !framesOk ? `url(${frameUrl(startIdx)})` : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+
+      {/* full-bleed cinematic canvas */}
+      {framesOk && (
+        <canvas
+          ref={canvasRef}
           aria-hidden
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundColor: framesOk ? "#000" : accentHex,
-            backgroundImage: !framesOk ? `url(${frameUrl(0)})` : undefined,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
+          className="absolute inset-0 z-10 h-full w-full object-cover"
         />
+      )}
 
-        {/* full-bleed cinematic canvas */}
-        {framesOk && (
-          <canvas
-            ref={canvasRef}
-            aria-hidden
-            className="absolute inset-0 z-10 h-full w-full object-cover"
-          />
-        )}
-
-        {/* loader */}
-        {!ready && framesOk && !reduced && (
-          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black">
-            <div
-              className="h-10 w-10 animate-spin rounded-full border-2 border-white/20"
-              style={{ borderTopColor: accentHex }}
-            />
-          </div>
-        )}
-
-        {/* optional CTA — fades in over the dark tail of the sequence */}
-        {ctaText && (
+      {/* loader */}
+      {!ready && framesOk && !reduced && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black">
           <div
-            ref={ctaRef}
-            className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center will-change-[opacity]"
-            style={{ opacity: 0 }}
-          >
-            <a
-              ref={ctaBtnRef}
-              href={ctaHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hero-cta pointer-events-none inline-block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
-              style={{
-                background: accentHex,
-                color: "#000",
-                fontWeight: 700,
-                fontSize: "1.1rem",
-                padding: "18px 48px",
-                borderRadius: "9999px",
-              }}
-            >
-              {ctaText}
-            </a>
-          </div>
-        )}
+            className="h-10 w-10 animate-spin rounded-full border-2 border-white/20"
+            style={{ borderTopColor: accentHex }}
+          />
+        </div>
+      )}
 
-        {/* ---------- cinematic visual effects (no text) ---------- */}
+      {/* scroll / touch hint (icon only, no text on image) */}
+      {ready && framesOk && !reduced && (
         <div
+          ref={hintRef}
           aria-hidden
-          className="pointer-events-none absolute inset-0 z-20"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.55) 100%)",
-          }}
-        />
+          className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center"
+        >
+          <ChevronDown className="h-7 w-7 animate-bounce text-white/80" />
+        </div>
+      )}
+
+      {/* optional CTA — fades in over the dark tail of the sequence */}
+      {ctaText && (
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 z-20 h-40"
-          style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40"
-          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}
-        />
-      </div>
+          ref={ctaRef}
+          className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center will-change-[opacity]"
+          style={{ opacity: 0 }}
+        >
+          <a
+            ref={ctaBtnRef}
+            href={ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-cta pointer-events-none inline-block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
+            style={{
+              background: accentHex,
+              color: "#000",
+              fontWeight: 700,
+              fontSize: "1.1rem",
+              padding: "18px 48px",
+              borderRadius: "9999px",
+            }}
+          >
+            {ctaText}
+          </a>
+        </div>
+      )}
+
+      {/* ---------- cinematic visual effects (no text) ---------- */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-20"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.55) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-40"
+        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}
+      />
     </section>
   );
 }
