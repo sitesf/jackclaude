@@ -166,24 +166,29 @@ export const HeroSection: React.FC = () => {
             window.dispatchEvent(ev);
           }}
         >
-          {/* Peretele cabinei — interior de avion, noaptea */}
+          {/* Peretele cabinei — panou de avion, lumină de noapte */}
           <div
             className="absolute inset-0"
-            style={{ background: 'radial-gradient(130% 100% at 50% 16%, #232a36 0%, #141922 48%, #090c12 100%)' }}
+            style={{ background: 'radial-gradient(120% 100% at 50% 28%, #7c848f 0%, #565d68 40%, #383e49 74%, #23272f 100%)' }}
           />
-          {/* mood light albastru de cabină (LED de noapte) sub tavan */}
+          {/* mood light albastru cald sub plafonieră */}
           <div
-            className="absolute inset-x-0 top-0 h-1/3 pointer-events-none"
-            style={{ background: 'linear-gradient(180deg, rgba(70,110,180,0.30) 0%, rgba(70,110,180,0) 100%)' }}
+            className="absolute inset-x-0 top-0 h-2/5 pointer-events-none"
+            style={{ background: 'linear-gradient(180deg, rgba(120,165,225,0.38) 0%, rgba(120,165,225,0) 100%)' }}
           />
           {/* lumină de citit, caldă, dinspre tavan */}
           <div
             className="absolute pointer-events-none"
-            style={{ left: '50%', top: '-12%', width: '62%', height: '62%', transform: 'translateX(-50%)', background: 'radial-gradient(ellipse at 50% 0%, rgba(255,218,158,0.18), rgba(255,218,158,0) 70%)' }}
+            style={{ left: '50%', top: '-10%', width: '60%', height: '55%', transform: 'translateX(-50%)', background: 'radial-gradient(ellipse at 50% 0%, rgba(255,224,170,0.22), rgba(255,224,170,0) 70%)' }}
+          />
+          {/* seam-uri orizontale de panou */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-50"
+            style={{ backgroundImage: 'repeating-linear-gradient(180deg, transparent 0, transparent 84px, rgba(255,255,255,0.06) 85px, rgba(0,0,0,0.10) 86px, transparent 87px)' }}
           />
           {/* curbura fuzelajului = vignete laterale */}
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.55) 100%)' }} />
-          <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 200px rgba(0,0,0,0.6)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 26%, rgba(0,0,0,0) 74%, rgba(0,0,0,0.45) 100%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 160px rgba(0,0,0,0.4)' }} />
 
           {/* Grupul geam (se mărește la trigger) */}
           <motion.div initial={{ scale: 1 }} animate={windowCtrl} className="absolute inset-0 flex items-center justify-center">
@@ -193,6 +198,15 @@ export const HeroSection: React.FC = () => {
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               className="relative w-[clamp(220px,62vw,360px)] aspect-[3/4.2]"
             >
+              {/* Adâncitura geamului în panou (window well) */}
+              <div
+                className="absolute -inset-[7%] pointer-events-none"
+                style={{
+                  borderRadius: '46% / 38%',
+                  background: 'linear-gradient(160deg, #5a626e 0%, #434a55 50%, #333944 100%)',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.5), inset 0 3px 8px rgba(255,255,255,0.10), inset 0 -6px 14px rgba(0,0,0,0.45)',
+                }}
+              />
               {/* Sticla + cerul de noapte + stele + luminile orașului + norii */}
               <div
                 className="absolute inset-0 overflow-hidden"
