@@ -28,6 +28,25 @@ const Cloud: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ 
   />
 );
 
+/* Nor care curge continuu prin geam — senzație de avion în zbor */
+const DriftingCloud: React.FC<{
+  left: string;
+  w: string;
+  h: string;
+  duration: number;
+  delay: number;
+}> = ({ left, w, h, duration, delay }) => (
+  <motion.div
+    className="absolute"
+    style={{ left, width: w, height: h }}
+    initial={{ y: '-30%' }}
+    animate={{ y: ['-30%', '130%'] }}
+    transition={{ duration, delay, repeat: Infinity, ease: 'linear' }}
+  >
+    <Cloud className="w-full h-full" />
+  </motion.div>
+);
+
 export const HeroSection: React.FC = () => {
   const [done, setDone] = useState(false);
   const playing = useRef(false);
@@ -103,14 +122,9 @@ export const HeroSection: React.FC = () => {
         <SiteNav overlay />
 
         <div className="relative z-10 flex flex-col items-center text-center pt-28 sm:pt-32 md:pt-36 px-4 sm:px-6">
-          <h1 className="hero-heading font-black uppercase tracking-tight leading-none text-[clamp(3rem,12vw,160px)]">
-            Descoperă
-            <br />
-            <span className="text-[#B600A8]">NEXAS</span>.ro
+          <h1 className="hero-heading font-black uppercase tracking-tight leading-[1.05] text-[clamp(1.7rem,5vw,3.6rem)] max-w-3xl">
+            Agenți AI, automatizări și site-uri care lucrează pentru afacerea ta — <span className="text-[#B600A8]">nonstop</span>.
           </h1>
-          <p className="mt-6 sm:mt-8 text-[#D7E2EA] font-light leading-relaxed opacity-60 text-[clamp(0.85rem,1.6vw,1.25rem)] max-w-md px-2">
-            Agenți AI, automatizări și site-uri care lucrează pentru afacerea ta — nonstop.
-          </p>
         </div>
 
         <div className="absolute left-4 right-4 sm:right-auto sm:left-6 md:left-10 bottom-16 sm:bottom-8 md:bottom-10 z-10 max-w-sm">
@@ -173,12 +187,14 @@ export const HeroSection: React.FC = () => {
                 style={{ borderRadius: '46% / 38%', background: 'linear-gradient(180deg, #5b97d6 0%, #92bfe8 45%, #cfe2f3 100%)' }}
               >
                 <motion.div initial={{ x: 0 }} animate={cloudLeftCtrl} className="absolute inset-0">
-                  <Cloud className="absolute w-[70%] h-[22%] left-[-10%] top-[24%]" />
-                  <Cloud className="absolute w-[55%] h-[18%] left-[2%] top-[58%]" />
+                  <DriftingCloud left="-12%" w="70%" h="22%" duration={7} delay={0} />
+                  <DriftingCloud left="-4%" w="50%" h="17%" duration={10} delay={2.5} />
+                  <DriftingCloud left="6%" w="40%" h="14%" duration={8.5} delay={5} />
                 </motion.div>
                 <motion.div initial={{ x: 0 }} animate={cloudRightCtrl} className="absolute inset-0">
-                  <Cloud className="absolute w-[65%] h-[20%] right-[-12%] top-[40%]" />
-                  <Cloud className="absolute w-[45%] h-[16%] right-[4%] top-[12%]" />
+                  <DriftingCloud left="45%" w="65%" h="20%" duration={9} delay={1.2} />
+                  <DriftingCloud left="58%" w="44%" h="16%" duration={11} delay={3.8} />
+                  <DriftingCloud left="50%" w="36%" h="13%" duration={7.5} delay={6} />
                 </motion.div>
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
