@@ -18,13 +18,6 @@ body,
   width: 100%;
 }
 
-/* Pe desktop, întreg site-ul afișat la 90% (la 100% rezoluție pare prea mare) */
-@media (min-width: 1024px) {
-  body {
-    zoom: 0.9;
-  }
-}
-
 .hero-heading {
   background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
   -webkit-background-clip: text;
