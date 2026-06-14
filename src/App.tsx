@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { SiteFooter } from './components/SiteFooter';
-import { SiteNav } from './components/SiteNav';
-import { HeroScrub } from './components/ui/hero-scrub';
 import { CookieConsent } from './components/CookieConsent';
 import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
@@ -52,20 +51,7 @@ function App() {
 
     return (
       <div className="w-full overflow-x-clip bg-[#0C0C0C]">
-        <div className="relative">
-          <SiteNav overlay />
-          <HeroScrub
-            frameCount={300}
-            frameUrl={(i) => `${import.meta.env.BASE_URL}frames/${String(i + 1).padStart(4, '0')}.webp`}
-            titleTop="LAMBORGHINI"
-            titleBottom="TEMERARIO"
-            accentHex="#D4A017"
-            bgClassName="bg-black"
-            ctaText="DISCOVER MORE →"
-            ctaHref="https://nexas.ro"
-            defaultAspect={16 / 9}
-          />
-        </div>
+        <HeroSection />
         <AboutSection />
         <ServicesSection />
         <ProjectsSection />
