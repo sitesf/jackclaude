@@ -9,7 +9,6 @@ import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
 import { ProjectPage } from './pages/ProjectPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
-import { TemerarioPage } from './pages/TemerarioPage';
 import { getProject } from './data/projects';
 
 const getRoute = () => window.location.hash.replace(/^#/, '') || '/';
@@ -42,7 +41,6 @@ function App() {
     if (route === '/confidentialitate' || route === '/privacy') return <PrivacyPage />;
     if (route === '/termeni') return <TermsPage />;
     if (route === '/cookies') return <CookiesPage />;
-    if (route === '/temerario') return <TemerarioPage />;
 
     if (route.startsWith('/proiect/')) {
       const project = getProject(route.slice('/proiect/'.length));
