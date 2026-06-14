@@ -1,16 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
-import { ChevronDown } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
-/* Tunables                                                            */
+/* Premium cinematic showcase                                          */
+/*                                                                     */
+/* The supplied 300-frame sequence is a cross-dissolve montage whose   */
+/* transition frames contain baked-in "ghosting" (two overlapping      */
+/* cars), which reads as jitter no matter how it is played back.       */
+/* So instead of scrubbing through every frame, we hand-pick the       */
+/* cleanest hero stills and present them with a slow continuous zoom    */
+/* (Ken Burns) and elegant cross-fades — a real, buttery-smooth        */
+/* camera move built from GPU transforms.                              */
 /* ------------------------------------------------------------------ */
-const START_FRAME = 34;       // 0-indexed -> 0035.webp = clean lateral hero shot
-const PLAY_DURATION = 14;     // seconds for the full cinematic (longer = slower zoom)
-const INITIAL_BATCH = 20;
-const BATCH_SIZE = 20;
-const BATCH_INTERVAL = 80;
-const FALLBACK_MS = 4500;
+
+// Curated clean frames (0-indexed): lateral, 3/4, cockpit, seats, dashboard.
+const CURATED = [34, 54, 189, 229, 269];
+const SLIDE = 5;     // seconds each shot is the hero
+const FADE = 1.4;    // cross-fade length (overlap between shots)
+const ZOOM_FROM = 1.06;
+const ZOOM_TO = 1.22;
 
 export type HeroScrubProps = {
   frameCount: number;
@@ -23,9 +31,6 @@ export type HeroScrubProps = {
   ctaHref?: string;
   defaultAspect?: number;
 };
-
-const clamp = (v: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, v));
-const norm = (p: number, a: number, b: number) => clamp((p - a) / (b - a));
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -48,220 +53,92 @@ export function HeroScrub({
   ctaHref = "https://nexas.ro",
 }: HeroScrubProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const layersRef = useRef<(HTMLDivElement | null)[]>([]);
   const ctaRef = useRef<HTMLDivElement>(null);
-  const ctaBtnRef = useRef<HTMLAnchorElement>(null);
-  const hintRef = useRef<HTMLDivElement>(null);
-
-  const imagesRef = useRef<HTMLImageElement[]>([]);
-  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-  const lastDrawnRef = useRef<number>(-1);
-
-  const startIdx = Math.min(START_FRAME, Math.max(0, frameCount - 1));
-
-  const [ready, setReady] = useState(false);
-  const [framesOk, setFramesOk] = useState(frameCount > 0);
   const reduced = usePrefersReducedMotion();
 
+  // Resolve the hero frames against the available range, with a fallback
+  // to a few evenly-spaced frames if the curated picks don't exist.
+  const frames = useMemo(() => {
+    const picks = CURATED.filter((i) => i < frameCount);
+    if (picks.length >= 2) return picks;
+    if (frameCount <= 0) return [];
+    return [0, 0.4, 0.7].map((p) => Math.min(frameCount - 1, Math.floor(p * frameCount)));
+  }, [frameCount]);
+
   /* ---------------------------------------------------------------- */
-  /* Image loading — load forward from the lateral start frame first. */
+  /* The cinematic loop                                               */
   /* ---------------------------------------------------------------- */
   useEffect(() => {
-    if (frameCount <= 0) {
-      setFramesOk(false);
+    if (frames.length === 0) return;
+    const layers = layersRef.current.filter(Boolean) as HTMLDivElement[];
+    if (layers.length === 0) return;
+
+    // Reduced motion: just reveal the first hero shot, no animation.
+    if (reduced) {
+      gsap.set(layers, { opacity: 0, scale: 1 });
+      gsap.set(layers[0], { opacity: 1 });
       return;
     }
-    let cancelled = false;
-    let errored = 0;
-    const images: HTMLImageElement[] = new Array(frameCount);
-    imagesRef.current = images;
 
-    // Priority order: start frame → end, then backfill the earlier frames.
-    const order: number[] = [];
-    for (let i = startIdx; i < frameCount; i++) order.push(i);
-    for (let i = startIdx - 1; i >= 0; i--) order.push(i);
-
-    const drawInitial = (img: HTMLImageElement) => {
-      const canvas = canvasRef.current;
-      if (canvas && img.naturalWidth && img.naturalHeight) {
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        const ctx = canvas.getContext("2d");
-        ctxRef.current = ctx;
-        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-        lastDrawnRef.current = startIdx;
-      }
-      setReady(true);
-    };
-
-    const onErr = () => {
-      errored++;
-      if (!cancelled && errored >= 5) setFramesOk(false);
-    };
-
-    const loadOne = (i: number, priority: boolean) => {
-      const img = new window.Image();
-      img.decoding = "async";
-      if (priority) {
-        (img as HTMLImageElement & { fetchPriority?: string }).fetchPriority = "high";
-      }
-      img.onerror = onErr;
-      if (i === startIdx) img.onload = () => { if (!cancelled) drawInitial(img); };
-      img.src = frameUrl(i);
-      images[i] = img;
-    };
-
-    let pos = 0;
-    const initial = Math.min(INITIAL_BATCH, order.length);
-    for (; pos < initial; pos++) loadOne(order[pos], true);
-
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    const loadNext = () => {
-      if (cancelled) return;
-      const end = Math.min(order.length, pos + BATCH_SIZE);
-      for (; pos < end; pos++) loadOne(order[pos], false);
-      if (pos < order.length) timer = setTimeout(loadNext, BATCH_INTERVAL);
-    };
-    timer = setTimeout(loadNext, BATCH_INTERVAL);
-
-    const fallback = window.setTimeout(() => {
-      if (!cancelled && !images[startIdx]?.complete) setFramesOk(false);
-    }, FALLBACK_MS);
-
-    return () => {
-      cancelled = true;
-      if (timer) clearTimeout(timer);
-      window.clearTimeout(fallback);
-    };
-  }, [frameCount, frameUrl, startIdx]);
-
-  /* ---------------------------------------------------------------- */
-  /* Reduced motion: just show the lateral frame.                     */
-  /* ---------------------------------------------------------------- */
-  useEffect(() => {
-    if (!reduced || !ready) return;
-    const img = imagesRef.current[startIdx];
-    const canvas = canvasRef.current;
-    if (img && canvas && img.complete) {
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      canvas.getContext("2d")?.drawImage(img, 0, 0, canvas.width, canvas.height);
-    }
-  }, [reduced, ready, startIdx]);
-
-  /* ---------------------------------------------------------------- */
-  /* Entry fade                                                       */
-  /* ---------------------------------------------------------------- */
-  useEffect(() => {
-    if (reduced) return;
     const ctx = gsap.context(() => {
-      gsap.from(bgRef.current, { opacity: 0, duration: 1.2, ease: "power2.out" });
-      gsap.from(canvasRef.current, { opacity: 0, duration: 1.4, ease: "power2.out", delay: 0.2 });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, [reduced]);
+      gsap.set(sectionRef.current, { opacity: 0 });
+      gsap.to(sectionRef.current, { opacity: 1, duration: 1.2, ease: "power2.out" });
 
-  /* ---------------------------------------------------------------- */
-  /* Cinematic playback — starts on first scroll / touch only.        */
-  /* Plays frames at a constant film-like cadence (no scroll scrub),  */
-  /* so the motion is smooth regardless of how the user scrolls.      */
-  /* ---------------------------------------------------------------- */
-  useEffect(() => {
-    if (reduced || !ready || !framesOk) return;
+      gsap.set(layers, { opacity: 0, scale: ZOOM_FROM, transformOrigin: "50% 50%" });
 
-    const isLoaded = (i: number) => {
-      const img = imagesRef.current[i];
-      return !!img && img.complete && img.naturalWidth > 0;
-    };
+      const n = layers.length;
+      const tl = gsap.timeline({ repeat: -1 });
 
-    const drawFrame = (index: number) => {
-      const canvas = canvasRef.current;
-      const ctx2 = ctxRef.current ?? canvas?.getContext("2d") ?? null;
-      if (!canvas || !ctx2) return;
-      ctxRef.current = ctx2;
-      let useIdx = index;
-      if (!isLoaded(useIdx)) {
-        let found = -1;
-        for (let d = 1; d < frameCount; d++) {
-          if (useIdx - d >= 0 && isLoaded(useIdx - d)) { found = useIdx - d; break; }
-          if (useIdx + d < frameCount && isLoaded(useIdx + d)) { found = useIdx + d; break; }
-        }
-        if (found === -1) return;
-        useIdx = found;
-      }
-      if (lastDrawnRef.current === useIdx) return;
-      const img = imagesRef.current[useIdx];
-      if (!img) return;
-      ctx2.drawImage(img, 0, 0, canvas.width, canvas.height);
-      lastDrawnRef.current = useIdx;
-    };
-
-    const setCtaO = ctaText
-      ? (gsap.quickSetter(ctaRef.current, "opacity") as (v: number) => void)
-      : null;
-
-    let started = false;
-    let finished = false;
-    let tween: gsap.core.Tween | null = null;
-    const frameObj = { f: startIdx };
-
-    const preventTouch = (e: TouchEvent) => { if (!finished) e.preventDefault(); };
-    const lock = () => {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("touchmove", preventTouch, { passive: false });
-    };
-    const unlock = () => {
-      finished = true;
-      document.body.style.overflow = "";
-      window.removeEventListener("touchmove", preventTouch);
-    };
-
-    lock();
-    drawFrame(startIdx);
-
-    const start = () => {
-      if (started) return;
-      started = true;
-      hintRef.current && gsap.to(hintRef.current, { opacity: 0, duration: 0.4 });
-
-      tween = gsap.to(frameObj, {
-        f: frameCount - 1,
-        duration: PLAY_DURATION,
-        ease: "none",
-        onUpdate: () => {
-          drawFrame(Math.round(frameObj.f));
-          if (setCtaO) {
-            const p = norm(frameObj.f, startIdx, frameCount - 1);
-            setCtaO(norm(p, 0.9, 1));
-          }
-        },
-        onComplete: () => {
-          unlock();
-          const btn = ctaBtnRef.current;
-          if (btn) btn.style.pointerEvents = "auto";
-        },
+      layers.forEach((el, i) => {
+        const start = i * SLIDE;
+        // continuous slow zoom across the whole time the shot is visible
+        tl.fromTo(
+          el,
+          { scale: ZOOM_FROM },
+          { scale: ZOOM_TO, duration: SLIDE + FADE, ease: "none" },
+          start
+        );
+        // fade in
+        tl.fromTo(
+          el,
+          { opacity: 0 },
+          { opacity: 1, duration: FADE, ease: "power1.inOut" },
+          start
+        );
+        // fade out (the next shot fades in over this, i.e. a cross-fade)
+        tl.to(el, { opacity: 0, duration: FADE, ease: "power1.inOut" }, start + SLIDE);
       });
-    };
 
-    const onWheel = () => start();
-    const onTouchStart = () => start();
-    const onKey = (e: KeyboardEvent) => {
-      if (["ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) start();
-    };
+      // Seamless loop: first shot fades back in as the last one fades out.
+      tl.fromTo(
+        layers[0],
+        { opacity: 0, scale: ZOOM_FROM },
+        { opacity: 1, duration: FADE, ease: "power1.inOut" },
+        n * SLIDE
+      );
 
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("keydown", onKey);
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 1, ease: "power2.out", delay: 1.6 }
+        );
+      }
+    }, sectionRef);
 
-    return () => {
-      tween?.kill();
-      unlock();
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [ready, framesOk, reduced, frameCount, startIdx, ctaText]);
+    return () => ctx.revert();
+  }, [frames, reduced]);
+
+  if (frames.length === 0) {
+    return (
+      <section
+        className={`relative h-[100svh] w-full ${bgClassName}`}
+        style={{ backgroundColor: accentHex }}
+        aria-label="Lamborghini Temerario showcase"
+      />
+    );
+  }
 
   return (
     <section
@@ -269,68 +146,47 @@ export function HeroScrub({
       className={`relative h-[100svh] w-full overflow-hidden text-white ${bgClassName}`}
       aria-label="Cinematic Lamborghini Temerario showcase"
     >
-      {/* background fill (also the static fallback) */}
-      <div
-        ref={bgRef}
-        aria-hidden
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundColor: framesOk ? "#000" : accentHex,
-          backgroundImage: !framesOk ? `url(${frameUrl(startIdx)})` : undefined,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
-
-      {/* full-bleed cinematic canvas */}
-      {framesOk && (
-        <canvas
-          ref={canvasRef}
-          aria-hidden
-          className="absolute inset-0 z-10 h-full w-full object-cover"
-        />
-      )}
-
-      {/* loader */}
-      {!ready && framesOk && !reduced && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black">
-          <div
-            className="h-10 w-10 animate-spin rounded-full border-2 border-white/20"
-            style={{ borderTopColor: accentHex }}
-          />
-        </div>
-      )}
-
-      {/* scroll / touch hint (icon only, no text on image) */}
-      {ready && framesOk && !reduced && (
+      {/* stacked hero stills (cross-fade + slow zoom) */}
+      {frames.map((frameIdx, i) => (
         <div
-          ref={hintRef}
+          key={frameIdx}
+          ref={(el) => (layersRef.current[i] = el)}
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center"
-        >
-          <ChevronDown className="h-7 w-7 animate-bounce text-white/80" />
-        </div>
-      )}
+          className="absolute inset-0 z-0 will-change-transform"
+          style={{
+            backgroundImage: `url(${frameUrl(frameIdx)})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0,
+          }}
+        />
+      ))}
 
-      {/* optional CTA — fades in over the dark tail of the sequence */}
+      {/* preload the hero stills */}
+      <div className="hidden">
+        {frames.map((frameIdx) => (
+          <img key={frameIdx} src={frameUrl(frameIdx)} alt="" aria-hidden loading="eager" />
+        ))}
+      </div>
+
+      {/* optional CTA */}
       {ctaText && (
         <div
           ref={ctaRef}
-          className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center will-change-[opacity]"
+          className="absolute inset-x-0 bottom-12 z-30 flex justify-center"
           style={{ opacity: 0 }}
         >
           <a
-            ref={ctaBtnRef}
             href={ctaHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="hero-cta pointer-events-none inline-block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
+            className="hero-cta inline-block focus:outline-none focus-visible:ring-4 focus-visible:ring-white/40"
             style={{
               background: accentHex,
               color: "#000",
               fontWeight: 700,
               fontSize: "1.1rem",
-              padding: "18px 48px",
+              padding: "16px 44px",
               borderRadius: "9999px",
             }}
           >
@@ -345,18 +201,18 @@ export function HeroScrub({
         className="pointer-events-none absolute inset-0 z-20"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.55) 100%)",
+            "radial-gradient(ellipse at center, transparent 56%, rgba(0,0,0,0.6) 100%)",
         }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 z-20 h-40"
-        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.65), transparent)" }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-40"
-        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-44"
+        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75), transparent)" }}
       />
     </section>
   );
