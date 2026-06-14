@@ -91,8 +91,7 @@ export const ChatBubbleDoodle: React.FC<{ className?: string }> = ({ className }
             fill={t.core}
             stroke="white"
             strokeWidth="1.5"
-            style={{ filter: `drop-shadow(0 0 6px ${t.core})` }}
-            animate={{ opacity: [0.3, 1, 0.3], scale: [0.75, 1.15, 0.75] }}
+            animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ duration: 1.3, repeat: Infinity, delay: i * 0.28, ease: 'easeInOut' }}
           />
         ))}
@@ -194,7 +193,6 @@ export const SeoDoodle: React.FC<{ className?: string }> = ({ className }) => {
             width="10"
             rx="5"
             fill={t.core}
-            style={{ filter: `drop-shadow(0 0 6px ${t.core})` }}
             initial={{ y: 76 - bar.h, height: bar.h }}
             animate={{ height: [bar.h * 0.4, bar.h, bar.h * 0.4], y: [76 - bar.h * 0.4, 76 - bar.h, 76 - bar.h * 0.4] }}
             transition={{ duration: 2.8, repeat: Infinity, delay: bar.delay, ease: 'easeInOut' }}

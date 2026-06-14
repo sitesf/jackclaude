@@ -69,21 +69,20 @@ export const OrbDecor: React.FC = () => (
           cy="74"
           r="34"
           fill="url(#ob-core)"
-          animate={{ opacity: [0.55, 0.9, 0.55], scale: [0.92, 1.04, 0.92] }}
+          animate={{ opacity: [0.55, 0.9, 0.55] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ transformOrigin: '70px 74px' }}
         />
-        {/* reflex care alunecă pe sticlă */}
+        {/* reflex pe sticlă — pulsează doar opacitatea (ieftin pe mobil) */}
         <motion.ellipse
+          cx="56"
           cy="60"
           rx="16"
           ry="46"
           fill="url(#ob-shine)"
-          opacity="0.5"
           filter="url(#ob-blur)"
-          transform="rotate(28 70 68)"
-          animate={{ cx: [26, 120, 26] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+          transform="rotate(28 56 60)"
+          animate={{ opacity: [0.25, 0.55, 0.25] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         />
       </g>
 
@@ -187,7 +186,7 @@ export const TorusDecor: React.FC = () => (
         fill="none"
         strokeLinecap="round"
         filter="url(#tr-blur)"
-        animate={{ opacity: [0.4, 0.95, 0.4], pathLength: [0.5, 1, 0.5] }}
+        animate={{ opacity: [0.4, 0.95, 0.4] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
       <circle cx="126" cy="64" r="4" fill="#FFFFFF" opacity="0.7" />

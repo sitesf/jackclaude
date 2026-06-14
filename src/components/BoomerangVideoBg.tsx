@@ -108,6 +108,7 @@ export default function BoomerangVideoBg({ src, className }: Props) {
     let last = performance.now();
     const interval = 1000 / 30;
     let rafId = 0;
+    let running = false;
 
     const render = (now: number) => {
       if (now - last >= interval) {
@@ -124,8 +125,38 @@ export default function BoomerangVideoBg({ src, className }: Props) {
       }
       rafId = requestAnimationFrame(render);
     };
-    rafId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(rafId);
+
+    const start = () => {
+      if (running) return;
+      running = true;
+      last = performance.now();
+      rafId = requestAnimationFrame(render);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(rafId);
+    };
+
+    // Rulează doar când canvasul e pe ecran și tab-ul e activ
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !document.hidden) start();
+        else stop();
+      },
+      { threshold: 0.01 },
+    );
+    io.observe(canvas);
+
+    const onVisibility = () => {
+      if (document.hidden) stop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      stop();
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
   }, [framesReady]);
 
   return (
