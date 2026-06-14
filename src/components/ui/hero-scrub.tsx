@@ -234,6 +234,60 @@ export function HeroScrub({
     return () => ctx.revert();
   }, [ready, framesOk, reduced, frameCount, ctaText]);
 
+  /* ---------------------------------------------------------------- */
+  /* Auto-play: gently auto-scroll through the sequence on load.      */
+  /* Any touch / wheel / key / pointer hands control back to user.    */
+  /* ---------------------------------------------------------------- */
+  useEffect(() => {
+    if (reduced || !ready || !framesOk) return;
+    const section = sectionRef.current;
+    if (!section) return;
+    // Only auto-play when the visitor is at the very top of the page.
+    if (window.scrollY > window.innerHeight * 0.4) return;
+
+    let killed = false;
+    const proxy = { y: window.scrollY };
+    // Drive scroll up to ~92% of the section (end of the car sequence).
+    const targetY = () =>
+      section.offsetTop + (section.offsetHeight - window.innerHeight) * FRAME_END;
+
+    const tween = gsap.to(proxy, {
+      y: targetY,
+      duration: 15,
+      ease: "power1.inOut",
+      delay: 1.1,
+      onUpdate: () => {
+        if (!killed) window.scrollTo(0, proxy.y);
+      },
+    });
+
+    const stop = () => {
+      if (killed) return;
+      killed = true;
+      tween.kill();
+      remove();
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", " ", "Home", "End"].includes(e.key)) stop();
+    };
+    const remove = () => {
+      window.removeEventListener("wheel", stop);
+      window.removeEventListener("touchstart", stop);
+      window.removeEventListener("pointerdown", stop);
+      window.removeEventListener("keydown", onKey);
+    };
+    window.addEventListener("wheel", stop, { passive: true });
+    window.addEventListener("touchstart", stop, { passive: true });
+    window.addEventListener("pointerdown", stop, { passive: true });
+    window.addEventListener("keydown", onKey);
+
+    return () => {
+      killed = true;
+      tween.kill();
+      remove();
+    };
+  }, [ready, framesOk, reduced]);
+
   return (
     <section
       ref={sectionRef}
