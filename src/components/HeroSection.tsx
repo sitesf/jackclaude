@@ -21,7 +21,7 @@ const Cloud: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ 
   <div
     className={className}
     style={{
-      background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(255,255,255,0.95), rgba(255,255,255,0))',
+      background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(150,175,210,0.35), rgba(150,175,210,0))',
       filter: 'blur(8px)',
       ...style,
     }}
@@ -75,7 +75,7 @@ export const HeroSection: React.FC = () => {
       cloudRightCtrl.start({ x: 520, opacity: 0.4, transition: { duration: 1.7, ease: 'easeIn' } });
       introTextCtrl.start({ opacity: 0, y: 14, transition: { duration: 0.4 } });
       // Flash alb la „spargerea" geamului
-      flashCtrl.start({ opacity: [0, 0.85, 0], transition: { duration: 1.1, delay: 0.95, times: [0, 0.5, 1] } });
+      flashCtrl.start({ opacity: [0, 0.55, 0], transition: { duration: 1.1, delay: 0.95, times: [0, 0.5, 1] } });
       // Dezvăluie hero-ul
       heroCtrl.start({ opacity: 1, scale: 1, transition: { duration: 0.9, delay: 1.2, ease: 'easeOut' } });
       // Cabina + geamul dispar
@@ -166,12 +166,24 @@ export const HeroSection: React.FC = () => {
             window.dispatchEvent(ev);
           }}
         >
-          {/* Peretele cabinei */}
+          {/* Peretele cabinei — interior de avion, noaptea */}
           <div
             className="absolute inset-0"
-            style={{ background: 'radial-gradient(120% 90% at 50% 40%, #efece7 0%, #dcd8d2 45%, #b9b4ad 100%)' }}
+            style={{ background: 'radial-gradient(130% 100% at 50% 16%, #232a36 0%, #141922 48%, #090c12 100%)' }}
           />
-          <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 160px rgba(0,0,0,0.35)' }} />
+          {/* mood light albastru de cabină (LED de noapte) sub tavan */}
+          <div
+            className="absolute inset-x-0 top-0 h-1/3 pointer-events-none"
+            style={{ background: 'linear-gradient(180deg, rgba(70,110,180,0.30) 0%, rgba(70,110,180,0) 100%)' }}
+          />
+          {/* lumină de citit, caldă, dinspre tavan */}
+          <div
+            className="absolute pointer-events-none"
+            style={{ left: '50%', top: '-12%', width: '62%', height: '62%', transform: 'translateX(-50%)', background: 'radial-gradient(ellipse at 50% 0%, rgba(255,218,158,0.18), rgba(255,218,158,0) 70%)' }}
+          />
+          {/* curbura fuzelajului = vignete laterale */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(0,0,0,0.55) 100%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 200px rgba(0,0,0,0.6)' }} />
 
           {/* Grupul geam (se mărește la trigger) */}
           <motion.div initial={{ scale: 1 }} animate={windowCtrl} className="absolute inset-0 flex items-center justify-center">
@@ -181,11 +193,25 @@ export const HeroSection: React.FC = () => {
               transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
               className="relative w-[clamp(220px,62vw,360px)] aspect-[3/4.2]"
             >
-              {/* Sticla + cerul + norii */}
+              {/* Sticla + cerul de noapte + stele + luminile orașului + norii */}
               <div
                 className="absolute inset-0 overflow-hidden"
-                style={{ borderRadius: '46% / 38%', background: 'linear-gradient(180deg, #5b97d6 0%, #92bfe8 45%, #cfe2f3 100%)' }}
+                style={{ borderRadius: '46% / 38%', background: 'linear-gradient(180deg, #03050b 0%, #060b18 45%, #0c1730 78%, #1c2138 100%)' }}
               >
+                {/* stele */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      'radial-gradient(1px 1px at 20% 28%, #fff, transparent), radial-gradient(1px 1px at 62% 18%, #cfe0ff, transparent), radial-gradient(1px 1px at 80% 38%, #fff, transparent), radial-gradient(1.5px 1.5px at 35% 52%, #fff, transparent), radial-gradient(1px 1px at 72% 60%, #dde6ff, transparent), radial-gradient(1px 1px at 14% 64%, #fff, transparent)',
+                    opacity: 0.85,
+                  }}
+                />
+                {/* luminile orașului de jos (seară) */}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
+                  style={{ background: 'linear-gradient(0deg, rgba(255,150,60,0.40) 0%, rgba(255,150,60,0.08) 50%, transparent 100%)' }}
+                />
                 <motion.div initial={{ x: 0 }} animate={cloudLeftCtrl} className="absolute inset-0">
                   <DriftingCloud left="-12%" w="70%" h="22%" duration={7} delay={0} />
                   <DriftingCloud left="-4%" w="50%" h="17%" duration={10} delay={2.5} />
@@ -200,7 +226,7 @@ export const HeroSection: React.FC = () => {
                   className="absolute inset-0 pointer-events-none"
                   animate={{ opacity: [0.25, 0.5, 0.25] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                  style={{ background: 'linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.55) 48%, transparent 60%)' }}
+                  style={{ background: 'linear-gradient(120deg, transparent 32%, rgba(200,220,255,0.18) 48%, transparent 60%)' }}
                 />
               </div>
 
@@ -209,13 +235,13 @@ export const HeroSection: React.FC = () => {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   borderRadius: '46% / 38%',
-                  border: '16px solid #e7e4df',
-                  boxShadow: '0 18px 50px rgba(0,0,0,0.35), inset 0 0 0 6px #cfcbc4, inset 0 6px 18px rgba(0,0,0,0.25)',
+                  border: '16px solid #2b2f37',
+                  boxShadow: '0 18px 50px rgba(0,0,0,0.6), inset 0 0 0 6px #1a1d23, inset 0 6px 18px rgba(0,0,0,0.5), inset 0 0 30px rgba(70,110,180,0.12)',
                 }}
               />
               <div
                 className="absolute left-1/2 -translate-x-1/2 bottom-[5%] w-3 h-3 rounded-full"
-                style={{ background: '#9a958d', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.5)' }}
+                style={{ background: '#3a3e46', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.7)' }}
               />
             </motion.div>
           </motion.div>
@@ -226,10 +252,10 @@ export const HeroSection: React.FC = () => {
             animate={introTextCtrl}
             className="absolute inset-x-0 bottom-10 sm:bottom-14 flex flex-col items-center text-center px-6 z-10"
           >
-            <h2 className="font-black uppercase tracking-tight leading-none text-[#1b1b1b] text-[clamp(1.6rem,6vw,3.2rem)] drop-shadow-sm">
+            <h2 className="font-black uppercase tracking-tight leading-none text-white text-[clamp(1.6rem,6vw,3.2rem)] drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
               Descoperă <span className="text-[#B600A8]">nexas.ro</span>
             </h2>
-            <div className="mt-4 flex flex-col items-center gap-1 text-[#3a3a3a]">
+            <div className="mt-4 flex flex-col items-center gap-1 text-white/70">
               <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em]">Scroll sau atinge</span>
               <motion.div
                 animate={{ y: [0, 8, 0], opacity: [0.4, 1, 0.4] }}
@@ -244,7 +270,7 @@ export const HeroSection: React.FC = () => {
 
       {/* Flash alb la „spargerea" geamului */}
       {!done && (
-        <motion.div initial={{ opacity: 0 }} animate={flashCtrl} className="absolute inset-0 z-30 bg-white pointer-events-none" />
+        <motion.div initial={{ opacity: 0 }} animate={flashCtrl} className="absolute inset-0 z-30 pointer-events-none" style={{ backgroundColor: '#ffe9c2' }} />
       )}
     </section>
   );
