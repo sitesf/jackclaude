@@ -3,10 +3,10 @@ import { FadeIn } from './FadeIn';
 import { ChatBubbleDoodle, GearsDoodle, BrowserDoodle, SeoDoodle } from './ServiceDoodles';
 
 const doodles = [
-  { Component: ChatBubbleDoodle, sizes: 'w-[60px] sm:w-[130px] md:w-[170px]', position: 'top-[8%] left-[1%] sm:left-[3%] md:left-[5%]', delay: 0.1, x: -80 },
-  { Component: GearsDoodle, sizes: 'w-[70px] sm:w-[150px] md:w-[190px]', position: 'top-[8%] right-[1%] sm:right-[3%] md:right-[5%]', delay: 0.2, x: 80 },
-  { Component: BrowserDoodle, sizes: 'w-[70px] sm:w-[150px] md:w-[190px]', position: 'bottom-[8%] left-[1%] sm:left-[4%] md:left-[6%]', delay: 0.25, x: -80 },
-  { Component: SeoDoodle, sizes: 'w-[60px] sm:w-[130px] md:w-[170px]', position: 'bottom-[8%] right-[1%] sm:right-[4%] md:right-[6%]', delay: 0.35, x: 80 },
+  { Component: ChatBubbleDoodle, sizes: 'w-[82px] sm:w-[130px] md:w-[170px]', position: 'top-[7%] left-[1%] sm:left-[3%] md:left-[5%]', delay: 0.1, x: -80 },
+  { Component: GearsDoodle, sizes: 'w-[88px] sm:w-[150px] md:w-[190px]', position: 'top-[7%] right-[1%] sm:right-[3%] md:right-[5%]', delay: 0.2, x: 80 },
+  { Component: BrowserDoodle, sizes: 'w-[88px] sm:w-[150px] md:w-[190px]', position: 'bottom-[7%] left-[1%] sm:left-[4%] md:left-[6%]', delay: 0.25, x: -80 },
+  { Component: SeoDoodle, sizes: 'w-[82px] sm:w-[130px] md:w-[170px]', position: 'bottom-[7%] right-[1%] sm:right-[4%] md:right-[6%]', delay: 0.35, x: 80 },
 ];
 
 const services = [

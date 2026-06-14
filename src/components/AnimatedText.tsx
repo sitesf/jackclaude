@@ -6,32 +6,33 @@ interface AnimatedTextProps {
   className?: string;
 }
 
+/**
+ * Text care se „albește" la scroll, pe cuvinte (nu pe caractere) — mult mai
+ * puține elemente animate, deci fluid pe telefon. Albirea se completează rapid,
+ * cât timp formele decorative intră în ecran.
+ */
 export const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className = '' }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 0.8', 'end 0.2'],
+    // interval scurt: albirea e gata când secțiunea e bine intrată în ecran
+    offset: ['start 0.85', 'start 0.35'],
   });
 
-  const characters = text.split('');
+  const words = text.split(' ');
+  const FLOOR = 0.3; // gri de pornire (mai albit decât înainte)
 
   return (
     <div ref={containerRef} className={className}>
-      {characters.map((char, i) => {
-        const charScrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
-        const charIndex = i / characters.length;
-
-        const opacity = useTransform(charScrollProgress, (progress) => {
-          const threshold = charIndex;
-          if (progress < threshold) {
-            return 0.2;
-          }
-          return Math.min(1, 0.2 + (progress - threshold) * 5);
-        });
-
+      {words.map((word, i) => {
+        const threshold = (i / words.length) * 0.85;
+        const opacity = useTransform(scrollYProgress, (p) =>
+          p < threshold ? FLOOR : Math.min(1, FLOOR + (p - threshold) * 7),
+        );
         return (
-          <motion.span key={i} style={{ opacity }}>
-            {char}
+          <motion.span key={i} style={{ opacity, display: 'inline-block', willChange: 'opacity' }}>
+            {word}
+            {i < words.length - 1 ? ' ' : ''}
           </motion.span>
         );
       })}
