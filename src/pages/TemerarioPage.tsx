@@ -9,7 +9,7 @@ export function TemerarioPage() {
     <main className="bg-black">
       <HeroScrub
         frameCount={300}
-        frameUrl={(i) => `/frames/${String(i + 1).padStart(4, "0")}.webp`}
+        frameUrl={(i) => `${import.meta.env.BASE_URL}frames/${String(i + 1).padStart(4, "0")}.webp`}
         titleTop="LAMBORGHINI"
         titleBottom="TEMERARIO"
         accentHex="#D4A017"
