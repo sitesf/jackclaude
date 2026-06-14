@@ -101,63 +101,32 @@ export const NeoVisual: React.FC = () => (
   </Frame>
 );
 
-/* ── HR: dashboard cu sidebar și KPI ── */
+/* ── HR: dashboard real (demo live al platformei) ── */
+export const HR_DEMO_URL = '/jackclaude/hr-demo.html';
+
 export const HrVisual: React.FC = () => (
-  <Frame
-    style={{
-      background:
-        'radial-gradient(circle at 10% 8%, rgba(93,169,255,.16), transparent 35%), linear-gradient(135deg,#121827,#171f33 50%,#1d263d)',
-    }}
-  >
-    <div className="w-full h-full flex p-4 sm:p-5 gap-3">
-      <div className="hidden sm:flex w-[26%] flex-col gap-1.5 rounded-2xl bg-[#101825] border border-white/10 p-3">
-        <div className="text-white font-black text-[11px] mb-2">
-          NEXAS <span className="text-[#7cc4ff]">HR</span>
-        </div>
-        {['Dashboard', 'Candidați', 'Statistici', 'Posturi', 'Calendar'].map((item, i) => (
-          <div
-            key={item}
-            className={`rounded-lg px-2 py-1.5 text-[8px] font-bold ${i === 0 ? 'text-white' : 'text-white/40'}`}
-            style={i === 0 ? { background: 'rgba(93,169,255,.14)' } : undefined}
-          >
-            {item}
-          </div>
-        ))}
-      </div>
-      <div className="flex-1 flex flex-col gap-2.5 min-w-0">
-        <div className="text-white font-black text-[11px]">Bun venit înapoi 👋</div>
-        <div className="grid grid-cols-2 gap-2">
-          {[
-            ['128', 'Candidați'],
-            ['14', 'Interviuri'],
-            ['6', 'Posturi'],
-            ['92%', 'Potrivire'],
-          ].map(([v, l]) => (
-            <div key={l} className="rounded-xl bg-[#1a2238] border border-white/10 px-3 py-2.5">
-              <div className="text-[6.5px] font-black text-white/40 uppercase tracking-widest">{l}</div>
-              <div className="text-white text-base font-black leading-tight">{v}</div>
-            </div>
-          ))}
-        </div>
-        <div className="flex-1 rounded-xl bg-[#1a2238] border border-white/10 p-3 flex flex-col gap-2 justify-center">
-          {[
-            ['Maria P.', 95, '#22c7b8'],
-            ['Andrei V.', 82, '#5da9ff'],
-            ['Ioana D.', 64, '#f59e0b'],
-          ].map(([name, score, color]) => (
-            <div key={name as string} className="flex items-center gap-2">
-              <span className="text-[8px] font-bold text-white/80 w-12 shrink-0">{name}</span>
-              <div className="flex-1 h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div className="h-full rounded-full" style={{ width: `${score}%`, background: color as string }} />
-              </div>
-              <span className="text-[8px] font-black text-white">{score}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </Frame>
+  <div className="w-full h-full overflow-hidden relative bg-[#0c0c0c]">
+    {/* Iframe randat la o lățime mai mare apoi scalat → arată layout-ul desktop ca preview */}
+    <iframe
+      src={HR_DEMO_URL}
+      title="NEXAS HR — Dashboard"
+      loading="lazy"
+      scrolling="no"
+      className="pointer-events-none"
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '250%',
+        height: '250%',
+        transform: 'scale(0.4)',
+        transformOrigin: 'top left',
+        border: 0,
+      }}
+    />
+  </div>
 );
+
 
 /* ── Știri: grilă de articole ── */
 export const StiriVisual: React.FC = () => (

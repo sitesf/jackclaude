@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
-import { projectVisuals } from '../components/ProjectVisuals';
+import { projectVisuals, HR_DEMO_URL } from '../components/ProjectVisuals';
 import { ProjectData } from '../data/projects';
 
 const gradientButtonStyle: React.CSSProperties = {
@@ -70,6 +70,36 @@ export const ProjectPage: React.FC<{ project: ProjectData }> = ({ project }) => 
           </div>
         </div>
       </section>
+
+      {/* Demo interactiv — doar pentru HR Dashboard */}
+      {project.slug === 'hr' && (
+        <section className="px-5 sm:px-8 md:px-10 pb-4">
+          <div className="max-w-6xl mx-auto">
+            <FadeIn delay={0} duration={0.7} y={30} as="div" className="text-center mb-8">
+              <span className="text-xs font-bold uppercase tracking-[0.25em]" style={{ color: project.accent }}>
+                Demo live
+              </span>
+              <h2 className="text-[#D7E2EA] font-black uppercase tracking-tight leading-none text-[clamp(1.8rem,4.5vw,3.2rem)] mt-4">
+                Încearcă platforma
+              </h2>
+              <p className="text-[#D7E2EA]/55 font-light leading-relaxed mt-4 max-w-xl mx-auto text-sm sm:text-base">
+                Un demo complet, interactiv — navighează prin dashboard, candidați și calendar, direct aici.
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.15} duration={0.8} y={40} as="div">
+              <div className="rounded-[24px] overflow-hidden border border-white/12 bg-[#0a0a0a] shadow-2xl">
+                <iframe
+                  src={HR_DEMO_URL}
+                  title="NEXAS HR — Demo interactiv"
+                  loading="lazy"
+                  className="w-full"
+                  style={{ height: 'min(78vh, 760px)', border: 0, display: 'block' }}
+                />
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+      )}
 
       {/* Funcții */}
       <section className="px-5 sm:px-8 md:px-10 py-16 sm:py-20">
