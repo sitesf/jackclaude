@@ -119,3 +119,88 @@ MIT
 ## Created from Prompt
 
 This portfolio was created from a detailed design specification for motionsites.ai
+
+---
+
+# HeroScrub — Cinematic Scroll-Driven Hero (Lamborghini Temerario)
+
+A canvas-based, scroll-scrubbed hero experience built with **GSAP + ScrollTrigger**.
+As the user scrolls through a tall (500vh) section, a sticky viewport scrubs
+through 300 sequential frames (a cinematic exterior → interior → beauty-shot
+tour) while five timed text phases animate in and out and the frame "card"
+scales from a small preview up to a fully immersive, viewport-filling shot and
+back.
+
+### Files
+
+| File | Purpose |
+| --- | --- |
+| `src/components/ui/hero-scrub.tsx` | The component (production-ready, self-contained). |
+| `src/pages/TemerarioPage.tsx` | Usage in this Vite app — route `#/temerario`. |
+| `app/page.tsx` | Canonical Next.js-style usage example (reference only). |
+| `public/frames/0001.webp … 0300.webp` | The 300 cinematic frames (1600×900, 16:9). |
+
+### Run it
+
+```bash
+npm install          # gsap is already in package.json
+npm run dev          # then open the printed URL and visit #/temerario
+```
+
+Example: `http://localhost:5173/jackclaude/#/temerario`
+
+### Dependencies
+
+- `gsap` (^3.15) — includes its own TypeScript types.
+  > The brief mentioned `@types/gsap`, but that package is **deprecated and
+  > empty** — GSAP v3 ships types in the box, so it is intentionally not installed.
+
+### Props
+
+```ts
+export type HeroScrubProps = {
+  frameCount: number;               // 300
+  frameUrl: (i: number) => string;  // (i) => `/frames/${String(i+1).padStart(4,'0')}.webp`
+  titleTop: string;                 // "LAMBORGHINI"
+  titleBottom: string;              // "TEMERARIO"
+  accentHex?: string;               // "#D4A017"
+  bgClassName?: string;             // "bg-black"
+  ctaText?: string;                 // "DISCOVER MORE →"
+  ctaHref?: string;                 // "https://nexas.ro"
+  defaultAspect?: number;           // 16/9
+};
+```
+
+### How it works
+
+- **Rendering:** frames are drawn to an HTML5 `<canvas>` (never `<img>`). The
+  2D context is cached, and the canvas only redraws when the target frame index
+  changes (`lastDrawnRef`). If a target frame hasn't downloaded yet, the nearest
+  loaded frame is drawn instead.
+- **Loading:** the first 20 frames preload immediately with
+  `fetchPriority="high"`; the rest stream in batches of 20 every 80ms. A loader
+  shows until the first frame is ready; if the first frame never arrives within
+  4.5s the component falls back to a static background.
+- **Scroll:** the section is `500vh` with a `position: sticky`, `100svh` inner
+  stage (no ScrollTrigger pin — sticky CSS performs better). A single
+  ScrollTrigger with `scrub: 0.5` drives a per-frame `render(progress)` that
+  computes the frame index, card scale and every overlay's opacity.
+- **Card scale:** starts at `0.65` (desktop) / `0.85` (mobile), grows to `1.0`
+  by 15%, expands to `immerseScale = max(vw/baseW, vh/baseH) * 1.04` by 78%,
+  then returns to the start scale by 100%.
+- **Text phases:** ① split title (0–15%), ② spec subtitle (20–45%),
+  ③ "Crafted for the Fearless" (50–70%), ④ "Where Art Meets Engineering"
+  (75–90%), ⑤ CTA button fades in (90–100%) and is the **only** clickable
+  element (it links to `ctaHref`).
+- **Entry animation:** a GSAP timeline fades in the background and canvas and
+  slides the two titles into place on load.
+- **Accessibility:** section `aria-label`, `aria-hidden` canvas/decoration,
+  focus-visible ring on the CTA, and full `prefers-reduced-motion` support
+  (animations skipped, first frame shown statically).
+
+### Reuse in another project
+
+1. Copy `public/frames/` and `src/components/ui/hero-scrub.tsx`.
+2. `npm install gsap`.
+3. Render `<HeroScrub … />` (see `app/page.tsx`). In a Next.js app, add
+   `"use client";` to the top of `hero-scrub.tsx`.
