@@ -71,13 +71,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, s
       style={{ scale, top: `${index * 24}px` }}
       className="sticky top-20 md:top-28 min-h-[80vh] flex items-center justify-center px-4 sm:px-6"
     >
-      {/* glow de brand pe cardul activ */}
+      {/* glow de brand pe cardul activ — gradient radial (fără filtru de blur = ieftin) */}
       <motion.div
         aria-hidden
-        className="absolute w-full max-w-5xl h-[70%] rounded-[60px] blur-3xl pointer-events-none"
-        style={{ background: project.accent }}
-        animate={{ opacity: inView ? 0.18 : 0 }}
-        transition={{ duration: 0.6 }}
+        className="absolute w-full max-w-5xl h-[80%] pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at center, ${project.accent}55, transparent 70%)` }}
+        animate={{ opacity: inView ? 0.5 : 0 }}
+        transition={{ duration: 0.5 }}
       />
 
       <motion.a
