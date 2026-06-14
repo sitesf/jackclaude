@@ -250,10 +250,110 @@ export const AlexVisual: React.FC = () => (
   </Frame>
 );
 
+/* ── Sport AI: predicții + știri sportive (verde) ── */
+export const SportVisual: React.FC = () => (
+  <Frame
+    style={{
+      background:
+        'radial-gradient(circle at 80% 0%, rgba(34,197,94,.18), transparent 45%), linear-gradient(135deg,#04130b,#06200f 60%,#04130b)',
+    }}
+  >
+    <div className="w-full h-full flex flex-col justify-center gap-2.5 p-5 sm:p-7">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <span className="w-5 h-5 rounded-md" style={{ background: 'linear-gradient(135deg,#22C55E,#15803d)' }} />
+          <span className="text-white text-[9px] font-black tracking-wide">
+            NEXAS <span className="text-[#4ade80]">AI</span>
+          </span>
+        </div>
+        <span className="rounded-full px-2 py-1 text-[7px] font-black text-[#04130b]" style={{ background: '#22C55E' }}>
+          Generează bilet
+        </span>
+      </div>
+      <div className="text-[7px] font-mono uppercase tracking-[0.2em] text-[#4ade80]/70">Automatizare sportivă</div>
+      <div className="text-white font-black leading-tight text-[clamp(0.9rem,2.4vw,1.35rem)]">
+        Sursa ta de sport,
+        <br />
+        validată <span className="text-[#4ade80]">100% de AI</span>.
+      </div>
+      <div className="grid grid-cols-3 gap-1.5 mt-1">
+        {[
+          ['Fotbal', 'Japonia revine în Cupa Mondială'],
+          ['Fotbal', 'Scoția, victorie istorică'],
+          ['Fotbal', 'FIFA explică decizia VAR'],
+        ].map(([c, t]) => (
+          <div key={t} className="rounded-lg bg-white/[0.05] border border-white/10 p-2">
+            <div className="text-[6px] font-black text-[#4ade80] mb-1 uppercase tracking-wider">{c}</div>
+            <div className="text-[7px] font-semibold text-white/85 leading-snug">{t}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Frame>
+);
+
+/* ── Logistik Auto: service auto (roșu) ── */
+export const LogistikVisual: React.FC = () => (
+  <Frame
+    style={{
+      background:
+        'radial-gradient(circle at 80% 10%, rgba(239,68,68,.2), transparent 45%), linear-gradient(135deg,#141414,#1b1b1b 60%,#0e0e0e)',
+    }}
+  >
+    <div className="w-full h-full flex flex-col justify-center gap-2 p-5 sm:p-6">
+      <div className="flex items-center justify-between">
+        <div className="text-white text-[9px] font-black tracking-wide">
+          LOGISTIK <span className="text-[#ef4444]">AUTO</span>
+        </div>
+        <span className="rounded-full px-2 py-1 text-[7px] font-black text-white" style={{ background: '#ef4444' }}>
+          Sună acum
+        </span>
+      </div>
+      <div className="text-[7px] font-mono uppercase tracking-[0.2em] text-[#ef4444]/80">Service auto · București</div>
+      <div className="text-white font-black uppercase leading-tight text-[clamp(0.9rem,2.4vw,1.25rem)]">
+        Mașina ta,
+        <br />
+        în <span className="text-[#ef4444]">mâini sigure</span>
+      </div>
+      <div className="flex gap-1.5 flex-wrap">
+        {['Sună', 'WhatsApp', 'Waze'].map((b, i) => (
+          <span
+            key={b}
+            className="rounded-full px-2 py-0.5 text-[7px] font-bold text-white"
+            style={{ background: i === 0 ? '#ef4444' : i === 1 ? '#22c55e' : '#3b82f6' }}
+          >
+            {b}
+          </span>
+        ))}
+      </div>
+      <div
+        className="rounded-lg overflow-hidden border border-white/10 mt-0.5 h-[34%] relative flex items-center justify-center"
+        style={{ background: 'radial-gradient(circle at 70% 50%, rgba(239,68,68,.28), #0a0a0a)' }}
+      >
+        <span
+          className="text-[#ff6b6b] font-black uppercase text-[8px] tracking-wider text-center px-2"
+          style={{ textShadow: '0 0 8px rgba(239,68,68,.8)' }}
+        >
+          Performanță în fiecare detaliu
+        </span>
+      </div>
+      <div className="grid grid-cols-2 gap-1.5">
+        {['Revizie & întreținere', 'Mecanică auto', 'Diagnoză', 'Tractări'].map((s) => (
+          <div key={s} className="rounded-md bg-white/[0.05] border border-white/10 px-2 py-1 text-[7px] font-semibold text-white/85">
+            {s}
+          </div>
+        ))}
+      </div>
+    </div>
+  </Frame>
+);
+
 export const projectVisuals: Record<string, React.FC> = {
   niro: NiroVisual,
   neo: NeoVisual,
   hr: HrVisual,
   stiri: StiriVisual,
   alex: AlexVisual,
+  sport: SportVisual,
+  logistik: LogistikVisual,
 };
