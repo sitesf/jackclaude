@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Clock, Phone, MessageCircle, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
 import { Spotlight } from '../components/Spotlight';
@@ -14,6 +14,8 @@ const CONTACT_EMAIL = 'contact@nexas.ro';
 const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
+
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY as string;
 
 const gradientButtonStyle: React.CSSProperties = {
   background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
@@ -36,9 +38,12 @@ const contactInfo = [
 const inputClasses =
   'w-full rounded-2xl bg-[#141414] border border-[rgba(215,226,234,0.15)] px-5 py-4 text-[#D7E2EA] font-light placeholder:text-[#D7E2EA] placeholder:opacity-40 focus:outline-none focus:border-[#B600A8] transition-colors duration-200';
 
+type Status = 'idle' | 'loading' | 'success' | 'error';
+
 export const ContactPage: React.FC = () => {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [gdpr, setGdpr] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -46,14 +51,41 @@ export const ContactPage: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!gdpr) return;
-    const subject = encodeURIComponent(form.subject || `Cerere proiect nou de la ${form.name}`);
-    const body = encodeURIComponent(
-      `Nume: ${form.name}\nEmail: ${form.email}\nTelefon: ${form.phone || '—'}\n\n${form.message}`
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    if (!gdpr || status === 'loading') return;
+
+    setStatus('loading');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          from_name: 'NEXAS Contact Form',
+          subject: form.subject
+            ? `[NEXAS] ${form.subject} — ${form.name}`
+            : `[NEXAS] Cerere proiect nou de la ${form.name}`,
+          name: form.name,
+          email: form.email,
+          phone: form.phone || '—',
+          nevoie: form.subject || 'Nespecificat',
+          message: form.message,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setStatus('success');
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+        setGdpr(false);
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -105,82 +137,132 @@ export const ContactPage: React.FC = () => {
 
           {/* Form */}
           <FadeIn delay={0.2} duration={0.7} y={30} as="div" className="lg:col-span-3">
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  placeholder="Numele tău *"
-                  value={form.name}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder="Emailul tău *"
-                  value={form.email}
-                  onChange={handleChange}
-                  className={inputClasses}
-                />
-              </div>
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Telefon (opțional)"
-                value={form.phone}
-                onChange={handleChange}
-                className={inputClasses}
-              />
-              <select name="subject" value={form.subject} onChange={handleChange} className={inputClasses}>
-                <option value="">De ce ai nevoie?</option>
-                <option value="Landing Page">Landing Page</option>
-                <option value="Site de prezentare">Site de prezentare</option>
-                <option value="Magazin online">Magazin online</option>
-                <option value="Agent AI / Automatizare">Agent AI / Automatizare</option>
-                <option value="Optimizare SEO">Optimizare SEO</option>
-                <option value="Altceva">Altceva</option>
-              </select>
-              <textarea
-                name="message"
-                required
-                rows={6}
-                placeholder="Povestește-ne despre proiectul tău... *"
-                value={form.message}
-                onChange={handleChange}
-                className={`${inputClasses} resize-none`}
-              />
-              <label className="flex items-start gap-3 text-[#D7E2EA]/60 font-light text-xs sm:text-sm leading-relaxed cursor-pointer">
-                <input
-                  type="checkbox"
-                  required
-                  checked={gdpr}
-                  onChange={(e) => setGdpr(e.target.checked)}
-                  className="mt-0.5 w-4 h-4 accent-[#B600A8] flex-shrink-0"
-                />
-                <span>
-                  Accept prelucrarea datelor de către NEXAS conform{' '}
-                  <a href="#/confidentialitate" className="underline hover:text-[#D7E2EA]">
-                    Politicii de confidențialitate
-                  </a>
-                  . *
-                </span>
-              </label>
-              <p className="text-[#D7E2EA]/35 font-light text-xs">
-                Nu introduce date sensibile (CNP, date bancare, parole) în formular.
-              </p>
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
-                style={gradientButtonStyle}
+            {status === 'success' ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center justify-center gap-6 h-full min-h-[400px] text-center rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#141414] p-10"
               >
-                Trimite mesajul
-              </motion.button>
-            </form>
+                <CheckCircle className="w-16 h-16 text-[#B600A8]" />
+                <div>
+                  <h2 className="text-[#D7E2EA] font-bold text-2xl mb-2">Mesaj trimis!</h2>
+                  <p className="text-[#D7E2EA]/60 font-light leading-relaxed">
+                    Mulțumim, {form.name || 'îți mulțumim'}! Te contactăm în câteva ore la adresa furnizată.
+                  </p>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => setStatus('idle')}
+                  className="rounded-full px-8 py-3 text-sm font-medium uppercase tracking-widest text-white"
+                  style={gradientButtonStyle}
+                >
+                  Trimite alt mesaj
+                </motion.button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Numele tău *"
+                    value={form.name}
+                    onChange={handleChange}
+                    disabled={status === 'loading'}
+                    className={inputClasses}
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Emailul tău *"
+                    value={form.email}
+                    onChange={handleChange}
+                    disabled={status === 'loading'}
+                    className={inputClasses}
+                  />
+                </div>
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Telefon (opțional)"
+                  value={form.phone}
+                  onChange={handleChange}
+                  disabled={status === 'loading'}
+                  className={inputClasses}
+                />
+                <select
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  disabled={status === 'loading'}
+                  className={inputClasses}
+                >
+                  <option value="">De ce ai nevoie?</option>
+                  <option value="Landing Page">Landing Page</option>
+                  <option value="Site de prezentare">Site de prezentare</option>
+                  <option value="Magazin online">Magazin online</option>
+                  <option value="Agent AI / Automatizare">Agent AI / Automatizare</option>
+                  <option value="Optimizare SEO">Optimizare SEO</option>
+                  <option value="Altceva">Altceva</option>
+                </select>
+                <textarea
+                  name="message"
+                  required
+                  rows={6}
+                  placeholder="Povestește-ne despre proiectul tău... *"
+                  value={form.message}
+                  onChange={handleChange}
+                  disabled={status === 'loading'}
+                  className={`${inputClasses} resize-none`}
+                />
+                <label className="flex items-start gap-3 text-[#D7E2EA]/60 font-light text-xs sm:text-sm leading-relaxed cursor-pointer">
+                  <input
+                    type="checkbox"
+                    required
+                    checked={gdpr}
+                    onChange={(e) => setGdpr(e.target.checked)}
+                    disabled={status === 'loading'}
+                    className="mt-0.5 w-4 h-4 accent-[#B600A8] flex-shrink-0"
+                  />
+                  <span>
+                    Accept prelucrarea datelor de către NEXAS conform{' '}
+                    <a href="#/confidentialitate" className="underline hover:text-[#D7E2EA]">
+                      Politicii de confidențialitate
+                    </a>
+                    . *
+                  </span>
+                </label>
+                <p className="text-[#D7E2EA]/35 font-light text-xs">
+                  Nu introduce date sensibile (CNP, date bancare, parole) în formular.
+                </p>
+                {status === 'error' && (
+                  <div className="flex items-center gap-2 text-red-400 text-sm">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                    <span>A apărut o eroare. Încearcă din nou sau scrie-ne direct la {CONTACT_EMAIL}.</span>
+                  </div>
+                )}
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: status === 'loading' ? 1 : 1.03 }}
+                  whileTap={{ scale: status === 'loading' ? 1 : 0.97 }}
+                  disabled={status === 'loading'}
+                  className="self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center gap-3"
+                  style={gradientButtonStyle}
+                >
+                  {status === 'loading' ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Se trimite...
+                    </>
+                  ) : (
+                    'Trimite mesajul'
+                  )}
+                </motion.button>
+              </form>
+            )}
           </FadeIn>
         </div>
 
