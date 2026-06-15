@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const gradientButtonStyle: React.CSSProperties = {
@@ -13,10 +14,10 @@ const gradientButtonStyle: React.CSSProperties = {
 };
 
 const navLinks = [
-  { href: '#/#about', label: 'Despre' },
-  { href: '#/preturi', label: 'Prețuri' },
-  { href: '#/#projects', label: 'Proiecte' },
-  { href: '#/contact', label: 'Contact' },
+  { href: '/#about', label: 'Despre' },
+  { to: '/preturi', label: 'Prețuri' },
+  { href: '/#projects', label: 'Proiecte' },
+  { to: '/contact', label: 'Contact' },
 ];
 
 interface SiteNavProps {
@@ -41,27 +42,37 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
           overlay ? 'absolute top-0 left-0 right-0' : 'relative w-full'
         } z-30 flex items-center justify-between px-4 sm:px-6 md:px-10 py-4 sm:py-6`}
       >
-        <a href="#/" className="text-lg sm:text-xl md:text-2xl font-black uppercase tracking-tight text-[#D7E2EA]">
+        <Link to="/" className="text-lg sm:text-xl md:text-2xl font-black uppercase tracking-tight text-[#D7E2EA]">
           NE<span className="text-[#B600A8]">X</span>AS
-        </a>
+        </Link>
 
         <div className="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full pl-6 pr-1 py-1 shadow-sm border border-white/15">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm px-3 py-2 font-medium uppercase tracking-wider text-[#D7E2EA]/80 hover:text-white transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-          <a
-            href="#/contact"
+          {navLinks.map((link) =>
+            'to' in link ? (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-sm px-3 py-2 font-medium uppercase tracking-wider text-[#D7E2EA]/80 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm px-3 py-2 font-medium uppercase tracking-wider text-[#D7E2EA]/80 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            )
+          )}
+          <Link
+            to="/contact"
             className="ml-2 text-white text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-transform hover:scale-105"
             style={gradientButtonStyle}
           >
             Începe un proiect
-          </a>
+          </Link>
         </div>
 
         <button
@@ -101,19 +112,33 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
       >
         <div className="flex flex-col h-full pt-24 px-8 pb-8">
           <div className="flex flex-col gap-1">
-            {navLinks.map((link, i) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className={`text-2xl font-bold uppercase tracking-wide text-[#D7E2EA] py-4 border-b border-white/10 transition-all duration-500 ${
-                  menuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
-                }`}
-                style={{ transitionDelay: menuOpen ? `${150 + i * 70}ms` : '0ms' }}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link, i) =>
+              'to' in link ? (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  className={`text-2xl font-bold uppercase tracking-wide text-[#D7E2EA] py-4 border-b border-white/10 transition-all duration-500 ${
+                    menuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                  }`}
+                  style={{ transitionDelay: menuOpen ? `${150 + i * 70}ms` : '0ms' }}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`text-2xl font-bold uppercase tracking-wide text-[#D7E2EA] py-4 border-b border-white/10 transition-all duration-500 ${
+                    menuOpen ? 'translate-x-0 opacity-100' : 'translate-x-8 opacity-0'
+                  }`}
+                  style={{ transitionDelay: menuOpen ? `${150 + i * 70}ms` : '0ms' }}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
 
           <div
@@ -122,14 +147,14 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
             }`}
             style={{ transitionDelay: menuOpen ? '400ms' : '0ms' }}
           >
-            <a
-              href="#/contact"
+            <Link
+              to="/contact"
               onClick={() => setMenuOpen(false)}
               className="text-center text-white text-sm font-semibold uppercase tracking-widest px-5 py-3 rounded-full"
               style={gradientButtonStyle}
             >
               Începe un proiect
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -24,6 +24,7 @@ export interface ProjectData {
   plans?: ProjectPlan[];
   ctaTitle: string;
   ctaText: string;
+  externalLink?: string;
 }
 
 export const projects: ProjectData[] = [
@@ -92,6 +93,7 @@ export const projects: ProjectData[] = [
     number: '03',
     name: 'HR Dashboard',
     category: 'Aplicație web · Recrutare AI',
+    externalLink: 'https://sitesf.github.io/nexas/demo.html',
     accent: '#5DA9FF',
     accentSoft: 'rgba(93,169,255,0.14)',
     tagline: 'Platformă de recrutare cu AI: candidați evaluați automat, interviuri programate, statistici live.',
