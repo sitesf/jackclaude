@@ -1,0 +1,7 @@
+dist/
+node_modules/
+src/
+*.tsx
+*.ts
+*.config.*
+package*.json
