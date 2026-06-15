@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
 import { ServicesSection } from './components/ServicesSection';
@@ -11,56 +12,77 @@ import { ProjectPage } from './pages/ProjectPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
-const getRoute = () => window.location.hash.replace(/^#/, '') || '/';
+const HomePage = () => (
+  <div className="w-full overflow-x-clip bg-[#0C0C0C]">
+    <HeroSection />
+    <AboutSection />
+    <ServicesSection />
+    <ProjectsSection />
+    <SiteFooter />
+  </div>
+);
 
-function App() {
-  const [route, setRoute] = useState(getRoute);
+const NotFound = () => (
+  <div className="w-full overflow-x-clip bg-[#0C0C0C]">
+    <HeroSection />
+    <SiteFooter />
+  </div>
+);
 
+function AppRoutes() {
+  // Handle anchor scrolling
   useEffect(() => {
-    const onHashChange = () => {
-      setRoute(getRoute());
-      window.scrollTo(0, 0);
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        requestAnimationFrame(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
     };
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+
+    // Scroll on mount if there's a hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Ancore de pe homepage accesate din alte pagini (ex: #/#projects)
-  useEffect(() => {
-    if (route.startsWith('/#')) {
-      const id = route.slice(2);
-      requestAnimationFrame(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-  }, [route]);
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/preturi" element={<PricingPage />} />
+      <Route path="/pricing" element={<PricingPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="/confidentialitate" element={<PrivacyPage />} />
+      <Route path="/privacy" element={<PrivacyPage />} />
+      <Route path="/termeni" element={<TermsPage />} />
+      <Route path="/cookies" element={<CookiesPage />} />
+      <Route path="/proiect/:slug" element={<ProjectPageWrapper />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
-  const renderPage = () => {
-    if (route === '/preturi' || route === '/pricing') return <PricingPage />;
-    if (route === '/contact') return <ContactPage />;
-    if (route === '/confidentialitate' || route === '/privacy') return <PrivacyPage />;
-    if (route === '/termeni') return <TermsPage />;
-    if (route === '/cookies') return <CookiesPage />;
+const ProjectPageWrapper = () => {
+  const slug = window.location.pathname.split('/').pop();
+  const project = getProject(slug || '');
+  
+  if (!project) {
+    return <NotFound />;
+  }
+  
+  return <ProjectPage project={project} />;
+};
 
-    if (route.startsWith('/proiect/')) {
-      const project = getProject(route.slice('/proiect/'.length));
-      if (project) return <ProjectPage project={project} />;
-    }
-
-    return (
-      <div className="w-full overflow-x-clip bg-[#0C0C0C]">
-        <HeroSection />
-        <AboutSection />
-        <ServicesSection />
-        <ProjectsSection />
-        <SiteFooter />
-      </div>
-    );
-  };
-
+function App() {
   return (
     <>
-      {renderPage()}
+      <AppRoutes />
       <CookieConsent />
     </>
   );
