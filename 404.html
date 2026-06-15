@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // SPA redirect: salvează URL-ul și redirecționează spre index
+      const path = window.location.pathname;
+      sessionStorage.setItem('spa_redirect', path);
+      window.location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>
