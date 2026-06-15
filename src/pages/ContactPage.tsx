@@ -10,7 +10,7 @@ const RobotVisual = React.lazy(() =>
   import('../components/RobotVisual').then((m) => ({ default: m.RobotVisual })),
 );
 
-const CONTACT_EMAIL = 'contact@nexas.ro';
+const CONTACT_EMAIL = 'nexas.axs@gmail.com';
 const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
