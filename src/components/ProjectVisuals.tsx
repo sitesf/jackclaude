@@ -66,7 +66,7 @@ export const NeoVisual: React.FC = () => (
     }}
   >
     <div className="w-full h-full flex flex-col justify-center gap-2.5 p-6 sm:p-8">
-      <div className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#6b7280]">Nexas · Agent NEO</div>
+      <div className="text-[9px] font-mono uppercase tracking-[0.2em] text-[#6b7280]">Nexas · Agentul SEO</div>
       <div className="flex items-center justify-between rounded-2xl bg-[#0d1117] border border-white/10 px-4 py-3">
         <div>
           <div className="text-[9px] text-[#6b7280] font-mono">Site analizat</div>

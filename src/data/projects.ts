@@ -61,7 +61,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'neo',
     number: '02',
-    name: 'NEO — Audit SEO',
+    name: 'Agentul SEO',
     category: 'Unealtă AI · SEO',
     accent: '#3B82F6',
     accentSoft: 'rgba(59,130,246,0.14)',
@@ -69,19 +69,19 @@ export const projects: ProjectData[] = [
     heroTitle: 'Audit SEO complet,',
     heroHighlight: 'gratuit și instant',
     heroText:
-      'Introduci URL-ul site-ului, iar NEO analizează tot: viteză, structură, meta tags, cuvinte cheie și probleme tehnice. Primești un raport detaliat cu recomandări prioritizate, generat de AI, direct în browser.',
+      'Introduci URL-ul site-ului, iar Agentul SEO analizează tot: viteză, structură, meta tags, cuvinte cheie și probleme tehnice. Primești un raport detaliat cu recomandări prioritizate, generat de AI, direct în browser.',
     badge: 'Raport generat în sub 60 de secunde',
     features: [
       { title: 'Scor SEO general', text: 'O notă clară de la 0 la 100 care îți arată instant starea site-ului tău.' },
       { title: 'Performanță reală', text: 'Analiză PageSpeed pe mobil și desktop: FCP, LCP, CLS și toate metricile care contează.' },
       { title: 'Probleme prioritizate', text: 'Fiecare problemă identificată primește o prioritate: critică, medie sau scăzută.' },
-      { title: 'Recomandări AI', text: 'NEO interpretează datele și generează recomandări concrete, cu dificultate estimată.' },
+      { title: 'Recomandări AI', text: 'Agentul SEO interpretează datele și generează recomandări concrete, cu dificultate estimată.' },
       { title: 'Cuvinte cheie', text: 'Sugestii de cuvinte cheie relevante pentru domeniul și conținutul site-ului tău.' },
       { title: 'Pași următori', text: 'Un plan de acțiune clar, în ordine logică, pe care îl poți implementa imediat.' },
     ],
     steps: [
       { title: 'Introduci URL-ul', text: 'Orice site public poate fi analizat — al tău sau al concurenței.' },
-      { title: 'NEO analizează', text: 'Performanță mobil + desktop, SEO tehnic, accesibilitate, bune practici.' },
+      { title: 'Agentul SEO analizează', text: 'Performanță mobil + desktop, SEO tehnic, accesibilitate, bune practici.' },
       { title: 'AI interpretează', text: 'Datele brute devin un raport în limba română, ușor de înțeles.' },
       { title: 'Primești planul', text: 'Recomandări prioritizate și pașii următori, gata de implementat.' },
     ],
