@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Sparkles, ChevronDown } from 'lucide-react';
 import { motion, useAnimationControls } from 'framer-motion';
-import BoomerangVideoBg from './BoomerangVideoBg';
 import { SiteNav } from './SiteNav';
 import heroVideo from '../assets/hero-bg.mp4';
 
@@ -116,7 +115,15 @@ export const HeroSection: React.FC = () => {
         animate={heroCtrl}
         className="absolute inset-0"
       >
-        <BoomerangVideoBg src={heroVideo} className="absolute inset-0 w-full h-full" />
+        <video
+          src={heroVideo}
+          className="absolute inset-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0C]/70 via-[#0C0C0C]/35 to-[#0C0C0C]/85 pointer-events-none" />
 
         <SiteNav overlay />
