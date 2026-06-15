@@ -11,6 +11,7 @@ const RobotVisual = React.lazy(() =>
 );
 
 const CONTACT_EMAIL = 'nexas.axs@gmail.com';
+const CONTACT_NAME = 'NEXAS';
 const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
@@ -53,7 +54,7 @@ export const ContactPage: React.FC = () => {
     const body = encodeURIComponent(
       `Nume: ${form.name}\nEmail: ${form.email}\nTelefon: ${form.phone || '—'}\n\n${form.message}`
     );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${CONTACT_NAME} <${CONTACT_EMAIL}>?subject=${subject}&body=${body}`;
   };
 
   return (
