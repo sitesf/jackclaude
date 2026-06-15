@@ -10,6 +10,7 @@ import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
 import { ProjectPage } from './pages/ProjectPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
+import { NeoPage } from './pages/NeoPage';
 import { getProject } from './data/projects';
 
 const HomePage = () => (

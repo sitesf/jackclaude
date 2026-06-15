@@ -13,7 +13,9 @@ const gradientButtonStyle: React.CSSProperties = {
   outlineOffset: '-3px',
 };
 
-const navLinks = [
+type NavLink = { to: string; label: string } | { href: string; label: string };
+
+const navLinks: NavLink[] = [
   { href: '/#about', label: 'Despre' },
   { to: '/preturi', label: 'Prețuri' },
   { href: '/#projects', label: 'Proiecte' },
