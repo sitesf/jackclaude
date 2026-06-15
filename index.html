@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEXAS — Agenție digitală & AI</title>
     <meta name="description" content="NEXAS construiește agenți AI, automatizări, aplicații web și site-uri care nu seamănă cu nimic altceva. Portofoliu: NIRO Agent, NEO Audit SEO, HR Dashboard, Știri AI, Alex AI." />
+    <script>
+      // Restore SPA route after GitHub Pages 404 redirect
+      const redirect = sessionStorage.getItem('spa_redirect');
+      if (redirect) {
+        sessionStorage.removeItem('spa_redirect');
+        window.history.replaceState(null, '', redirect);
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
