@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
-import { FadeIn } from '../components/FadeIn';
-import { PageLayout } from '../components/PageLayout';
-import { Spotlight } from '../components/Spotlight';
-import { SpotlightCursor } from '../components/SpotlightCursor';
+import { FadeIn } from '../../components/FadeIn';
+import { PageLayout } from '../../components/PageLayout';
+import { Spotlight } from '../../components/Spotlight';
+import { SpotlightCursor } from '../../components/SpotlightCursor';
 
 const RobotVisual = React.lazy(() =>
   import('../components/RobotVisual').then((m) => ({ default: m.RobotVisual })),

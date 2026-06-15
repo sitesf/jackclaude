@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Check } from 'lucide-react';
-import { FadeIn } from '../components/FadeIn';
-import { PageLayout } from '../components/PageLayout';
-import { projectVisuals, HR_DEMO_URL } from '../components/ProjectVisuals';
-import { ProjectData } from '../data/projects';
+import { FadeIn } from '../../components/FadeIn';
+import { PageLayout } from '../../components/PageLayout';
+import { projectVisuals, HR_DEMO_URL } from '../../components/ProjectVisuals';
+import { ProjectData } from '../../data/projects';
 
 const gradientButtonStyle: React.CSSProperties = {
   background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { FadeIn } from '../components/FadeIn';
-import { PageLayout } from '../components/PageLayout';
+import { FadeIn } from '../../components/FadeIn';
+import { PageLayout } from '../../components/PageLayout';
 
 /*
  * Pagini legale NEXAS — conținut conform GDPR / ePrivacy, adaptat din

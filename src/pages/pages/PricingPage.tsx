@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
-import { FadeIn } from '../components/FadeIn';
-import { PageLayout } from '../components/PageLayout';
-import { CountUp } from '../components/CountUp';
+import { FadeIn } from '../../components/FadeIn';
+import { PageLayout } from '../../components/PageLayout';
+import { CountUp } from '../../components/CountUp';
 
 type Category = 'ai' | 'web';
 

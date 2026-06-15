@@ -1,11 +1,11 @@
 import React, { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Clock, Phone, MessageCircle, CheckCircle, AlertCircle } from 'lucide-react';
-import { FadeIn } from '../components/FadeIn';
-import { PageLayout } from '../components/PageLayout';
-import { Spotlight } from '../components/Spotlight';
-import { SpotlightCursor } from '../components/SpotlightCursor';
-import { Head } from '../components/Head';
+import { FadeIn } from '../../components/FadeIn';
+import { PageLayout } from '../../components/PageLayout';
+import { Spotlight } from '../../components/Spotlight';
+import { SpotlightCursor } from '../../components/SpotlightCursor';
+import { Head } from '../../components/Head';
 import axios from 'axios';
 
 const RobotVisual = React.lazy(() =>
