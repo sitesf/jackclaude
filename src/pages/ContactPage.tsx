@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
+import { Mail, MapPin, Clock, Phone, MessageCircle, Sparkles, Bot, Zap, Globe } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
-import { Spotlight } from '../components/Spotlight';
-import { SpotlightCursor } from '../components/SpotlightCursor';
-
-const RobotVisual = React.lazy(() =>
-  import('../components/RobotVisual').then((m) => ({ default: m.RobotVisual })),
-);
 
 const CONTACT_EMAIL = 'contact@nexas.ro';
 const CONTACT_PHONE = '+40 730 858 640';
@@ -86,19 +80,52 @@ export const ContactPage: React.FC = () => {
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
           {/* Robot 3D interactiv — sticky pe desktop */}
           <div className="lg:col-span-2">
-            <div className="lg:sticky lg:top-28">
-              <div className="relative overflow-hidden rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#0a0a0a] h-[320px] sm:h-[420px] lg:h-[560px]">
-                <Spotlight className="-top-40 left-0 md:left-20 md:-top-20" fill="#B600A8" />
-                <SpotlightCursor size={300} color="rgba(255,255,255,0.6)" />
-                <React.Suspense
-                  fallback={
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full border-2 border-[#B600A8] border-t-transparent animate-spin" />
+            <div className="lg:sticky lg:top-28 flex flex-col gap-4">
+              {/* Card principal */}
+              <div className="relative overflow-hidden rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#0a0a0a] p-8 flex flex-col gap-6">
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse at 20% 0%, rgba(182,0,168,0.18), transparent 65%)' }}
+                />
+                <div className="relative z-10">
+                  <div className="inline-flex items-center gap-2 text-[#B600A8] mb-4">
+                    <Sparkles className="w-4 h-4" />
+                    <span className="text-xs font-semibold uppercase tracking-widest">NEXAS AI</span>
+                  </div>
+                  <h2 className="text-[#D7E2EA] font-black uppercase text-2xl leading-tight mb-3">
+                    Hai să construim ceva <span className="text-[#B600A8]">memorabil</span>
+                  </h2>
+                  <p className="text-[#D7E2EA]/60 font-light text-sm leading-relaxed">
+                    De la idee la lansare — agenți AI, automatizări și site-uri care lucrează pentru tine nonstop.
+                  </p>
+                </div>
+                <div className="relative z-10 flex flex-col gap-3">
+                  {[
+                    { icon: Bot, text: 'Agenți AI personalizați' },
+                    { icon: Zap, text: 'Automatizări & integrări' },
+                    { icon: Globe, text: 'Site-uri & aplicații web' },
+                  ].map(({ icon: Icon, text }) => (
+                    <div key={text} className="flex items-center gap-3 text-[#D7E2EA]/70 text-sm">
+                      <span className="w-7 h-7 rounded-full bg-[#B600A8]/15 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-3.5 h-3.5 text-[#B600A8]" />
+                      </span>
+                      {text}
                     </div>
-                  }
-                >
-                  <RobotVisual />
-                </React.Suspense>
+                  ))}
+                </div>
+              </div>
+              {/* Timp de răspuns */}
+              <div className="rounded-[20px] border border-[rgba(215,226,234,0.08)] bg-[#0a0a0a] p-5 flex items-center gap-4">
+                <motion.div
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-3 h-3 rounded-full bg-[#22C55E] flex-shrink-0"
+                  style={{ boxShadow: '0 0 8px #22C55E' }}
+                />
+                <div>
+                  <p className="text-[#D7E2EA] text-sm font-medium">Online · Răspundem în câteva ore</p>
+                  <p className="text-[#D7E2EA]/40 text-xs mt-0.5">București, România</p>
+                </div>
               </div>
             </div>
           </div>

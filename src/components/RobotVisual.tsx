@@ -4,7 +4,7 @@ import type { Application } from '@splinetool/runtime';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 
 // Scena Spline originală, găzduită local (fără request către serverele Spline)
-const SCENE_URL = '/jackclaude/models/nexbot.splinecode';
+const SCENE_URL = '/models/nexbot.splinecode';
 
 // Cuvinte-cheie pentru obiectele de text/fundal pe care vrem să le ascundem
 const HIDE_HINTS = ['text', 'nexas', 'logo', 'title', 'word', 'type', 'letter', 'bg'];
