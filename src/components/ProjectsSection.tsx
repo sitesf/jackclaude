@@ -81,7 +81,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, s
       />
 
       <motion.a
-        href={`#/proiect/${project.slug}`}
+        href={project.externalLink ?? `/proiect/${project.slug}`}
+        target={project.externalLink ? '_blank' : undefined}
+        rel={project.externalLink ? 'noopener noreferrer' : undefined}
         onMouseEnter={() => interactive && setHover(true)}
         onMouseMove={handleMove}
         onMouseLeave={handleLeave}
