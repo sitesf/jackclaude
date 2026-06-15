@@ -12,7 +12,7 @@ interface Metrics {
   lastUpdated: string;
 }
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_URL = process.env.REACT_APP_API_URL || 'https://api.nexas.ro';
 
 const metricCards = [
   {
@@ -63,7 +63,6 @@ export const MetricsDashboard: React.FC = () => {
         const response = await axios.get(`${API_URL}/api/metrics`);
         setMetrics(response.data);
       } catch (error) {
-        console.log('Metrics API unavailable, using defaults');
         // Keep default values
       } finally {
         setLoading(false);

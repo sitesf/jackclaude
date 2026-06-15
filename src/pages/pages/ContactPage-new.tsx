@@ -17,7 +17,7 @@ const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+const API_URL = process.env.REACT_APP_API_URL || 'https://api.nexas.ro';
 
 const gradientButtonStyle: React.CSSProperties = {
   background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
