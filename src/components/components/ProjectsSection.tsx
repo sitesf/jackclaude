@@ -81,7 +81,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, s
       />
 
       <motion.a
-        href={`/proiect/${project.slug}`}
+        href={project.slug === 'hr' ? 'https://sitesf.github.io/nexas/demo.html' : `/proiect/${project.slug}`}
         onMouseEnter={() => interactive && setHover(true)}
         onMouseMove={handleMove}
         onMouseLeave={handleLeave}
