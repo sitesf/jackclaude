@@ -31,7 +31,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'niro',
     number: '01',
-    name: 'NIRO Agent',
+    name: 'WhatsApp AI Chatbot',
     category: 'Agent AI · WhatsApp',
     accent: '#8F5CFF',
     accentSoft: 'rgba(143,92,255,0.14)',
@@ -61,7 +61,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'neo',
     number: '02',
-    name: 'Audit SEO',
+    name: 'SEO Audit & Optimization Tool',
     category: 'Unealtă AI · SEO',
     accent: '#3B82F6',
     accentSoft: 'rgba(59,130,246,0.14)',
@@ -91,7 +91,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'hr',
     number: '03',
-    name: 'HR Dashboard',
+    name: 'AI HR Management Platform',
     category: 'Aplicație web · Recrutare AI',
     externalLink: 'https://sitesf.github.io/nexas/demo.html',
     accent: '#5DA9FF',
@@ -122,7 +122,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'stiri',
     number: '04',
-    name: 'NEXAS NEWS',
+    name: 'AI News Agent',
     category: 'Platformă · Conținut automat',
     accent: '#B600A8',
     accentSoft: 'rgba(182,0,168,0.14)',
@@ -152,7 +152,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'alex',
     number: '05',
-    name: 'Alex AI',
+    name: 'AI Assistant Chatbot',
     category: 'Asistent AI · Automatizare',
     accent: '#6C63FF',
     accentSoft: 'rgba(108,99,255,0.14)',
@@ -182,7 +182,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'sport',
     number: '06',
-    name: 'Sport News',
+    name: 'AI Sports Predictor',
     category: 'Platformă · Predicții sportive AI',
     accent: '#22C55E',
     accentSoft: 'rgba(34,197,94,0.14)',
