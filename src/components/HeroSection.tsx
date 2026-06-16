@@ -120,7 +120,7 @@ export const HeroSection: React.FC = () => {
 
         <div className="relative z-10 flex flex-col items-center text-center pt-28 sm:pt-32 md:pt-36 px-4 sm:px-6">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-[1.05] text-[clamp(1.7rem,5vw,3.6rem)] max-w-3xl">
-            Agenți AI și automatizări care lucrează <span className="text-[#B600A8]">24/7</span> pentru afacerea ta.
+           Soluții digitale pentru afaceri <span className="text-[#B600A8]">moderne, </span>gândite să te ajute să lucrezi mai inteligent, nu mai mult.
           </h1>
         </div>
 
