@@ -19,6 +19,18 @@ const HomePage = () => (
     <AboutSection />
     <ServicesSection />
     <ProjectsSection />
+    <section className="w-full px-4 sm:px-6 py-20">
+      <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden">
+        <video
+          src="/showreel.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-auto block"
+        />
+      </div>
+    </section>
     <SiteFooter />
   </div>
 );
