@@ -160,7 +160,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, totalCards, s
   );
 };
 
-export const ProjectsSection: React.FC = () => {
+const ProjectGroup: React.FC<{ projects: ProjectData[]; startIndex: number }> = ({ projects: group, startIndex }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -168,8 +168,27 @@ export const ProjectsSection: React.FC = () => {
   });
 
   return (
+    <div ref={containerRef} className="relative">
+      {group.map((project, idx) => (
+        <ProjectCard
+          key={project.slug}
+          project={project}
+          index={idx}
+          totalCards={group.length}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
+      <div className="h-[200vh]" />
+    </div>
+  );
+};
+
+export const ProjectsSection: React.FC = () => {
+  const group1 = projects.slice(0, 3);
+  const group2 = projects.slice(3);
+
+  return (
     <section
-      ref={containerRef}
       id="projects"
       className="relative bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 z-10 pt-20 sm:pt-24 md:pt-32 pb-20"
     >
@@ -180,18 +199,11 @@ export const ProjectsSection: React.FC = () => {
         Produse reale, construite de la zero: agenți AI, automatizări și platforme web. Apasă pe oricare pentru detalii complete.
       </FadeIn>
 
-      <div className="relative">
-        {projects.map((project, idx) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            index={idx}
-            totalCards={projects.length}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
-        <div className="h-[250vh]" />
-      </div>
+      <ProjectGroup projects={group1} startIndex={0} />
+
+      <div className="h-24 sm:h-32" />
+
+      <ProjectGroup projects={group2} startIndex={3} />
     </section>
   );
 };
