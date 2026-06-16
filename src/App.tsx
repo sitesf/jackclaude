@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
@@ -13,37 +14,55 @@ import { NiroPage } from './pages/NiroPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
-const LazyShowreel: React.FC = () => {
-  const ref = React.useRef<HTMLVideoElement>(null);
-  React.useEffect(() => {
-    const video = ref.current;
-    if (!video) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !video.src) {
-          video.src = '/showreel.mp4';
-          video.play().catch(() => {});
-        }
-      },
-      { rootMargin: '200px' }
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
+const CHROMATIC_LETTERS = [1, 2]; // E and X
+
+const NexasAnimation: React.FC = () => {
+  const letters = 'NEXAS'.split('');
+
   return (
-    <div className="flex justify-center px-4 sm:px-6">
-      <video
-        ref={ref}
-        muted
-        loop
-        playsInline
-        className="w-full h-auto block rounded-[34px] sm:rounded-[44px]"
-        style={{
-          mixBlendMode: 'screen',
-          filter: 'contrast(3) brightness(1.4)',
-          maxWidth: '1152px',
-        }}
-      />
+    <div className="w-full py-20 sm:py-28 flex justify-center px-4 overflow-hidden select-none">
+      <div className="flex items-baseline">
+        {letters.map((letter, i) => {
+          const hasChromatic = CHROMATIC_LETTERS.includes(i);
+          const repeatDelay = 5 + i * 1.8;
+
+          return (
+            <motion.span
+              key={i}
+              className="relative font-black uppercase text-[#D7E2EA]"
+              style={{ fontSize: 'clamp(5rem, 18vw, 180px)', lineHeight: 1, letterSpacing: '-0.03em' }}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ delay: i * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              {letter}
+              {hasChromatic && (
+                <>
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 font-black uppercase"
+                    style={{ letterSpacing: '-0.03em', color: '#00D8FF', mixBlendMode: 'screen' }}
+                    animate={{ x: [0, 0, 7, -4, 7, 0, 0], opacity: [0, 0, 0.9, 0.6, 0.9, 0, 0] }}
+                    transition={{ duration: 0.45, delay: 2 + i * 0.35, repeat: Infinity, repeatDelay, ease: 'linear' }}
+                  >
+                    {letter}
+                  </motion.span>
+                  <motion.span
+                    aria-hidden
+                    className="absolute inset-0 font-black uppercase"
+                    style={{ letterSpacing: '-0.03em', color: '#B600A8', mixBlendMode: 'screen' }}
+                    animate={{ x: [0, 0, -7, 4, -7, 0, 0], opacity: [0, 0, 0.9, 0.6, 0.9, 0, 0] }}
+                    transition={{ duration: 0.45, delay: 2 + i * 0.35, repeat: Infinity, repeatDelay, ease: 'linear' }}
+                  >
+                    {letter}
+                  </motion.span>
+                </>
+              )}
+            </motion.span>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -54,9 +73,7 @@ const HomePage = () => (
     <AboutSection />
     <ServicesSection />
     <ProjectsSection />
-    <section className="w-full py-10">
-      <LazyShowreel />
-    </section>
+    <NexasAnimation />
     <SiteFooter />
   </div>
 );
