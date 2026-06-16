@@ -120,7 +120,7 @@ export const HeroSection: React.FC = () => {
 
         <div className="relative z-10 flex flex-col items-center text-center pt-28 sm:pt-32 md:pt-36 px-4 sm:px-6">
           <h1 className="hero-heading font-black uppercase tracking-tight leading-[1.05] text-[clamp(1.7rem,5vw,3.6rem)] max-w-3xl">
-            Agenți AI, automatizări și site-uri care lucrează pentru afacerea ta — <span className="text-[#B600A8]">nonstop</span>.
+            Agenți AI și automatizări care lucrează <span className="text-[#B600A8]">24/7</span> pentru afacerea ta.
           </h1>
         </div>
 
@@ -130,8 +130,7 @@ export const HeroSection: React.FC = () => {
             <span className="text-sm font-semibold uppercase tracking-wider">NEXAS AI</span>
           </div>
           <p className="text-[#D7E2EA] font-light leading-relaxed opacity-60 text-[clamp(0.85rem,1.6vw,1.25rem)] mb-6 max-w-xs">
-            NEXAS construiește agenți AI, automatizări și produse digitale care nu seamănă cu
-            nimic altceva — configurate exact pe afacerea ta.
+            Nexas construiește sisteme inteligente de ultimă generație — agenți AI, automatizări complexe și site-uri performante — toate create și optimizate exact după nevoile afacerii tale.
           </p>
           <div className="flex items-center gap-4 flex-wrap">
             <Link
