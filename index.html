@@ -7,12 +7,16 @@
     <title>NEXAS — Agenție digitală & AI</title>
     <meta name="description" content="NEXAS construiește agenți AI, automatizări, aplicații web și site-uri care nu seamănă cu nimic altceva. Portofoliu: NIRO Agent, NEO Audit SEO, HR Dashboard, Știri AI, Alex AI." />
     <script>
-      // Restore SPA route after GitHub Pages 404 redirect
-      const redirect = sessionStorage.getItem('spa_redirect');
-      if (redirect) {
-        sessionStorage.removeItem('spa_redirect');
-        window.history.replaceState(null, '', redirect);
-      }
+      (function(l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function(s) {
+            return s.replace(/~and~/g, '&');
+          });
+          window.history.replaceState(null, null,
+            decoded[0] + (decoded.slice(1).length > 0 ? '?' + decoded.slice(1).join('&') : '') + l.hash
+          );
+        }
+      }(window.location));
     </script>
     <script type="module" crossorigin src="/assets/index-CEWbg_BX.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-Cg6aUcUc.css">

@@ -3,10 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <script>
-      // SPA redirect: salvează URL-ul și redirecționează spre index
-      const path = window.location.pathname;
-      sessionStorage.setItem('spa_redirect', path);
-      window.location.replace('/');
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/?/' +
+        l.pathname.slice(1).replace(/&/g, '~and~') +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
     </script>
   </head>
   <body></body>
