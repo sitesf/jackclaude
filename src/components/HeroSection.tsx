@@ -5,14 +5,6 @@ import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
 import heroVideo from '../assets/hero-bg.mp4';
 
-const glassButtonStyle: React.CSSProperties = {
-  background: 'rgba(255, 255, 255, 0.10)',
-  backdropFilter: 'blur(14px)',
-  WebkitBackdropFilter: 'blur(14px)',
-  border: '1px solid rgba(255, 255, 255, 0.20)',
-  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-};
-
 /* Nor moale (div cu blur) — doar translatează, deci ieftin pe mobil */
 const Cloud: React.FC<{ className?: string; style?: React.CSSProperties }> = ({ className, style }) => (
   <div
@@ -144,8 +136,7 @@ export const HeroSection: React.FC = () => {
           <div className="flex items-center gap-4 flex-wrap">
             <Link
               to="/contact"
-              className="text-white text-sm font-semibold uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-200 hover:bg-white/[0.15]"
-              style={glassButtonStyle}
+              className="glass-btn text-white text-sm font-semibold uppercase tracking-widest px-6 py-3 rounded-full"
             >
               Contactează-ne
             </Link>

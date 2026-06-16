@@ -76,3 +76,56 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #bbccd7;
 }
+
+/* ── Glass Button ── */
+.glass-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.06) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.28);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.4),
+    0 2px 8px rgba(0,0,0,0.15),
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+/* shimmer — lumina care trece la hover */
+.glass-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(105deg, transparent, rgba(255,255,255,0.28), transparent);
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+
+.glass-btn:hover::after {
+  left: 160%;
+}
+
+.glass-btn:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.10) 100%);
+  box-shadow:
+    0 14px 48px rgba(0,0,0,0.5),
+    0 4px 16px rgba(0,0,0,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  border-color: rgba(255,255,255,0.42);
+  transform: translateY(-2px);
+}
+
+.glass-btn:active {
+  transform: translateY(0px);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.35),
+    inset 0 2px 6px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  transition-duration: 0.08s;
+}

@@ -68,14 +68,7 @@ export const CookieConsent: React.FC = () => {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => decide(true)}
-              className="rounded-full px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-white"
-              style={{
-                background: 'rgba(255, 255, 255, 0.10)',
-                backdropFilter: 'blur(14px)',
-                WebkitBackdropFilter: 'blur(14px)',
-                border: '1px solid rgba(255, 255, 255, 0.20)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-              }}
+              className="glass-btn rounded-full px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-white"
             >
               Accept
             </button>

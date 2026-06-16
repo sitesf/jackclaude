@@ -89,14 +89,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ project }) => {
           <FadeIn as="div">
             <Link
               to="/contact"
-              className="inline-block text-white font-semibold uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-200 hover:bg-white/[0.15]"
-              style={{
-                background: 'rgba(255, 255, 255, 0.10)',
-                backdropFilter: 'blur(14px)',
-                WebkitBackdropFilter: 'blur(14px)',
-                border: '1px solid rgba(255, 255, 255, 0.20)',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-              }}
+              className="glass-btn inline-block text-white font-semibold uppercase tracking-widest px-8 py-4 rounded-full"
             >
               Contactează-ne
             </Link>

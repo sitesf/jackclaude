@@ -16,14 +16,6 @@ const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
 
-const glassButtonStyle: React.CSSProperties = {
-  background: 'rgba(255, 255, 255, 0.10)',
-  backdropFilter: 'blur(14px)',
-  WebkitBackdropFilter: 'blur(14px)',
-  border: '1px solid rgba(255, 255, 255, 0.20)',
-  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-};
-
 const contactInfo = [
   { icon: Mail, label: 'Email', value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { icon: Phone, label: 'Telefon', value: CONTACT_PHONE, href: 'tel:+40730858640' },
@@ -187,8 +179,7 @@ export const ContactPage: React.FC = () => {
                 type="submit"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
-                style={glassButtonStyle}
+                className="glass-btn self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
               >
                 Trimite mesajul
               </motion.button>
@@ -202,7 +193,7 @@ export const ContactPage: React.FC = () => {
             {contactInfo.map((item, idx) => (
               <FadeIn key={item.label} delay={idx * 0.1} duration={0.7} y={30} as="div">
                 <div className="h-full rounded-[28px] bg-[#141414] border border-[rgba(215,226,234,0.12)] p-6 flex items-start gap-5">
-                  <span className="rounded-full p-3 flex-shrink-0" style={glassButtonStyle}>
+                  <span className="glass-btn rounded-full p-3 flex-shrink-0">
                     <item.icon className="w-5 h-5 text-white" />
                   </span>
                   <div>

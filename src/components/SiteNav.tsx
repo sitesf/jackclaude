@@ -2,14 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-const glassButtonStyle: React.CSSProperties = {
-  background: 'rgba(255, 255, 255, 0.10)',
-  backdropFilter: 'blur(14px)',
-  WebkitBackdropFilter: 'blur(14px)',
-  border: '1px solid rgba(255, 255, 255, 0.20)',
-  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-};
-
 type NavLink = { to: string; label: string } | { href: string; label: string };
 
 const navLinks: NavLink[] = [
@@ -67,8 +59,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
           )}
           <Link
             to="/contact"
-            className="ml-2 text-white text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-transform hover:scale-105"
-            style={glassButtonStyle}
+            className="glass-btn ml-2 text-white text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full"
           >
             Începe un proiect
           </Link>
@@ -149,8 +140,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
             <Link
               to="/contact"
               onClick={() => setMenuOpen(false)}
-              className="text-center text-white text-sm font-semibold uppercase tracking-widest px-5 py-3 rounded-full"
-              style={glassButtonStyle}
+              className="glass-btn text-center text-white text-sm font-semibold uppercase tracking-widest px-5 py-3 rounded-full"
             >
               Începe un proiect
             </Link>

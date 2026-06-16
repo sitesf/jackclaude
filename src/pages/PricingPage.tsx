@@ -27,8 +27,7 @@ const PricingSwitch: React.FC<{ value: Category; onChange: (v: Category) => void
             {value === opt.id && (
               <motion.span
                 layoutId="pricing-switch"
-                className="absolute inset-0 rounded-full"
-                style={glassButtonStyle}
+                className="glass-btn absolute inset-0 rounded-full"
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               />
             )}
@@ -38,14 +37,6 @@ const PricingSwitch: React.FC<{ value: Category; onChange: (v: Category) => void
       </div>
     </div>
   );
-};
-
-const glassButtonStyle: React.CSSProperties = {
-  background: 'rgba(255, 255, 255, 0.10)',
-  backdropFilter: 'blur(14px)',
-  WebkitBackdropFilter: 'blur(14px)',
-  border: '1px solid rgba(255, 255, 255, 0.20)',
-  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
 };
 
 const darkButtonStyle: React.CSSProperties = {
@@ -197,8 +188,7 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
           </ul>
           <Link
             to="/contact"
-            className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white transition-all duration-200 hover:bg-white/[0.15]"
-            style={glassButtonStyle}
+            className="glass-btn mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
           >
             Începe acum
           </Link>
