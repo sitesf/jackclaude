@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
@@ -27,7 +28,7 @@ const PricingSwitch: React.FC<{ value: Category; onChange: (v: Category) => void
               <motion.span
                 layoutId="pricing-switch"
                 className="absolute inset-0 rounded-full"
-                style={gradientButtonStyle}
+                style={glassButtonStyle}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
               />
             )}
@@ -39,15 +40,21 @@ const PricingSwitch: React.FC<{ value: Category; onChange: (v: Category) => void
   );
 };
 
-const gradientButtonStyle: React.CSSProperties = {
-  background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-  boxShadow: `
-    0px 4px 4px rgba(181, 1, 167, 0.25),
-    inset 4px 4px 12px #7721B1,
-    inset -2px -2px 4px rgba(181, 1, 167, 0.2)
-  `,
-  outline: '2px solid white',
-  outlineOffset: '-3px',
+const glassButtonStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.10)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  border: '1px solid rgba(255, 255, 255, 0.20)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+};
+
+const darkButtonStyle: React.CSSProperties = {
+  background: '#0C0C0C',
+  border: '1px solid rgba(12,12,12,0.12)',
+};
+
+const badgeStyle: React.CSSProperties = {
+  background: '#0C0C0C',
 };
 
 const aiPlans = [
@@ -165,7 +172,7 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
           }`}
         >
           {plan.featured && (
-            <span className="self-start text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white rounded-full px-4 py-1.5 mb-6" style={gradientButtonStyle}>
+            <span className="self-start text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white rounded-full px-4 py-1.5 mb-6" style={badgeStyle}>
               Cel mai popular
             </span>
           )}
@@ -188,15 +195,13 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
               </li>
             ))}
           </ul>
-          <motion.a
-            href="#/contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
-            style={gradientButtonStyle}
+          <Link
+            to="/contact"
+            className="mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white transition-all duration-200 hover:bg-white/[0.15]"
+            style={glassButtonStyle}
           >
             Începe acum
-          </motion.a>
+          </Link>
         </div>
       </FadeIn>
     ))}
@@ -283,15 +288,13 @@ export const PricingPage: React.FC = () => {
           <p className="text-[#0C0C0C] font-medium text-lg sm:text-2xl max-w-xl">
             Nu știi ce pachet ți se potrivește? Spune-mi despre proiectul tău și îți recomand gratuit varianta corectă.
           </p>
-          <motion.a
-            href="#/contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
-            style={gradientButtonStyle}
+          <Link
+            to="/contact"
+            className="rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white transition-all duration-200 hover:opacity-80"
+            style={darkButtonStyle}
           >
             Cere o ofertă gratuită
-          </motion.a>
+          </Link>
         </FadeIn>
       </section>
     </PageLayout>

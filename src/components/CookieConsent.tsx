@@ -70,9 +70,11 @@ export const CookieConsent: React.FC = () => {
               onClick={() => decide(true)}
               className="rounded-full px-6 py-2.5 text-xs font-medium uppercase tracking-widest text-white"
               style={{
-                background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-                outline: '2px solid white',
-                outlineOffset: '-3px',
+                background: 'rgba(255, 255, 255, 0.10)',
+                backdropFilter: 'blur(14px)',
+                WebkitBackdropFilter: 'blur(14px)',
+                border: '1px solid rgba(255, 255, 255, 0.20)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
               }}
             >
               Accept

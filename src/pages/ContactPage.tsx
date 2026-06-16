@@ -16,15 +16,12 @@ const CONTACT_PHONE = '+40 730 858 640';
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20discutam%20despre%20un%20proiect%20NEXAS';
 
-const gradientButtonStyle: React.CSSProperties = {
-  background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-  boxShadow: `
-    0px 4px 4px rgba(181, 1, 167, 0.25),
-    inset 4px 4px 12px #7721B1,
-    inset -2px -2px 4px rgba(181, 1, 167, 0.2)
-  `,
-  outline: '2px solid white',
-  outlineOffset: '-3px',
+const glassButtonStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.10)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  border: '1px solid rgba(255, 255, 255, 0.20)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
 };
 
 const contactInfo = [
@@ -191,7 +188,7 @@ export const ContactPage: React.FC = () => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="self-start rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white"
-                style={gradientButtonStyle}
+                style={glassButtonStyle}
               >
                 Trimite mesajul
               </motion.button>
@@ -205,7 +202,7 @@ export const ContactPage: React.FC = () => {
             {contactInfo.map((item, idx) => (
               <FadeIn key={item.label} delay={idx * 0.1} duration={0.7} y={30} as="div">
                 <div className="h-full rounded-[28px] bg-[#141414] border border-[rgba(215,226,234,0.12)] p-6 flex items-start gap-5">
-                  <span className="rounded-full p-3 flex-shrink-0" style={gradientButtonStyle}>
+                  <span className="rounded-full p-3 flex-shrink-0" style={glassButtonStyle}>
                     <item.icon className="w-5 h-5 text-white" />
                   </span>
                   <div>

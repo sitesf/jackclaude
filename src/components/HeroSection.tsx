@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Sparkles, ChevronDown } from 'lucide-react';
 import { motion, useAnimationControls } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
 import heroVideo from '../assets/hero-bg.mp4';
 
-const gradientButtonStyle: React.CSSProperties = {
-  background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-  boxShadow: `
-    0px 4px 4px rgba(181, 1, 167, 0.25),
-    inset 4px 4px 12px #7721B1,
-    inset -2px -2px 4px rgba(181, 1, 167, 0.2)
-  `,
-  outline: '2px solid white',
-  outlineOffset: '-3px',
+const glassButtonStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.10)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  border: '1px solid rgba(255, 255, 255, 0.20)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
 };
 
 /* Nor moale (div cu blur) — doar translatează, deci ieftin pe mobil */
@@ -144,15 +142,15 @@ export const HeroSection: React.FC = () => {
             nimic altceva — configurate exact pe afacerea ta.
           </p>
           <div className="flex items-center gap-4 flex-wrap">
-            <a
-              href="#/contact"
-              className="text-white text-sm font-semibold uppercase tracking-widest px-6 py-3 rounded-full transition-transform hover:scale-105"
-              style={gradientButtonStyle}
+            <Link
+              to="/contact"
+              className="text-white text-sm font-semibold uppercase tracking-widest px-6 py-3 rounded-full transition-all duration-200 hover:bg-white/[0.15]"
+              style={glassButtonStyle}
             >
               Contactează-ne
-            </a>
+            </Link>
             <a
-              href="#/#projects"
+              href="/#projects"
               className="text-[#D7E2EA] text-sm font-medium uppercase tracking-wider hover:opacity-80 transition-opacity"
             >
               Vezi proiectele

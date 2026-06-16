@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-const gradientButtonStyle: React.CSSProperties = {
-  background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-  boxShadow: `
-    0px 4px 4px rgba(181, 1, 167, 0.25),
-    inset 4px 4px 12px #7721B1,
-    inset -2px -2px 4px rgba(181, 1, 167, 0.2)
-  `,
-  outline: '2px solid white',
-  outlineOffset: '-3px',
+const glassButtonStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.10)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  border: '1px solid rgba(255, 255, 255, 0.20)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
 };
 
 type NavLink = { to: string; label: string } | { href: string; label: string };
@@ -71,7 +68,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
           <Link
             to="/contact"
             className="ml-2 text-white text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full transition-transform hover:scale-105"
-            style={gradientButtonStyle}
+            style={glassButtonStyle}
           >
             Începe un proiect
           </Link>
@@ -153,7 +150,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
               to="/contact"
               onClick={() => setMenuOpen(false)}
               className="text-center text-white text-sm font-semibold uppercase tracking-widest px-5 py-3 rounded-full"
-              style={gradientButtonStyle}
+              style={glassButtonStyle}
             >
               Începe un proiect
             </Link>

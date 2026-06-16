@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { SiteNav } from '../components/SiteNav';
 import { SiteFooter } from '../components/SiteFooter';
 import { FadeIn } from '../components/FadeIn';
@@ -86,15 +87,19 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ project }) => {
             {project.ctaText}
           </FadeIn>
           <FadeIn as="div">
-            <a
-              href="/#contact"
-              className="inline-block text-white font-semibold uppercase tracking-widest px-8 py-4 rounded-full transition-transform hover:scale-105"
+            <Link
+              to="/contact"
+              className="inline-block text-white font-semibold uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-200 hover:bg-white/[0.15]"
               style={{
-                background: `linear-gradient(123deg, #18011F 7%, ${project.accent} 37%, #7621B0 72%, #BE4C00 100%)`,
+                background: 'rgba(255, 255, 255, 0.10)',
+                backdropFilter: 'blur(14px)',
+                WebkitBackdropFilter: 'blur(14px)',
+                border: '1px solid rgba(255, 255, 255, 0.20)',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
               }}
             >
               Contactează-ne
-            </a>
+            </Link>
           </FadeIn>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 interface ContactButtonProps {
@@ -6,23 +7,23 @@ interface ContactButtonProps {
   onClick?: () => void;
 }
 
+const glassButtonStyle: React.CSSProperties = {
+  background: 'rgba(255, 255, 255, 0.10)',
+  backdropFilter: 'blur(14px)',
+  WebkitBackdropFilter: 'blur(14px)',
+  border: '1px solid rgba(255, 255, 255, 0.20)',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+};
+
 export const ContactButton: React.FC<ContactButtonProps> = ({ className = '', onClick }) => {
+  const navigate = useNavigate();
   return (
     <motion.button
-      onClick={onClick ?? (() => { window.location.hash = '#/contact'; })}
+      onClick={onClick ?? (() => navigate('/contact'))}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className={`rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white ${className}`}
-      style={{
-        background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
-        boxShadow: `
-          0px 4px 4px rgba(181, 1, 167, 0.25),
-          inset 4px 4px 12px #7721B1,
-          inset -2px -2px 4px rgba(181, 1, 167, 0.2)
-        `,
-        outline: '2px solid white',
-        outlineOffset: '-3px',
-      }}
+      className={`rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white transition-all duration-200 hover:bg-white/[0.15] ${className}`}
+      style={glassButtonStyle}
     >
       Contactează-mă
     </motion.button>
