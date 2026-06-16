@@ -182,7 +182,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'sport',
     number: '06',
-    name: 'Sport AI',
+    name: 'Sport News',
     category: 'Platformă · Predicții sportive AI',
     accent: '#22C55E',
     accentSoft: 'rgba(34,197,94,0.14)',
