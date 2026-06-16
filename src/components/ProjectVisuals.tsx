@@ -42,7 +42,7 @@ const HRVisual: React.FC = () => (
 const StiriVisual: React.FC = () => (
   <div className="w-full h-full relative overflow-hidden select-none bg-black">
     <video
-      src="/stiri-preview.mp4"
+      src="/nexas-news-preview.mp4"
       autoPlay
       muted
       loop
