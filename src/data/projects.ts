@@ -122,7 +122,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'stiri',
     number: '04',
-    name: 'Știri AI',
+    name: 'NEXAS NEWS',
     category: 'Platformă · Conținut automat',
     accent: '#B600A8',
     accentSoft: 'rgba(182,0,168,0.14)',
