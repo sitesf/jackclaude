@@ -13,6 +13,35 @@ import { NiroPage } from './pages/NiroPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
+const LazyShowreel: React.FC = () => {
+  const ref = React.useRef<HTMLVideoElement>(null);
+  React.useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !video.src) {
+          video.src = '/showreel.mp4';
+          video.play().catch(() => {});
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      muted
+      loop
+      playsInline
+      className="w-full h-auto block"
+      style={{ mixBlendMode: 'screen' }}
+    />
+  );
+};
+
 const HomePage = () => (
   <div className="w-full overflow-x-clip bg-[#0C0C0C]">
     <HeroSection />
@@ -20,15 +49,7 @@ const HomePage = () => (
     <ServicesSection />
     <ProjectsSection />
     <section className="w-full py-10">
-      <video
-        src="/showreel.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="w-full h-auto block"
-        style={{ mixBlendMode: 'screen' }}
-      />
+      <LazyShowreel />
     </section>
     <SiteFooter />
   </div>
