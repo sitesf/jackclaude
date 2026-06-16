@@ -77,8 +77,6 @@ const SportVisual: React.FC = () => (
     />
   </div>
 );
-  </div>
-);
 
 const LogistikVisual: React.FC = () => (
   <div className="w-full h-full relative overflow-hidden select-none bg-black">
