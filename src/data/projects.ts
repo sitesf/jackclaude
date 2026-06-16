@@ -212,7 +212,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'logistik',
     number: '07',
-    name: 'Logistik Auto',
+    name: 'Service Auto',
     category: 'Site de prezentare · Service auto',
     accent: '#EF4444',
     accentSoft: 'rgba(239,68,68,0.14)',
