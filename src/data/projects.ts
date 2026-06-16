@@ -61,7 +61,7 @@ export const projects: ProjectData[] = [
   {
     slug: 'neo',
     number: '02',
-    name: 'NEO — Audit SEO',
+    name: 'Audit SEO',
     category: 'Unealtă AI · SEO',
     accent: '#3B82F6',
     accentSoft: 'rgba(59,130,246,0.14)',
