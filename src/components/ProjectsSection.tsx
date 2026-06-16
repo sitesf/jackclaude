@@ -178,7 +178,7 @@ const ProjectGroup: React.FC<{ projects: ProjectData[]; startIndex: number }> = 
           scrollYProgress={scrollYProgress}
         />
       ))}
-      <div className="h-[200vh]" />
+      <div className="h-[60vh]" />
     </div>
   );
 };
