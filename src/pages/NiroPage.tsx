@@ -81,7 +81,7 @@ export const NiroPage: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <Link to="/#projects" style={{ color: '#fff', textDecoration: 'none', opacity: .85, fontSize: '.94rem', padding: '4px 12px' }}>Proiecte</Link>
             <Link to="/preturi" style={{ color: '#fff', textDecoration: 'none', opacity: .85, fontSize: '.94rem', padding: '4px 12px' }}>Prețuri</Link>
-            <Link to="/contact" style={{ padding: '13px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.20)', color: '#fff', textDecoration: 'none', fontWeight: 700, fontSize: '.9rem' }}>
+            <Link to="/contact" className="glass-btn" style={{ padding: '13px 22px', borderRadius: 14, color: '#fff', textDecoration: 'none', fontWeight: 700, fontSize: '.9rem', display: 'inline-block' }}>
               Solicită demo
             </Link>
           </div>
@@ -107,7 +107,7 @@ export const NiroPage: React.FC = () => {
             NIRO răspunde instant clienților pe WhatsApp, explică serviciile, preia cereri de programare și salvează automat toate datele în Google Sheets. Fără apeluri pierdute. Fără timp pierdut.
           </p>
           <div style={{ display: 'flex', gap: 18, marginTop: 36, flexWrap: 'wrap' }}>
-            <Link to="/contact" style={{ padding: '13px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.20)', color: '#fff', textDecoration: 'none', fontWeight: 700 }}>
+            <Link to="/contact" className="glass-btn" style={{ padding: '13px 22px', borderRadius: 14, color: '#fff', textDecoration: 'none', fontWeight: 700, display: 'inline-block' }}>
               Solicită demo
             </Link>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '13px 22px', borderRadius: 14, border: '1px solid rgba(255,255,255,.08)', textDecoration: 'none', color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.03)', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -213,7 +213,7 @@ export const NiroPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <Link to="/contact" style={{ display: 'block', marginTop: 30, padding: '13px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.20)', color: '#fff', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
+              <Link to="/contact" className="glass-btn" style={{ display: 'block', marginTop: 30, padding: '13px 22px', borderRadius: 14, color: '#fff', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
                 Solicită demo
               </Link>
             </div>
@@ -228,7 +228,7 @@ export const NiroPage: React.FC = () => {
           Automatizează programările pe WhatsApp și transformă modul în care interacționezi cu clienții.
         </p>
         <div style={{ marginTop: 34, display: 'flex', justifyContent: 'center', gap: 18, flexWrap: 'wrap' }}>
-          <Link to="/contact" style={{ padding: '13px 22px', borderRadius: 14, background: 'rgba(255,255,255,0.10)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', border: '1px solid rgba(255,255,255,0.20)', color: '#fff', textDecoration: 'none', fontWeight: 700 }}>
+          <Link to="/contact" className="glass-btn" style={{ padding: '13px 22px', borderRadius: 14, color: '#fff', textDecoration: 'none', fontWeight: 700 }}>
             Solicită demo
           </Link>
           <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" style={{ padding: '13px 22px', borderRadius: 14, border: '1px solid rgba(255,255,255,.08)', textDecoration: 'none', color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.03)', display: 'flex', alignItems: 'center', gap: 8 }}>
