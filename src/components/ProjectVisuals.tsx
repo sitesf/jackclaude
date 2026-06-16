@@ -77,7 +77,7 @@ const SportVisual: React.FC = () => (
 const LogistikVisual: React.FC = () => (
   <div className="w-full h-full relative overflow-hidden select-none bg-black">
     <video
-      src="/logistik-preview.mp4"
+      src="/service-auto-preview.mp4"
       autoPlay
       muted
       loop
