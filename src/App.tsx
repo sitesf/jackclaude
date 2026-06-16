@@ -31,14 +31,20 @@ const LazyShowreel: React.FC = () => {
     return () => observer.disconnect();
   }, []);
   return (
-    <video
-      ref={ref}
-      muted
-      loop
-      playsInline
-      className="w-full h-auto block"
-      style={{ mixBlendMode: 'screen' }}
-    />
+    <div className="flex justify-center">
+      <video
+        ref={ref}
+        muted
+        loop
+        playsInline
+        className="w-full h-auto block"
+        style={{
+          mixBlendMode: 'screen',
+          filter: 'contrast(3) brightness(1.4)',
+          maxWidth: '600px',
+        }}
+      />
+    </div>
   );
 };
 
