@@ -3,6 +3,7 @@ import { Sparkles, ChevronDown } from 'lucide-react';
 import { motion, useAnimationControls } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
+import { NexasLogo } from './NexasLogo';
 import heroVideo from '../assets/hero-bg.mp4';
 
 /* Nor moale (div cu blur) — doar translatează, deci ieftin pe mobil */
@@ -261,9 +262,10 @@ export const HeroSection: React.FC = () => {
             animate={introTextCtrl}
             className="absolute inset-x-0 bottom-10 sm:bottom-14 flex flex-col items-center text-center px-6 z-10"
           >
-            <h2 className="font-black uppercase tracking-tight leading-none text-white text-[clamp(1.6rem,6vw,3.2rem)] drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
-              Descoperă <span className="text-[#B600A8]">nexas.ro</span>
-            </h2>
+            <div className="flex flex-col items-center gap-3 drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)]">
+              <span className="text-white/60 font-light text-xs sm:text-sm uppercase tracking-[0.28em]">Descoperă</span>
+              <NexasLogo fontSize="clamp(2.2rem, 7vw, 4.5rem)" gap="0.12em" />
+            </div>
             <div className="mt-4 flex flex-col items-center gap-1 text-white/70">
               <span className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em]">Scroll sau atinge</span>
               <motion.div

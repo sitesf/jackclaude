@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
+import { NexasLogo } from '../components/NexasLogo';
 
 const WHATSAPP_URL =
   'https://wa.me/40730858640?text=Salut%2C%20vreau%20sa%20testez%20NIRO%20Agent';
@@ -75,8 +76,8 @@ export const NiroPage: React.FC = () => {
       {/* Header */}
       <header style={{ position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 100, backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(255,255,255,.05)', background: 'rgba(6,7,12,.55)' }}>
         <div style={{ width: 'min(1180px, 92%)', margin: 'auto', height: 78, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link to="/" style={{ fontSize: '1.2rem', fontWeight: 900, letterSpacing: '.15em', color: '#f5f7ff', textDecoration: 'none' }}>
-            NE<span style={{ color: '#B600A8' }}>X</span>AS
+          <Link to="/" style={{ textDecoration: 'none', display: 'block' }}>
+            <NexasLogo fontSize="1.2rem" gap="0.07em" />
           </Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <Link to="/#projects" style={{ color: '#fff', textDecoration: 'none', opacity: .85, fontSize: '.94rem', padding: '4px 12px' }}>Proiecte</Link>

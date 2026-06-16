@@ -121,6 +121,12 @@ body,
   transform: translateY(-2px);
 }
 
+/* ── NexasLogo shimmer ── */
+@keyframes nexas-shimmer {
+  0%   { background-position: 280% center; }
+  100% { background-position: -280% center; }
+}
+
 .glass-btn:active {
   transform: translateY(0px);
   box-shadow:

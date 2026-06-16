@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { NexasLogo } from './NexasLogo';
 
 type NavLink = { to: string; label: string } | { href: string; label: string };
 
@@ -33,8 +34,8 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
           overlay ? 'absolute top-0 left-0 right-0' : 'relative w-full'
         } z-30 flex items-center justify-between px-4 sm:px-6 md:px-10 py-4 sm:py-6`}
       >
-        <Link to="/" className="text-lg sm:text-xl md:text-2xl font-black uppercase tracking-tight text-[#D7E2EA]">
-          NE<span className="text-[#B600A8]">X</span>AS
+        <Link to="/" className="block">
+          <NexasLogo fontSize="clamp(1.1rem, 2.5vw, 1.5rem)" gap="0.06em" />
         </Link>
 
         <div className="hidden lg:flex items-center gap-1 bg-white/10 backdrop-blur-md rounded-full pl-6 pr-1 py-1 shadow-sm border border-white/15">
