@@ -27,11 +27,15 @@ const NeoVisual: React.FC = () => (
 );
 
 const HRVisual: React.FC = () => (
-  <div className="w-full h-full bg-gradient-to-b from-[#0C0C0C] to-[#1a1a1a] flex items-center justify-center">
-    <div className="text-center">
-      <div className="text-4xl font-bold text-[#5DA9FF] mb-2">HR Dashboard</div>
-      <p className="text-[#D7E2EA]/50">Recrutare cu AI</p>
-    </div>
+  <div className="w-full h-full relative overflow-hidden select-none bg-black">
+    <video
+      src="/hr-preview.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      className="w-full h-full object-cover"
+    />
   </div>
 );
 
