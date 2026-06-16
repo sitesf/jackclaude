@@ -29,10 +29,10 @@ const NeonBar: React.FC<{ middle?: boolean }> = ({ middle }) => (
       height: '13%',
       width: middle ? '68%' : '100%',
       background:
-        'linear-gradient(180deg, rgba(180,245,255,0.95) 0%, #00DDFF 30%, #00AACC 65%, rgba(0,140,175,0.55) 100%)',
+        'linear-gradient(180deg, rgba(150,225,240,0.85) 0%, #00C4E0 32%, #0092AC 68%, rgba(0,110,135,0.4) 100%)',
       borderRadius: '2px',
       boxShadow:
-        '0 0 3px 1px #00EEFF, 0 0 9px 3px rgba(0,210,255,0.65), 0 0 20px 5px rgba(0,180,255,0.28)',
+        '0 0 2px 1px rgba(0,210,235,0.6), 0 0 6px 2px rgba(0,190,225,0.35), 0 0 12px 3px rgba(0,165,210,0.15)',
     }}
   />
 );
@@ -47,8 +47,8 @@ export const NexasLogo: React.FC<NexasLogoProps> = ({
 
   return (
     <span
-      className={`inline-flex items-baseline select-none ${className}`}
-      style={{ gap }}
+      className={`inline-flex items-baseline select-none flex-wrap justify-center ${className}`}
+      style={{ gap, fontSize: fs }}
     >
       {/* N */}
       <span style={shimmerStyle(0, 5.5, fs, ls)}>N</span>
@@ -60,13 +60,13 @@ export const NexasLogo: React.FC<NexasLogoProps> = ({
         animate={{
           filter: [
             'brightness(1)',
-            'brightness(1.4)',
-            'brightness(0.85)',
-            'brightness(1.25)',
+            'brightness(1.12)',
+            'brightness(0.92)',
+            'brightness(1.08)',
             'brightness(1)',
           ],
         }}
-        transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
       >
         <span style={{ visibility: 'hidden', fontWeight: 900, textTransform: 'uppercase' }}>E</span>
         <span
