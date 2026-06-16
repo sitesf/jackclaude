@@ -14,58 +14,84 @@ import { NiroPage } from './pages/NiroPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
-const CHROMATIC_LETTERS = [1, 2]; // E and X
+const NEXAS_FS = 'clamp(3rem, 10vw, 110px)';
+const NEXAS_LS = '-0.03em';
 
-const NexasAnimation: React.FC = () => {
-  const letters = 'NEXAS'.split('');
+const NeonE: React.FC<{ index: number }> = ({ index }) => (
+  <motion.span
+    className="relative inline-block font-black uppercase"
+    style={{ fontSize: NEXAS_FS, lineHeight: 1, letterSpacing: NEXAS_LS }}
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.5 }}
+    transition={{ delay: index * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {/* invisible E keeps correct width in flow */}
+    <span style={{ visibility: 'hidden' }}>E</span>
+    <motion.span
+      aria-hidden
+      className="absolute inset-0 flex flex-col justify-between"
+      style={{ padding: '0.07em 0.05em 0.07em 0' }}
+      animate={{ filter: ['brightness(1)', 'brightness(1.35)', 'brightness(0.85)', 'brightness(1.2)', 'brightness(1)'] }}
+      transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
+    >
+      {[0, 1, 2].map(bar => (
+        <span
+          key={bar}
+          style={{
+            display: 'block',
+            height: '11%',
+            width: bar === 1 ? '72%' : '100%',
+            background: 'linear-gradient(90deg, #007FA8 0%, #00EEFF 50%, #007FA8 100%)',
+            borderRadius: '3px',
+            boxShadow: '0 0 5px 2px #00CCFF, 0 0 14px 5px rgba(0,200,255,0.6), 0 0 28px 8px rgba(0,200,255,0.25)',
+          }}
+        />
+      ))}
+    </motion.span>
+  </motion.span>
+);
 
-  return (
-    <div className="w-full py-20 sm:py-28 flex justify-center px-4 overflow-hidden select-none">
-      <div className="flex items-baseline">
-        {letters.map((letter, i) => {
-          const hasChromatic = CHROMATIC_LETTERS.includes(i);
-          const repeatDelay = 5 + i * 1.8;
+const ShimmerLetter: React.FC<{ letter: string; index: number }> = ({ letter, index }) => (
+  <motion.span
+    className="font-black uppercase"
+    style={{
+      fontSize: NEXAS_FS,
+      lineHeight: 1,
+      letterSpacing: NEXAS_LS,
+      background: 'linear-gradient(105deg, #4a5a6a 0%, #8a9aaa 22%, #D7E2EA 44%, #ffffff 50%, #D7E2EA 56%, #8a9aaa 78%, #4a5a6a 100%)',
+      backgroundSize: '260% auto',
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      animation: `nexas-shimmer ${5.5 + index * 0.6}s ${index * 0.85}s linear infinite`,
+    }}
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.5 }}
+    transition={{ delay: index * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {letter}
+  </motion.span>
+);
 
-          return (
-            <motion.span
-              key={i}
-              className="relative font-black uppercase text-[#D7E2EA]"
-              style={{ fontSize: 'clamp(5rem, 18vw, 180px)', lineHeight: 1, letterSpacing: '-0.03em' }}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ delay: i * 0.09, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {letter}
-              {hasChromatic && (
-                <>
-                  <motion.span
-                    aria-hidden
-                    className="absolute inset-0 font-black uppercase"
-                    style={{ letterSpacing: '-0.03em', color: '#00D8FF', mixBlendMode: 'screen' }}
-                    animate={{ x: [0, 0, 7, -4, 7, 0, 0], opacity: [0, 0, 0.9, 0.6, 0.9, 0, 0] }}
-                    transition={{ duration: 0.45, delay: 2 + i * 0.35, repeat: Infinity, repeatDelay, ease: 'linear' }}
-                  >
-                    {letter}
-                  </motion.span>
-                  <motion.span
-                    aria-hidden
-                    className="absolute inset-0 font-black uppercase"
-                    style={{ letterSpacing: '-0.03em', color: '#B600A8', mixBlendMode: 'screen' }}
-                    animate={{ x: [0, 0, -7, 4, -7, 0, 0], opacity: [0, 0, 0.9, 0.6, 0.9, 0, 0] }}
-                    transition={{ duration: 0.45, delay: 2 + i * 0.35, repeat: Infinity, repeatDelay, ease: 'linear' }}
-                  >
-                    {letter}
-                  </motion.span>
-                </>
-              )}
-            </motion.span>
-          );
-        })}
-      </div>
+const NexasAnimation: React.FC = () => (
+  <div className="w-full py-16 sm:py-20 flex justify-center px-4 overflow-hidden select-none">
+    <style>{`
+      @keyframes nexas-shimmer {
+        0%   { background-position: 260% center; }
+        100% { background-position: -260% center; }
+      }
+    `}</style>
+    <div className="flex items-baseline">
+      <ShimmerLetter letter="N" index={0} />
+      <NeonE index={1} />
+      <ShimmerLetter letter="X" index={2} />
+      <ShimmerLetter letter="A" index={3} />
+      <ShimmerLetter letter="S" index={4} />
     </div>
-  );
-};
+  </div>
+);
 
 const HomePage = () => (
   <div className="w-full overflow-x-clip bg-[#0C0C0C]">
