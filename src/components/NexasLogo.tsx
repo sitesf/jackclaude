@@ -22,12 +22,12 @@ const shimmerStyle = (delay: number, duration: number, fs: string, ls: string): 
   animation: `nexas-shimmer ${duration}s ${delay}s linear infinite`,
 });
 
-const NeonBar: React.FC<{ middle?: boolean }> = ({ middle }) => (
+const NeonBar: React.FC<{ middle?: boolean }> = () => (
   <span
     style={{
       display: 'block',
       height: '13%',
-      width: middle ? '68%' : '100%',
+      width: '100%',
       background:
         'linear-gradient(180deg, rgba(150,225,240,0.85) 0%, #00C4E0 32%, #0092AC 68%, rgba(0,110,135,0.4) 100%)',
       borderRadius: '2px',
