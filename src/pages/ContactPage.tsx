@@ -6,6 +6,7 @@ import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
 import { Spotlight } from '../components/Spotlight';
 import { SpotlightCursor } from '../components/SpotlightCursor';
+import { NexasLogo } from '../components/NexasLogo';
 
 const RobotVisual = React.lazy(() =>
   import('../components/RobotVisual').then((m) => ({ default: m.RobotVisual })),
@@ -91,6 +92,9 @@ export const ContactPage: React.FC = () => {
                 >
                   <RobotVisual />
                 </React.Suspense>
+                <div className="absolute bottom-4 right-5 z-10 opacity-50 pointer-events-none">
+                  <NexasLogo fontSize="0.95rem" gap="0.05em" />
+                </div>
               </div>
               {/* Timp de răspuns */}
               <div className="rounded-[20px] border border-[rgba(215,226,234,0.08)] bg-[#0a0a0a] p-5 flex items-center gap-4">
