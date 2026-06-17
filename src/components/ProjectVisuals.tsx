@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, Search, CheckCircle2, Newspaper, Bot, Trophy, Wrench } from 'lucide-react';
+import { MessageCircle, Search, CheckCircle2, Newspaper, Trophy, Wrench } from 'lucide-react';
 
 /* ───────── helpers comune ───────── */
 
@@ -27,44 +27,52 @@ const TypingDots: React.FC<{ color: string }> = ({ color }) => (
   </span>
 );
 
+/* ───────── chat mockup (folosit de NIRO și Alex) ───────── */
+
+const ChatMock: React.FC<{ accent: string; bubbles: { side: 'left' | 'right'; text: string }[] }> = ({
+  accent,
+  bubbles,
+}) => (
+  <Backdrop accent={accent}>
+    <div className="w-full max-w-[280px] flex flex-col gap-2.5">
+      {bubbles.map((b, i) => (
+        <motion.div
+          key={i}
+          className={`max-w-[78%] rounded-2xl px-3.5 py-2 text-[11px] sm:text-xs font-medium ${
+            b.side === 'right' ? 'self-end text-white' : 'self-start text-[#D7E2EA]'
+          }`}
+          style={{ background: b.side === 'right' ? accent : 'rgba(255,255,255,0.06)' }}
+          animate={{ opacity: [0, 1, 1, 0], y: [12, 0, 0, 12] }}
+          transition={{ duration: 6, repeat: Infinity, delay: i * 1.1, times: [0, 0.06, 0.8, 1], ease: 'easeOut' }}
+        >
+          {b.text}
+        </motion.div>
+      ))}
+      <motion.div
+        className="self-start flex items-center gap-1.5 rounded-2xl px-3.5 py-2"
+        style={{ background: 'rgba(255,255,255,0.06)' }}
+        animate={{ opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 6, repeat: Infinity, delay: bubbles.length * 1.1, times: [0, 0.05, 0.85, 1] }}
+      >
+        <TypingDots color="#D7E2EA" />
+      </motion.div>
+    </div>
+    <MessageCircle className="absolute top-5 right-5 w-5 h-5 opacity-30" style={{ color: accent }} />
+  </Backdrop>
+);
+
 /* ───────── 01 — NIRO: chat WhatsApp ───────── */
 
-const NiroVisual: React.FC = () => {
-  const accent = '#8F5CFF';
-  const bubbles: { side: 'left' | 'right'; text: string }[] = [
-    { side: 'left', text: 'Bună! Vreau o programare.' },
-    { side: 'right', text: 'Sigur, pentru ce mașină?' },
-    { side: 'left', text: 'BMW Seria 3, 2019.' },
-  ];
-  return (
-    <Backdrop accent={accent}>
-      <div className="w-full max-w-[280px] flex flex-col gap-2.5">
-        {bubbles.map((b, i) => (
-          <motion.div
-            key={i}
-            className={`max-w-[78%] rounded-2xl px-3.5 py-2 text-[11px] sm:text-xs font-medium ${
-              b.side === 'right' ? 'self-end text-white' : 'self-start text-[#D7E2EA]'
-            }`}
-            style={{ background: b.side === 'right' ? accent : 'rgba(255,255,255,0.06)' }}
-            animate={{ opacity: [0, 1, 1, 0], y: [12, 0, 0, 12] }}
-            transition={{ duration: 6, repeat: Infinity, delay: i * 1.1, times: [0, 0.06, 0.8, 1], ease: 'easeOut' }}
-          >
-            {b.text}
-          </motion.div>
-        ))}
-        <motion.div
-          className="self-start flex items-center gap-1.5 rounded-2xl px-3.5 py-2"
-          style={{ background: 'rgba(255,255,255,0.06)' }}
-          animate={{ opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 6, repeat: Infinity, delay: 3.3, times: [0, 0.05, 0.85, 1] }}
-        >
-          <TypingDots color="#D7E2EA" />
-        </motion.div>
-      </div>
-      <MessageCircle className="absolute top-5 right-5 w-5 h-5 opacity-30" style={{ color: accent }} />
-    </Backdrop>
-  );
-};
+const NiroVisual: React.FC = () => (
+  <ChatMock
+    accent="#8F5CFF"
+    bubbles={[
+      { side: 'left', text: 'Bună! Vreau o programare.' },
+      { side: 'right', text: 'Sigur, pentru ce mașină?' },
+      { side: 'left', text: 'Dacia Logan, 2019.' },
+    ]}
+  />
+);
 
 /* ───────── 02 — NEO: scor SEO circular ───────── */
 
@@ -117,27 +125,37 @@ const NeoVisual: React.FC = () => {
 
 const HrVisual: React.FC = () => {
   const accent = '#5DA9FF';
+  const weekdays = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  const days = Array.from({ length: 21 }, (_, i) => i + 1);
   const filled = [2, 5, 9, 13, 16, 20];
   return (
     <Backdrop accent={accent}>
       <div className="w-full max-w-[260px]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-[#D7E2EA] text-xs font-semibold uppercase tracking-wider opacity-70">Interviuri</span>
+          <span className="text-[#D7E2EA] text-xs font-semibold uppercase tracking-wider opacity-70">Interviuri · Iunie</span>
           <CheckCircle2 className="w-4 h-4" style={{ color: accent }} />
         </div>
+        <div className="grid grid-cols-7 gap-1.5 mb-1.5">
+          {weekdays.map((d, i) => (
+            <span key={i} className="text-center text-[9px] text-[#D7E2EA]/40 font-semibold">
+              {d}
+            </span>
+          ))}
+        </div>
         <div className="grid grid-cols-7 gap-1.5">
-          {Array.from({ length: 21 }).map((_, i) => (
+          {days.map((day, i) => (
             <motion.div
-              key={i}
-              className="aspect-square rounded-md"
-              style={{ background: filled.includes(i) ? accent : 'rgba(255,255,255,0.05)' }}
-              animate={
-                filled.includes(i)
-                  ? { opacity: [0.4, 1, 0.4], scale: [0.92, 1, 0.92] }
-                  : {}
-              }
+              key={day}
+              className="aspect-square rounded-md flex items-center justify-center text-[9px] font-bold"
+              style={{
+                background: filled.includes(i) ? accent : 'rgba(255,255,255,0.05)',
+                color: filled.includes(i) ? '#0C0C0C' : 'rgba(215,226,234,0.45)',
+              }}
+              animate={filled.includes(i) ? { opacity: [0.5, 1, 0.5], scale: [0.94, 1, 0.94] } : {}}
               transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.06, ease: 'easeInOut' }}
-            />
+            >
+              {day}
+            </motion.div>
           ))}
         </div>
       </div>
@@ -149,10 +167,11 @@ const HrVisual: React.FC = () => {
 
 const StiriVisual: React.FC = () => {
   const accent = '#B600A8';
-  const widths = ['92%', '78%', '85%', '60%'];
+  const headline = 'AI-ul care reduce costurile operaționale cu până la 30%';
+  const excerptLines = ['Companiile care adoptă automatizări AI', 'raportează economii semnificative...'];
   return (
     <Backdrop accent={accent}>
-      <div className="w-full max-w-[280px] flex flex-col gap-4">
+      <div className="w-full max-w-[280px] flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <Newspaper className="w-4 h-4" style={{ color: accent }} />
           <motion.span
@@ -163,15 +182,25 @@ const StiriVisual: React.FC = () => {
           />
           <span className="text-[10px] uppercase tracking-widest text-[#D7E2EA]/50 font-semibold">Live</span>
         </div>
-        <div className="flex flex-col gap-2.5">
-          {widths.map((w, i) => (
+        <motion.div
+          className="overflow-hidden"
+          animate={{ width: ['0%', '100%', '100%', '0%'] }}
+          transition={{ duration: 6, repeat: Infinity, times: [0, 0.3, 0.85, 1], ease: 'easeInOut' }}
+        >
+          <span className="block whitespace-nowrap text-[#D7E2EA] font-bold text-sm sm:text-base leading-snug">
+            {headline}
+          </span>
+        </motion.div>
+        <div className="flex flex-col gap-2.5 mt-1">
+          {excerptLines.map((line, i) => (
             <motion.div
               key={i}
-              className="h-2.5 rounded-full"
-              style={{ background: 'rgba(255,255,255,0.08)', maxWidth: w }}
-              animate={{ width: ['0%', w, w, '0%'] }}
-              transition={{ duration: 5, repeat: Infinity, delay: i * 0.9, times: [0, 0.25, 0.85, 1], ease: 'easeInOut' }}
-            />
+              className="overflow-hidden"
+              animate={{ width: ['0%', '100%', '100%', '0%'] }}
+              transition={{ duration: 6, repeat: Infinity, delay: 0.7 + i * 0.5, times: [0, 0.2, 0.85, 1], ease: 'easeInOut' }}
+            >
+              <span className="block whitespace-nowrap text-[#D7E2EA]/50 text-[11px] font-light">{line}</span>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -181,30 +210,16 @@ const StiriVisual: React.FC = () => {
 
 /* ───────── 05 — Alex: asistent conversațional ───────── */
 
-const AlexVisual: React.FC = () => {
-  const accent = '#6C63FF';
-  return (
-    <Backdrop accent={accent}>
-      <div className="flex flex-col items-center gap-5">
-        <motion.div
-          className="w-16 h-16 rounded-full flex items-center justify-center"
-          style={{ background: `${accent}22`, border: `1px solid ${accent}55` }}
-          animate={{ boxShadow: [`0 0 0px ${accent}00`, `0 0 22px ${accent}55`, `0 0 0px ${accent}00`] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <Bot className="w-7 h-7" style={{ color: accent }} />
-        </motion.div>
-        <motion.div
-          className="flex items-center gap-2 rounded-2xl px-4 py-2.5"
-          style={{ background: 'rgba(255,255,255,0.06)' }}
-        >
-          <TypingDots color="#D7E2EA" />
-        </motion.div>
-        <span className="text-[10px] uppercase tracking-widest text-[#D7E2EA]/40 font-semibold">Răspuns &lt; 1s</span>
-      </div>
-    </Backdrop>
-  );
-};
+const AlexVisual: React.FC = () => (
+  <ChatMock
+    accent="#6C63FF"
+    bubbles={[
+      { side: 'left', text: 'Ce servicii oferiți?' },
+      { side: 'right', text: 'Site-uri, agenți AI și automatizări.' },
+      { side: 'left', text: 'Cât costă un site?' },
+    ]}
+  />
+);
 
 /* ───────── 06 — Sport: predicții live ───────── */
 
