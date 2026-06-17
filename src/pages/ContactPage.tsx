@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Mail, MapPin, Clock, Phone, MessageCircle } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
@@ -166,9 +167,9 @@ export const ContactPage: React.FC = () => {
                 />
                 <span>
                   Accept prelucrarea datelor de către NEXAS conform{' '}
-                  <a href="#/confidentialitate" className="underline hover:text-[#D7E2EA]">
+                  <Link to="/confidentialitate" className="underline hover:text-[#D7E2EA]">
                     Politicii de confidențialitate
-                  </a>
+                  </Link>
                   . *
                 </span>
               </label>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const STORAGE_KEY = 'nexas_cookie_consent';
 const CONSENT_VERSION = 2;
@@ -63,7 +64,7 @@ export const CookieConsent: React.FC = () => {
           <p className="text-[#D7E2EA]/60 font-light text-xs sm:text-sm leading-relaxed mb-4">
             Folosim cookie-uri esențiale pentru funcționarea site-ului și, doar cu acordul tău,
             cookie-uri de analiză a traficului. Detalii în{' '}
-            <a href="#/cookies" className="underline hover:text-[#D7E2EA]">Politica de Cookies</a>.
+            <Link to="/cookies" className="underline hover:text-[#D7E2EA]">Politica de Cookies</Link>.
           </p>
           <div className="flex flex-wrap gap-3">
             <button

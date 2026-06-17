@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
 
@@ -317,7 +318,7 @@ export const CookiesPage: React.FC = () => (
       <p>
         Putem actualiza această politică atunci când adăugăm sau eliminăm servicii. Pentru orice întrebare legată de
         cookie-uri sau date personale, scrie la <a href="mailto:contact@nexas.ro">contact@nexas.ro</a> sau consultă{' '}
-        <a href="#/confidentialitate">Politica de confidențialitate</a>.
+        <Link to="/confidentialitate">Politica de confidențialitate</Link>.
       </p>
     </Sec>
   </LegalShell>
