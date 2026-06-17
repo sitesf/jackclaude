@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { NexasLogo } from './NexasLogo';
+import { prefetchContact } from '../lib/prefetchContact';
 
 type NavLink = { to: string; label: string } | { href: string; label: string };
 
@@ -60,6 +61,8 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
           )}
           <Link
             to="/contact"
+            onMouseEnter={prefetchContact}
+            onTouchStart={prefetchContact}
             className="glass-btn ml-2 text-white text-sm font-medium uppercase tracking-wider px-5 py-2.5 rounded-full"
           >
             Începe un proiect
@@ -141,6 +144,7 @@ export const SiteNav: React.FC<SiteNavProps> = ({ overlay = false }) => {
             <Link
               to="/contact"
               onClick={() => setMenuOpen(false)}
+              onTouchStart={prefetchContact}
               className="glass-btn text-center text-white text-sm font-semibold uppercase tracking-widest px-5 py-3 rounded-full"
             >
               Începe un proiect

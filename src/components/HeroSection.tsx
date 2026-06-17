@@ -4,6 +4,7 @@ import { motion, useAnimationControls } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
 import { NexasLogo } from './NexasLogo';
+import { prefetchContact } from '../lib/prefetchContact';
 import heroVideo from '../assets/hero-bg.mp4';
 
 /* Nor moale (div cu blur) — doar translatează, deci ieftin pe mobil */
@@ -136,6 +137,8 @@ export const HeroSection: React.FC = () => {
           <div className="flex items-center gap-4 flex-wrap">
             <Link
               to="/contact"
+              onMouseEnter={prefetchContact}
+              onTouchStart={prefetchContact}
               className="glass-btn text-white text-sm font-semibold uppercase tracking-widest px-6 py-3 rounded-full"
             >
               Contactează-ne

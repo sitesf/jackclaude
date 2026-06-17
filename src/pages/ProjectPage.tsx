@@ -4,6 +4,7 @@ import { SiteNav } from '../components/SiteNav';
 import { SiteFooter } from '../components/SiteFooter';
 import { FadeIn } from '../components/FadeIn';
 import { ProjectData } from '../data/projects';
+import { prefetchContact } from '../lib/prefetchContact';
 
 interface ProjectPageProps {
   project: ProjectData;
@@ -89,6 +90,8 @@ export const ProjectPage: React.FC<ProjectPageProps> = ({ project }) => {
           <FadeIn as="div">
             <Link
               to="/contact"
+              onMouseEnter={prefetchContact}
+              onTouchStart={prefetchContact}
               className="glass-btn inline-block text-white font-semibold uppercase tracking-widest px-8 py-4 rounded-full"
             >
               Contactează-ne

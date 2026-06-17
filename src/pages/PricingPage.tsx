@@ -5,6 +5,7 @@ import { Check } from 'lucide-react';
 import { FadeIn } from '../components/FadeIn';
 import { PageLayout } from '../components/PageLayout';
 import { CountUp } from '../components/CountUp';
+import { prefetchContact } from '../lib/prefetchContact';
 
 type Category = 'ai' | 'web';
 
@@ -188,6 +189,8 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
           </ul>
           <Link
             to="/contact"
+            onMouseEnter={prefetchContact}
+            onTouchStart={prefetchContact}
             className="glass-btn mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
           >
             Începe acum
@@ -280,6 +283,8 @@ export const PricingPage: React.FC = () => {
           </p>
           <Link
             to="/contact"
+            onMouseEnter={prefetchContact}
+            onTouchStart={prefetchContact}
             className="rounded-full px-10 py-4 text-sm md:text-base font-medium uppercase tracking-widest text-white transition-all duration-200 hover:opacity-80"
             style={darkButtonStyle}
           >
