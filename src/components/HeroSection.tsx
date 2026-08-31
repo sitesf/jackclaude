@@ -1,15 +1,12 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense } from 'react';
 import { Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
 import { FadeIn } from './FadeIn';
 import { Spotlight } from './Spotlight';
 import { SpotlightCursor } from './SpotlightCursor';
+import { RobotVisual } from './RobotVisual';
 import { prefetchContact } from '../lib/prefetchContact';
-
-const RobotVisual = lazy(() =>
-  import('./RobotVisual').then((m) => ({ default: m.RobotVisual })),
-);
 
 export const HeroSection: React.FC = () => {
   return (
