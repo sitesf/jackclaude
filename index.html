@@ -1,27 +1,1252 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ro">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEXAS — Agenție digitală & AI</title>
-    <meta name="description" content="NEXAS construiește agenți AI, automatizări, aplicații web și site-uri care nu seamănă cu nimic altceva. Portofoliu: NIRO Agent, NEO Audit SEO, HR Dashboard, Știri AI, Alex AI." />
-    <script>
-      (function(l) {
-        if (l.search[1] === '/') {
-          var decoded = l.search.slice(1).split('&').map(function(s) {
-            return s.replace(/~and~/g, '&');
-          });
-          window.history.replaceState(null, null,
-            decoded[0] + (decoded.slice(1).length > 0 ? '?' + decoded.slice(1).join('&') : '') + l.hash
-          );
-        }
-      }(window.location));
-    </script>
-    <script type="module" crossorigin src="/assets/index-CtPa8hdv.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DwBvDJD8.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#05060b" />
+  <title>NEXAS | Soluții Digitale, Web Design & Agenți AI</title>
+  <meta name="description" content="NEXAS construiește soluții digitale pentru afaceri moderne — agenți AI, automatizări complexe, web design și experiențe 3D de înaltă performanță." />
+  <meta property="og:title" content="NEXAS | Soluții Digitale & Agenți AI" />
+  <meta property="og:description" content="Soluții digitale pentru afaceri moderne, gândite să te ajute să lucrezi mai inteligent, nu mai mult. Agenți AI, web design și automatizări." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nexas.ro/" />
+  <meta property="og:image" content="https://nexas.ro/poze/pozaLogo.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <link rel="canonical" href="https://nexas.ro/" />
+
+  <style>
+  :root{
+    --bg:#05060b;
+    --bg2:#090b14;
+    --text:#f7f8ff;
+    --muted:rgba(247,248,255,.68);
+    --soft:rgba(247,248,255,.12);
+    --line:rgba(247,248,255,.14);
+    --blue:#5dd7ff;
+    --violet:#9b6cff;
+    --pink:#ff4fd8;
+    --green:#7cffc7;
+    --gold:#ffdf8b;
+    --glass:rgba(10,13,26,.65);
+    --glass2:rgba(255,255,255,.065);
+    --radius:28px;
+    --shadow:0 28px 90px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;background:var(--bg)}
+  body{
+    min-height:100vh;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color:var(--text);
+    background:radial-gradient(circle at 50% 0%, rgba(93,215,255,.16), transparent 40%), var(--bg);
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  button,input,textarea{font:inherit}
+
+  #webgl{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100dvh;
+    z-index:0;
+    pointer-events:none;
+  }
+  .noise{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    opacity:.16;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+    mix-blend-mode:soft-light;
+  }
+  .grid-glow{
+    position:fixed;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:
+      linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:80px 80px;
+    mask-image:linear-gradient(to bottom, transparent, black 15%, black 75%, transparent);
+    opacity:.45;
+  }
+  .site-shell{position:relative;z-index:5}
+
+  /* ── NAVIGATION ── */
+  .nav{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(1180px, calc(100% - 28px));
+    z-index:80;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 14px 12px 18px;
+    border:1px solid var(--line);
+    background:rgba(5,7,15,.62);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+    border-radius:999px;
+    box-shadow:0 18px 60px rgba(0,0,0,.35);
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.08em}
+  .brand-mark{
+    width:34px;height:34px;border-radius:50%;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--blue),var(--violet),var(--pink));
+    color:#02030a;
+    box-shadow:0 0 32px rgba(93,215,255,.35);
+    font-size:14px;
+  }
+  .brand span{font-size:14px}
+  .brand em{font-style:normal;color:var(--blue)}
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-links a{
+    padding:10px 14px;
+    border-radius:999px;
+    color:rgba(255,255,255,.75);
+    font-size:13px;
+    font-weight:600;
+    transition:.22s ease;
+  }
+  .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+  .nav-cta{
+    color:#060812!important;
+    background:#fff;
+    font-weight:800;
+    box-shadow:0 10px 28px rgba(255,255,255,.16);
+  }
+  .nav-cta:hover{
+    background:var(--blue)!important;
+    box-shadow:0 10px 32px rgba(93,215,255,.35);
+  }
+
+  .progress{
+    position:fixed;
+    top:0;
+    left:0;
+    height:2px;
+    width:0%;
+    z-index:100;
+    background:linear-gradient(90deg,var(--blue),var(--violet),var(--pink));
+    box-shadow:0 0 18px rgba(93,215,255,.9);
+  }
+
+  /* ── SECTIONS ── */
+  .section{
+    min-height:100svh;
+    width:min(1180px, calc(100% - 32px));
+    margin:0 auto;
+    position:relative;
+    display:flex;
+    align-items:center;
+    padding:130px 0 80px;
+  }
+
+  /* ── HERO SECTION ── */
+  .hero{
+    min-height:100svh;
+    padding-top:140px;
+    padding-bottom:70px;
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:40px;
+    align-items:center;
+  }
+  .hero-content{max-width:720px;position:relative;z-index:4}
+  
+  .kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:8px 16px;
+    border:1px solid rgba(93,215,255,.3);
+    border-radius:999px;
+    background:rgba(93,215,255,.08);
+    color:rgba(255,255,255,.92);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin-bottom:24px;
+    box-shadow:0 0 24px rgba(93,215,255,.15);
+  }
+  .kicker-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 14px var(--green);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.2)}}
+
+  h1{
+    font-size:clamp(34px, 4.4vw, 56px);
+    line-height:1.06;
+    letter-spacing:-.045em;
+    font-weight:950;
+    max-width:720px;
+    text-transform:none;
+  }
+  h2{
+    font-size:clamp(30px, 3.8vw, 48px);
+    line-height:1.08;
+    letter-spacing:-.04em;
+    font-weight:950;
+    max-width:760px;
+  }
+  h3{
+    font-size:22px;
+    line-height:1.15;
+    letter-spacing:-.03em;
+    font-weight:900;
+  }
+  .grad{
+    background:linear-gradient(115deg, #fff 10%, var(--blue) 45%, var(--violet) 75%, var(--pink) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 0 28px rgba(93,215,255,.25));
+  }
+  .lead{
+    max-width:620px;
+    margin-top:24px;
+    color:var(--muted);
+    font-size:clamp(16px, 1.8vw, 19px);
+    line-height:1.6;
+  }
+
+  /* Buttons */
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;align-items:center}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    min-height:52px;
+    padding:0 22px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
+    font-weight:800;
+    font-size:14px;
+    text-align:left;
+  }
+  .btn-text-group{display:flex;flex-direction:column;line-height:1.2}
+  .btn-label{font-size:13.5px;font-weight:800}
+  .btn-sub{font-size:11px;font-weight:500;opacity:.8;letter-spacing:.02em}
+
+  .btn:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.1)}
+  .btn.primary{
+    background:#fff;color:#03050d;border-color:#fff;
+    box-shadow:0 14px 45px rgba(255,255,255,.18);
+  }
+  .btn.primary:hover{
+    background:var(--blue);color:#03050d;border-color:var(--blue);
+    box-shadow:0 20px 60px rgba(93,215,255,.35);
+  }
+  .btn.whatsapp{
+    background:#25D366;color:#05060b;border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 12px 35px rgba(37,211,102,.22);
+  }
+  .btn.whatsapp:hover{
+    background:#1ebd5d;color:#05060b;
+    box-shadow:0 16px 45px rgba(37,211,102,.35);
+  }
+  .btn.phone{
+    background:rgba(255,255,255,.07);color:#fff;border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(12px);
+  }
+  .btn.phone:hover{
+    background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);
+  }
+
+  /* Proof Stats */
+  .hero-proof{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:12px;
+    max-width:680px;
+    margin-top:40px;
+  }
+  .proof-card{
+    padding:16px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:rgba(255,255,255,.04);
+    backdrop-filter:blur(16px);
+    transition:.3s ease;
+  }
+  .proof-card:hover{
+    transform:translateY(-4px);
+    border-color:var(--blue);
+    box-shadow:0 0 30px -10px var(--blue);
+  }
+  .proof-card strong{
+    display:block;
+    font-size:clamp(28px, 3.2vw, 42px);
+    font-weight:900;
+    letter-spacing:-.04em;
+    line-height:.98;
+    margin-bottom:6px;
+    background:linear-gradient(120deg,var(--blue),var(--violet));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .proof-card span{font-size:12px;color:var(--muted);line-height:1.45}
+
+  /* ── HERO LIVE AI COMMAND CENTER / TERMINAL ── */
+  .hero-terminal{
+    width:100%;
+    border:1px solid rgba(93,215,255,.24);
+    border-radius:26px;
+    background:linear-gradient(145deg, rgba(14,18,34,.82), rgba(6,8,18,.75));
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+    box-shadow:0 30px 90px rgba(0,0,0,.65), 0 0 50px rgba(93,215,255,.12);
+    overflow:hidden;
+    position:relative;
+    transition:transform .3s ease, border-color .3s ease;
+  }
+  .hero-terminal:hover{
+    border-color:rgba(93,215,255,.45);
+    box-shadow:0 35px 100px rgba(0,0,0,.75), 0 0 65px rgba(93,215,255,.2);
+  }
+  .terminal-header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;
+    background:rgba(0,0,0,.45);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .terminal-dots{display:flex;gap:6px}
+  .terminal-dot{width:10px;height:10px;border-radius:50%}
+  .td-red{background:#ff5f56}
+  .td-yellow{background:#ffbd2e}
+  .td-green{background:#27c93f}
+  .terminal-title{
+    font-family:'JetBrains Mono',monospace,Courier;
+    font-size:11px;
+    letter-spacing:.14em;
+    color:var(--blue);
+    font-weight:700;
+    text-transform:uppercase;
+  }
+  .terminal-status{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:700;color:var(--green);
+  }
+  .terminal-status::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--green);
+    box-shadow:0 0 8px var(--green);
+    animation:pulse 1.8s infinite;
+  }
+  
+  .terminal-body{padding:20px 20px 22px}
+  .terminal-tabs{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:16px;
+  }
+  .t-tab{
+    padding:8px 6px;text-align:center;border-radius:10px;
+    font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.03);
+    color:var(--muted);
+    cursor:pointer;
+    transition:.2s ease;
+  }
+  .t-tab.active, .t-tab:hover{
+    color:#fff;background:rgba(93,215,255,.14);border-color:rgba(93,215,255,.35);
+  }
+
+  .terminal-screen{
+    background:rgba(0,0,0,.6);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:16px;
+    padding:16px;
+    font-family:'JetBrains Mono',monospace,Courier;
+    font-size:12px;
+    color:rgba(255,255,255,.78);
+    height:220px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .log-line{display:flex;gap:8px;align-items:center;line-height:1.4}
+  .log-time{color:rgba(255,255,255,.35);font-size:10.5px}
+  .log-tag{
+    font-weight:800;font-size:10px;padding:2px 6px;border-radius:5px;
+    text-transform:uppercase;letter-spacing:.05em;
+  }
+  .tag-alex{background:rgba(155,108,255,.2);color:var(--violet)}
+  .tag-stiri{background:rgba(93,215,255,.2);color:var(--blue)}
+  .tag-whatsapp{background:rgba(124,255,199,.2);color:var(--green)}
+  .tag-seo{background:rgba(255,223,139,.2);color:var(--gold)}
+  .log-msg{color:#f0f3ff;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .terminal-cursor{display:inline-block;width:7px;height:13px;background:var(--blue);animation:blink 1s infinite;vertical-align:middle;margin-left:4px}
+  @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+  .terminal-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);
+    font-size:11px;color:var(--muted);
+  }
+  .terminal-footer strong{color:var(--blue)}
+
+  /* ── AGENT GRID ── */
+  .agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px;width:100%}
+  .ac{
+    position:relative;border-radius:28px;padding:26px;
+    background:linear-gradient(145deg,rgba(255,255,255,.07),rgba(255,255,255,.025));
+    border:1px solid var(--line);backdrop-filter:blur(20px);
+    overflow:hidden;text-decoration:none;color:inherit;display:block;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .ac::before{
+    content:'';position:absolute;top:-100%;left:0;right:0;height:50%;
+    background:linear-gradient(to bottom,transparent,rgba(255,255,255,.025),transparent);
+    animation:acScan 5s linear infinite;pointer-events:none;z-index:1;
+  }
+  @keyframes acScan{0%{top:-50%}100%{top:130%}}
+  .ac:hover{
+    transform:translateY(-7px);border-color:var(--ac-color);
+    box-shadow:0 0 55px -12px var(--ac-color),0 36px 80px rgba(0,0,0,.45);
+  }
+  .ac-glow{
+    position:absolute;inset:-1px;border-radius:inherit;
+    background:radial-gradient(ellipse 80% 50% at 20% 0%,var(--ac-color),transparent 55%);
+    opacity:0;transition:.3s ease;z-index:0;
+  }
+  .ac:hover .ac-glow{opacity:.09}
+  .ac>*{position:relative;z-index:2}
+  .ac-status{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ac-color);margin-bottom:14px;
+  }
+  .ac-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--ac-color);
+    box-shadow:0 0 10px var(--ac-color);
+    animation:acDot 2.2s ease-in-out infinite;
+  }
+  @keyframes acDot{0%,100%{opacity:1;box-shadow:0 0 8px var(--ac-color)}50%{opacity:.5;box-shadow:0 0 22px var(--ac-color)}}
+  .ac-name{
+    font-size:clamp(38px,4.5vw,56px);font-weight:900;
+    letter-spacing:-.065em;line-height:.95;
+    color:var(--ac-color);
+    margin-bottom:10px;
+  }
+  .ac-desc{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+  .ac-feed{
+    background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.07);
+    border-radius:14px;padding:10px 14px;
+    overflow:hidden;height:56px;margin-bottom:16px;
+  }
+  .ac-feed-inner{animation:feedScroll 9s linear infinite}
+  @keyframes feedScroll{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}
+  .ac-feed-line{
+    font-family:'JetBrains Mono',monospace,Courier;
+    font-size:11px;color:rgba(255,255,255,.5);
+    padding:2.5px 0;display:flex;align-items:center;gap:7px;white-space:nowrap;
+  }
+  .ac-feed-line::before{content:'›';color:var(--ac-color);font-size:14px;line-height:1}
+  .ac-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .ac-stat{
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+    border-radius:12px;padding:9px 6px;text-align:center;
+  }
+  .ac-stat-val{font-size:22px;font-weight:900;color:var(--ac-color);display:block;font-variant-numeric:tabular-nums}
+  .ac-stat-lbl{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;display:block;margin-top:2px;line-height:1.3}
+
+  /* ── SERVICES / CARDS ── */
+  .cards{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:16px;width:100%;margin-top:40px}
+  .card{
+    min-height:250px;
+    padding:26px;
+    border-radius:26px;
+    border:1px solid var(--line);
+    background:linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
+    backdrop-filter:blur(18px);
+    box-shadow:0 22px 80px rgba(0,0,0,.24);
+    transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease;
+    position:relative;
+    overflow:hidden;
+  }
+  .card:hover{transform:translateY(-8px);border-color:var(--blue);box-shadow:0 0 50px -10px var(--blue)}
+  .icon{
+    width:48px;height:48px;border-radius:16px;margin-bottom:20px;
+    display:grid;place-items:center;
+    background:rgba(93,215,255,.1);
+    border:1px solid rgba(93,215,255,.24);
+    color:var(--blue);
+    font-weight:900;
+    font-size:14px;
+    letter-spacing:.05em;
+  }
+  .card h3{margin-top:10px;letter-spacing:-.03em}
+  .card p{font-size:14px;color:var(--muted);line-height:1.6;margin-top:12px}
+
+  /* ── PROCESS / STEPS ── */
+  .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:54px;align-items:center;width:100%}
+  .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);font-weight:900;margin-bottom:16px}
+  .section p.big{font-size:clamp(17px,2vw,21px);line-height:1.6;color:var(--muted);margin-top:20px;max-width:640px}
+  .process{display:grid;gap:14px;margin-top:34px}
+  .step{
+    display:grid;
+    grid-template-columns:82px 1fr;
+    gap:18px;
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:24px;
+    background:rgba(255,255,255,.045);
+    backdrop-filter:blur(15px);
+    transition:.3s ease;
+  }
+  .step:hover{border-color:var(--blue);transform:translateY(-3px)}
+  .step strong{
+    width:48px;height:48px;border-radius:50%;flex-shrink:0;align-self:flex-start;
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px;font-weight:900;
+    color:var(--blue);
+    border:1.5px solid rgba(93,215,255,.3);
+    background:rgba(93,215,255,.08);
+  }
+  .step h3{margin-bottom:6px}
+  .step p{color:var(--muted);font-size:14px;line-height:1.55}
+
+  /* ── CTA SECTION ── */
+  .cta-section{min-height:85svh;text-align:center;justify-content:center}
+  .cta-box{
+    width:min(940px,100%);margin:auto;padding:60px 32px;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:36px;
+    background:linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.035));
+    backdrop-filter:blur(24px);
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-aurora{
+    position:absolute;inset:-50%;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse 50% 40% at 20% 50%,rgba(93,215,255,.12),transparent 60%),
+      radial-gradient(ellipse 40% 50% at 80% 30%,rgba(155,108,255,.12),transparent 55%);
+    animation:aurora 12s ease-in-out infinite alternate;
+  }
+  @keyframes aurora{0%{transform:rotate(0deg) scale(1)}100%{transform:rotate(4deg) scale(1.05)}}
+  .cta-box>*{position:relative;z-index:2}
+  .cta-box h2{margin:auto}
+  .cta-box p{margin:20px auto 0;color:var(--muted);font-size:18px;line-height:1.6;max-width:640px}
+  .cta-box .hero-actions{justify-content:center}
+
+  /* ── TICKER BAND ── */
+  .ticker-band{
+    width:100%;
+    overflow:hidden;
+    background:linear-gradient(90deg,rgba(10,10,15,1) 0%,rgba(13,16,33,.97) 50%,rgba(10,10,15,1) 100%);
+    border-top:1px solid rgba(108,99,255,.22);
+    border-bottom:1px solid rgba(108,99,255,.22);
+    padding:14px 0;
+    position:relative;
+    z-index:5;
+  }
+  .ticker-band::before, .ticker-band::after{
+    content:"";position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none;
+  }
+  .ticker-band::before{left:0;background:linear-gradient(90deg,rgba(10,10,15,1),transparent)}
+  .ticker-band::after{right:0;background:linear-gradient(270deg,rgba(10,10,15,1),transparent)}
+  .ticker-track{
+    display:flex;align-items:center;gap:0;width:max-content;
+    animation:ticker-scroll 26s linear infinite;
+    will-change:transform;
+  }
+  .ticker-track:hover{animation-play-state:paused}
+  @keyframes ticker-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  .ticker-item{
+    display:inline-flex;align-items:center;gap:.6rem;padding:0 2.2rem;
+    white-space:nowrap;font-family:'JetBrains Mono',monospace;
+    font-size:.78rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:rgba(240,240,255,.6);transition:color .2s;cursor:default;
+  }
+  .ticker-item:hover{color:#fff}
+  .ticker-dot{
+    width:5px;height:5px;border-radius:50%;
+    background:var(--ticker-accent,rgba(108,99,255,.5));
+    box-shadow:0 0 8px var(--ticker-accent,rgba(108,99,255,.5));
+    flex-shrink:0;
+  }
+  .ticker-item[data-accent="purple"]{ --ticker-accent:rgba(108,99,255,.7); }
+  .ticker-item[data-accent="cyan"]  { --ticker-accent:rgba(0,212,255,.7);  }
+  .ticker-item[data-accent="coral"] { --ticker-accent:rgba(255,107,107,.7);}
+  .ticker-item[data-accent="green"] { --ticker-accent:rgba(37,211,102,.7); }
+  .ticker-item[data-accent="amber"] { --ticker-accent:rgba(255,180,50,.7); }
+
+  /* ── FOOTER ── */
+  .footer{
+    position:relative;z-index:8;
+    width:min(1180px,calc(100% - 32px));
+    margin:0 auto;padding:40px 0 48px;
+    display:flex;justify-content:space-between;gap:18px;
+    color:rgba(255,255,255,.48);font-size:13px;
+    border-top:1px solid var(--line);
+  }
+  .footer a{margin-left:16px;transition:color .2s}
+  .footer a:hover{color:#fff}
+
+  /* ── REVEAL & COOKIE BANNER ── */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .75s cubic-bezier(.16,1,.3,1), transform .75s cubic-bezier(.16,1,.3,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  .cookie{
+    position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+    z-index:120;width:min(720px, calc(100% - 28px));padding:16px;
+    border-radius:22px;border:1px solid var(--line);
+    background:rgba(5,7,15,.88);backdrop-filter:blur(22px);
+    box-shadow:0 20px 70px rgba(0,0,0,.45);
+    display:none;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .cookie.show{display:flex}
+  .cookie p{font-size:13px;line-height:1.5;color:var(--muted)}
+  .cookie a{color:var(--blue);text-decoration:underline}
+  .cookie-actions{display:flex;gap:8px}
+  .cookie button{
+    border:1px solid var(--line);border-radius:12px;padding:10px 14px;
+    background:rgba(255,255,255,.06);color:#fff;cursor:pointer;
+  }
+  .cookie .accept{background:#fff;color:#05060b;font-weight:900}
+
+  /* ── RESPONSIVENESS ── */
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr;padding-top:115px;gap:36px}
+    .hero-terminal{max-width:620px}
+    .nav{top:12px;padding:10px 14px}
+    .nav-links a:not(.nav-cta){display:none}
+    .brand span{font-size:13px}
+    .section{width:min(100% - 24px, 720px);padding:90px 0 50px}
+    .hero-proof{grid-template-columns:1fr;margin-top:28px}
+    .split{grid-template-columns:1fr;gap:24px}
+    .cards{grid-template-columns:1fr}
+    .agent-grid{grid-template-columns:1fr}
+    .footer{flex-direction:column;align-items:flex-start}
+    .footer a{margin-left:0;margin-right:14px}
+    .cookie{flex-direction:column;align-items:flex-start}
+    .cookie-actions{width:100%}
+    .cookie button{flex:1}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal,.card,.btn{transition:none!important}
+    #webgl{display:none}
+  }
+  </style>
+</head>
+
+<body>
+<canvas id="webgl" aria-hidden="true"></canvas>
+<div class="noise" aria-hidden="true"></div>
+<div class="grid-glow" aria-hidden="true"></div>
+<div class="progress" id="progress"></div>
+
+<!-- NAVIGATION -->
+<nav class="nav" aria-label="Navigatie principala">
+  <a class="brand" href="#top" aria-label="NEXAS Home">
+    <span class="brand-mark">N</span>
+    <span>N<em>E</em>XAS</span>
+  </a>
+  <div class="nav-links">
+    <a href="#hero">Acasă</a>
+    <a href="#agenti">Agenți AI</a>
+    <a href="#servicii">Servicii</a>
+    <a href="#proces">Proces</a>
+    <a href="servicii.html">Prețuri</a>
+    <a href="contact.html" class="nav-cta">Începe un Proiect</a>
+  </div>
+</nav>
+
+<main class="site-shell" id="top">
+
+  <!-- ════════ HERO SECTION (PRINCIPALĂ) ════════ -->
+  <section class="section hero" id="hero" data-scene="0">
+    <div class="hero-content reveal">
+      <div class="kicker">
+        <span class="kicker-dot"></span>
+        ✨ NEXAS AI · Sisteme Inteligente &amp; Web Design
+      </div>
+
+      <h1>
+        Soluții digitale pentru afaceri moderne, gândite să te ajute să lucrezi
+        <span class="grad">mai inteligent, nu mai mult.</span>
+      </h1>
+
+      <p class="lead">
+        Nexas construiește sisteme inteligente de ultimă generație — agenți AI autonomi,
+        automatizări de procese și site-uri web performante — toate optimizate exact după nevoile afacerii tale.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="contact.html">
+          <div class="btn-text-group">
+            <span class="btn-label">Solicită Demo</span>
+            <span class="btn-sub">contact@nexas.ro</span>
+          </div>
+        </a>
+
+        <a class="btn whatsapp" href="https://wa.me/40730858640" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:2px"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          <div class="btn-text-group">
+            <span class="btn-label">WhatsApp</span>
+            <span class="btn-sub">0730 858 640</span>
+          </div>
+        </a>
+
+        <a class="btn phone" href="tel:+40730858640">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div class="btn-text-group">
+            <span class="btn-label">Apelează</span>
+            <span class="btn-sub">0730 858 640</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="hero-proof">
+        <div class="proof-card">
+          <strong>24/7</strong>
+          <span>Angajați digitali activi non-stop pentru afacerea ta.</span>
+        </div>
+        <div class="proof-card">
+          <strong>100%</strong>
+          <span>Optimizat SEO și structură gândită pentru conversie.</span>
+        </div>
+        <div class="proof-card">
+          <strong>&lt;2s</strong>
+          <span>Viteză ultra-rapidă și design modern interactiv.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TERMINAL LIVE SHOWCASE (DREAPTA HERO) -->
+    <div class="hero-terminal reveal" aria-label="NEXAS AI Command Center">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="terminal-dot td-red"></span>
+          <span class="terminal-dot td-yellow"></span>
+          <span class="terminal-dot td-green"></span>
+        </div>
+        <span class="terminal-title">NEXAS AI ENGINE · v3.4 LIVE</span>
+        <span class="terminal-status">SISTEME ACTIVE</span>
+      </div>
+
+      <div class="terminal-body">
+        <div class="terminal-tabs">
+          <div class="t-tab active" data-agent="alex">Chatbot Alex</div>
+          <div class="t-tab" data-agent="stiri">Agent Știri</div>
+          <div class="t-tab" data-agent="whatsapp">WhatsApp</div>
+          <div class="t-tab" data-agent="seo">SEO Engine</div>
+        </div>
+
+        <div class="terminal-screen" id="terminalFeed">
+          <div class="log-line">
+            <span class="log-time">[22:30:12]</span>
+            <span class="log-tag tag-alex">ALEX AI</span>
+            <span class="log-msg">Vizitator nou conectat · Conversație inițiată</span>
+          </div>
+          <div class="log-line">
+            <span class="log-time">[22:30:15]</span>
+            <span class="log-tag tag-stiri">STIRI BOT</span>
+            <span class="log-msg">68 surse RSS monitorizate · 14 articole agregate</span>
+          </div>
+          <div class="log-line">
+            <span class="log-time">[22:30:22]</span>
+            <span class="log-tag tag-whatsapp">WHATSAPP</span>
+            <span class="log-msg">Programare confirmată și sincronizată în Google Sheets</span>
+          </div>
+          <div class="log-line">
+            <span class="log-time">[22:30:30]</span>
+            <span class="log-tag tag-seo">SEO NEO</span>
+            <span class="log-msg">Audit finalizat · Indexare Google 100% · LCP 0.6s</span>
+          </div>
+          <div class="log-line">
+            <span class="log-time">[22:30:38]</span>
+            <span class="log-tag tag-alex">ALEX AI</span>
+            <span class="log-msg">Lead calificat transferat pe WhatsApp în 1.4s <span class="terminal-cursor"></span></span>
+          </div>
+        </div>
+
+        <div class="terminal-footer">
+          <span>Timp mediu de răspuns: <strong>1.4 secunde</strong></span>
+          <span>Uptime: <strong>99.98%</strong></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TICKER BAND ════════ -->
+  <div class="ticker-band" aria-label="Tehnologii si platforme integrate" role="marquee">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- SET 1 -->
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>NEXAS AI</span>
+      <span class="ticker-item" data-accent="amber"><span class="ticker-dot"></span>HTML5 &amp; CSS3</span>
+      <span class="ticker-item" data-accent="cyan"><span class="ticker-dot"></span>JavaScript ES6+</span>
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>Python Automations</span>
+      <span class="ticker-item" data-accent="coral"><span class="ticker-dot"></span>REST APIs</span>
+      <span class="ticker-item" data-accent="amber"><span class="ticker-dot"></span>Node.js</span>
+      <span class="ticker-item" data-accent="green"><span class="ticker-dot"></span>GitHub Actions</span>
+      <span class="ticker-item" data-accent="cyan"><span class="ticker-dot"></span>OpenAI &amp; Anthropic</span>
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>Three.js 3D</span>
+      <span class="ticker-item" data-accent="coral"><span class="ticker-dot"></span>SEO Tehnic</span>
+
+      <!-- SET 2 (Duplicate for seamless loop) -->
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>NEXAS AI</span>
+      <span class="ticker-item" data-accent="amber"><span class="ticker-dot"></span>HTML5 &amp; CSS3</span>
+      <span class="ticker-item" data-accent="cyan"><span class="ticker-dot"></span>JavaScript ES6+</span>
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>Python Automations</span>
+      <span class="ticker-item" data-accent="coral"><span class="ticker-dot"></span>REST APIs</span>
+      <span class="ticker-item" data-accent="amber"><span class="ticker-dot"></span>Node.js</span>
+      <span class="ticker-item" data-accent="green"><span class="ticker-dot"></span>GitHub Actions</span>
+      <span class="ticker-item" data-accent="cyan"><span class="ticker-dot"></span>OpenAI &amp; Anthropic</span>
+      <span class="ticker-item" data-accent="purple"><span class="ticker-dot"></span>Three.js 3D</span>
+      <span class="ticker-item" data-accent="coral"><span class="ticker-dot"></span>SEO Tehnic</span>
+    </div>
+  </div>
+
+  <!-- ════════ SECTION 1: AGENTI AI ════════ -->
+  <section class="section" id="agenti" data-scene="1">
+    <div class="block reveal">
+      <div class="eyebrow">ANGALATI DIGITALI AUTONOMI</div>
+      <h2>Site-ul tău poate avea propriii angajați digitali</h2>
+      <p class="big">Agenți AI integrați direct în site, pregătiți să răspundă vizitatorilor, să publice știri, să preia programări și să automatizeze sarcini zilnice — non-stop, fără pauze.</p>
+      
+      <div class="agent-grid">
+
+        <a class="ac" href="https://nexas.ro/stiri" target="_blank" rel="noopener" style="--ac-color:var(--blue)">
+          <div class="ac-glow"></div>
+          <div class="ac-status"><span class="ac-dot"></span>Online · Publicare Automată</div>
+          <div class="ac-name">Știri</div>
+          <div class="ac-desc">Agentul de conținut — monitorizează 68 surse media, reformulează, generează imagini și publică automat pe site.</div>
+          <div class="ac-feed"><div class="ac-feed-inner">
+            <div class="ac-feed-line">Preluat 12 știri noi din G4Media</div>
+            <div class="ac-feed-line">Publicat articol › Business · 3 min ago</div>
+            <div class="ac-feed-line">Feed procesat › Digi24, Profit.ro</div>
+            <div class="ac-feed-line">Rezumat AI generat pentru 4 articole</div>
+            <div class="ac-feed-line">Preluat 12 știri noi din G4Media</div>
+          </div></div>
+          <div class="ac-stats">
+            <div class="ac-stat"><span class="ac-stat-val" data-count="68">0</span><span class="ac-stat-lbl">surse RSS</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="24">0</span><span class="ac-stat-lbl">ore/zi activ</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="840">0</span><span class="ac-stat-lbl">știri/lună</span></div>
+          </div>
+        </a>
+
+        <a class="ac" href="https://nexas.ro/chatbot/alex.html" target="_blank" rel="noopener" style="--ac-color:var(--violet)">
+          <div class="ac-glow"></div>
+          <div class="ac-status"><span class="ac-dot"></span>Online · Răspunde Acum</div>
+          <div class="ac-name">ChatBot</div>
+          <div class="ac-desc">Agentul de vânzări — conversează inteligent cu vizitatorii, explică serviciile și transformă curiozitatea în clienți.</div>
+          <div class="ac-feed"><div class="ac-feed-inner">
+            <div class="ac-feed-line">Vizitator nou a deschis chat-ul</div>
+            <div class="ac-feed-line">Răspuns trimis în 1.4s › despre pachete</div>
+            <div class="ac-feed-line">Transfer WhatsApp › lead calificat</div>
+            <div class="ac-feed-line">Sesiune activă › 5 mesaje schimbate</div>
+            <div class="ac-feed-line">Vizitator nou a deschis chat-ul</div>
+          </div></div>
+          <div class="ac-stats">
+            <div class="ac-stat"><span class="ac-stat-val" data-count="2">0</span><span class="ac-stat-lbl">sec răspuns</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="180">0</span><span class="ac-stat-lbl">conv/lună</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="99">0</span><span class="ac-stat-lbl">% uptime</span></div>
+          </div>
+        </a>
+
+        <a class="ac" href="https://nexas.ro/niro" target="_blank" rel="noopener" style="--ac-color:var(--green)">
+          <div class="ac-glow"></div>
+          <div class="ac-status"><span class="ac-dot"></span>Online · WhatsApp Activ</div>
+          <div class="ac-name">WhatsApp</div>
+          <div class="ac-desc">Agentul de programări — preia clienții direct pe WhatsApp și salvează detaliile automat în Google Sheets sau CRM.</div>
+          <div class="ac-feed"><div class="ac-feed-inner">
+            <div class="ac-feed-line">Programare nouă › Serviciu confirmat</div>
+            <div class="ac-feed-line">Salvat în Google Sheets › rând 54</div>
+            <div class="ac-feed-line">Client notificat automat cu confirmare</div>
+            <div class="ac-feed-line">Răspuns automat trimis în 1.1s</div>
+            <div class="ac-feed-line">Programare nouă › Serviciu confirmat</div>
+          </div></div>
+          <div class="ac-stats">
+            <div class="ac-stat"><span class="ac-stat-val" data-count="90">0</span><span class="ac-stat-lbl">% apeluri −</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="24">0</span><span class="ac-stat-lbl">ore/zi activ</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="120">0</span><span class="ac-stat-lbl">prog/lună</span></div>
+          </div>
+        </a>
+
+        <a class="ac" href="https://nexas.ro/demo" target="_blank" rel="noopener" style="--ac-color:var(--gold)">
+          <div class="ac-glow"></div>
+          <div class="ac-status"><span class="ac-dot"></span>Beta · Recrutare &amp; HR</div>
+          <div class="ac-name">HR AI</div>
+          <div class="ac-desc">Platforma inteligentă de recrutare — analizează CV-uri, filtrează candidați și programează interviuri în mod automat.</div>
+          <div class="ac-feed"><div class="ac-feed-inner">
+            <div class="ac-feed-line">CV analizat › potrivire 89% › Specialist</div>
+            <div class="ac-feed-line">Interviu programat › Calendar sincronizat</div>
+            <div class="ac-feed-line">Candidat notificat automat prin email</div>
+            <div class="ac-feed-line">Raport generat pentru management</div>
+            <div class="ac-feed-line">CV analizat › potrivire 89% › Specialist</div>
+          </div></div>
+          <div class="ac-stats">
+            <div class="ac-stat"><span class="ac-stat-val" data-count="3">0</span><span class="ac-stat-lbl">sec/CV</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="15">0</span><span class="ac-stat-lbl">posturi active</span></div>
+            <div class="ac-stat"><span class="ac-stat-val" data-count="75">0</span><span class="ac-stat-lbl">% timp salvat</span></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SECTION 2: SERVICII ════════ -->
+  <section class="section" id="servicii" data-scene="2">
+    <div class="block reveal">
+      <div class="eyebrow">SERVICII &amp; SOLUȚII DIGITALE</div>
+      <h2>Trei tipuri de prezență digitală. Fiecare cu un rol precis.</h2>
+      <p class="big">Fiecare proiect este gândit strategic — atrage atenția, explică clar valoarea ofertei tale și transformă vizitatorii în clienți fideli.</p>
+      
+      <div class="cards">
+        <article class="card">
+          <div class="icon">3D</div>
+          <h3>Site-uri 3D &amp; Interactive</h3>
+          <p>Hero cinematic, animații pe scroll, adâncime WebGL, lumini dinamice și experiențe vizuale premium care lasă o impresie memorabilă.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">WEB</div>
+          <h3>Site-uri de Prezentare</h3>
+          <p>Structură clară, design minimalist, texte persuasive și optimizare SEO tehnică completă pentru poziționare pe Google.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">SHOP</div>
+          <h3>Magazine Online &amp; Automatizări</h3>
+          <p>Proces simplu de comandă, viteză maximă de încărcare, integrare de plăți și automatizări pentru comenzi și stocuri.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SECTION 3: PROCESUL DE LUCRU ════════ -->
+  <section class="section" id="proces" data-scene="3">
+    <div class="split">
+      <div class="reveal">
+        <div class="eyebrow">METODOLOGIE RAPIDĂ</div>
+        <h2>Transformăm ideea ta într-un produs digital care aduce rezultate.</h2>
+        <p class="big">Înțelegem afacerea, construim direcția vizuală, dezvoltăm codul curat și testăm performanța înainte de lansarea oficială.</p>
+      </div>
+
+      <div class="process reveal">
+        <div class="step">
+          <strong>01</strong>
+          <div>
+            <h3>Direcție &amp; Mesaj Strategic</h3>
+            <p>Stabilim publicul țintă, oferta și poziționarea brandului — ca fiecare vizitator să înțeleagă din prima secundă de ce să te aleagă.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <strong>02</strong>
+          <div>
+            <h3>Design UI/UX &amp; Dezvoltare Cod</h3>
+            <p>Construim interfața responsive, animațiile fluide și integrăm agenții AI pentru a crea o experiență impecabilă pe telefon și desktop.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <strong>03</strong>
+          <div>
+            <h3>Optimizare SEO, Viteză &amp; Lansare</h3>
+            <p>Testăm viteza Core Web Vitals, structura meta pentru Google, formularele și asigurăm publicarea rapidă în producție.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SECTION 4: CTA FINAL ════════ -->
+  <section class="section cta-section" id="contact" data-scene="4">
+    <div class="cta-box reveal">
+      <div class="cta-aurora"></div>
+      <div class="eyebrow">START PROIECT</div>
+      <h2>Un site bun nu doar arată bine. Te ajută să fii ales.</h2>
+      <p>Spune-ne ce afacere ai, care sunt obiectivele tale și ce vrei să automatizăm. Îți construim o soluție completă care te va diferenția instant pe piață.</p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="contact.html">
+          <div class="btn-text-group">
+            <span class="btn-label">Solicită Demo &amp; Ofertă</span>
+            <span class="btn-sub">contact@nexas.ro</span>
+          </div>
+        </a>
+
+        <a class="btn whatsapp" href="https://wa.me/40730858640" target="_blank" rel="noopener">
+          <div class="btn-text-group">
+            <span class="btn-label">Scrie-ne pe WhatsApp</span>
+            <span class="btn-sub">0730 858 640</span>
+          </div>
+        </a>
+
+        <a class="btn phone" href="tel:+40730858640">
+          <div class="btn-text-group">
+            <span class="btn-label">Apelează Telefonic</span>
+            <span class="btn-sub">0730 858 640</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div>© 2026 NEXAS.RO — Toate drepturile rezervate.</div>
+  <div>
+    <a href="blog/">Noutăți</a>
+    <a href="privacy.html">Confidențialitate</a>
+    <a href="cookies.html">Cookies</a>
+    <a href="termeni.html">Termeni</a>
+    <a href="contact.html">Contact</a>
+    <a href="#" data-cookie-settings>Setări cookies</a>
+  </div>
+</footer>
+
+<!-- COOKIE CONSENT BANNER -->
+<div class="cookie" id="cookieBanner" role="dialog" aria-label="Consimțământ cookies">
+  <p>Acest site folosește cookie-uri pentru analiză și îmbunătățirea experienței tale. Consultă <a href="cookies.html">Politica de cookies</a>.</p>
+  <div class="cookie-actions">
+    <button type="button" data-cookie-reject>Refuză</button>
+    <button type="button" class="accept" data-cookie-accept>Acceptă</button>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="/vendor/three.min.js"></script>
+
+<!-- SCROLL PROGRESS & OBSERVER -->
+<script>
+(function(){
+  const progress = document.getElementById('progress');
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold:.12 });
+  reveals.forEach(el => io.observe(el));
+
+  function updateProgress(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const p = max > 0 ? scrollY / max : 0;
+    progress.style.width = (p * 100) + '%';
+  }
+  addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+})();
+</script>
+
+<!-- WEBGL 3D CYBERNETIC ORB SCENE -->
+<script>
+(function(){
+  const canvas = document.getElementById('webgl');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.THREE || !canvas){ return; }
+
+  const isMobile = innerWidth < 820;
+  const isLowEnd = isMobile && (navigator.hardwareConcurrency || 4) <= 4;
+  
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x05060b, 12, 36);
+
+  const camera = new THREE.PerspectiveCamera(isMobile ? 70 : 56, innerWidth / innerHeight, .1, 100);
+  camera.position.set(0, 0.8, isMobile ? 8.4 : 7.2);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: !isMobile,
+    alpha: true,
+    powerPreference: isMobile ? 'low-power' : 'high-performance'
+  });
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, isLowEnd ? 1 : isMobile ? 1.4 : 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  // 3D Central Cybernetic Orb
+  const orbGeo = new THREE.IcosahedronGeometry(1.8, 4);
+  const orbMat = new THREE.MeshStandardMaterial({
+    color:0x0b1225,
+    metalness:.75,
+    roughness:.22,
+    emissive:0x13213f,
+    emissiveIntensity:.85
+  });
+  const orb = new THREE.Mesh(orbGeo, orbMat);
+  group.add(orb);
+
+  const wireMat = new THREE.MeshBasicMaterial({ color:0x5dd7ff, wireframe:true, transparent:true, opacity:.18 });
+  const wire = new THREE.Mesh(orbGeo, wireMat);
+  wire.scale.setScalar(1.015);
+  group.add(wire);
+
+  // Orbital Rings
+  const ringMat = new THREE.MeshBasicMaterial({ color:0x9b6cff, transparent:true, opacity:.24, side:THREE.DoubleSide });
+  for(let i=0; i<3; i++){
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(2.3 + i*.35, .007, 16, 180), ringMat.clone());
+    ring.rotation.x = Math.PI / 2 + i * .55;
+    ring.rotation.y = i * .45;
+    group.add(ring);
+  }
+
+  // Floating Cybernetic Particles
+  const particlesCount = isLowEnd ? 200 : isMobile ? 400 : 1500;
+  const pos = new Float32Array(particlesCount * 3);
+  for(let i=0; i<particlesCount; i++){
+    const r = 6 + Math.random() * 12;
+    const a = Math.random() * Math.PI * 2;
+    const b = Math.acos(2 * Math.random() - 1);
+    pos[i*3] = Math.sin(b) * Math.cos(a) * r;
+    pos[i*3+1] = Math.sin(b) * Math.sin(a) * r * .55;
+    pos[i*3+2] = Math.cos(b) * r;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  const pMat = new THREE.PointsMaterial({ size:isMobile ? .018 : .022, color:0x9ecbff, transparent:true, opacity:.45, depthWrite:false });
+  const points = new THREE.Points(pGeo, pMat);
+  scene.add(points);
+
+  // Dynamic Lights
+  scene.add(new THREE.AmbientLight(0x6f86ff, .7));
+  const light1 = new THREE.PointLight(0x5dd7ff, 28, 18); light1.position.set(3,3,4); scene.add(light1);
+  const light2 = new THREE.PointLight(0xff4fd8, 18, 16); light2.position.set(-4,-2,2); scene.add(light2);
+  const light3 = new THREE.PointLight(0xffffff, 10, 12); light3.position.set(0,4,6); scene.add(light3);
+
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  addEventListener('pointermove', e => {
+    mx = (e.clientX / innerWidth - .5) * 2;
+    my = (e.clientY / innerHeight - .5) * 2;
+  }, {passive:true});
+
+  function scrollP(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    return max > 0 ? Math.min(1, scrollY / max) : 0;
+  }
+
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    const p = scrollP();
+    tx += (mx - tx) * .035;
+    ty += (my - ty) * .035;
+
+    const side = isMobile ? 0 : 2.1;
+    group.position.x = side + Math.sin(p * Math.PI * 2) * .7;
+    group.position.y = .1 - p * .75;
+    group.position.z = -p * 2.4;
+    group.rotation.y = t * .16 + p * Math.PI * 1.35 + tx * .2;
+    group.rotation.x = -0.1 + ty * .14 + Math.sin(t*.35)*.05;
+
+    orb.rotation.y += .0035;
+    wire.rotation.y -= .002;
+    points.rotation.y = t * .012;
+    points.rotation.x = Math.sin(t*.12) * .035;
+
+    camera.position.x += ((isMobile ? 0 : -1.2) + tx * .22 - camera.position.x) * .04;
+    camera.position.y += ((.85 - p*.45) + ty * -.08 - camera.position.y) * .04;
+    camera.position.z += ((isMobile ? 8.4 : 7.2) - p * 1.1 - camera.position.z) * .04;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth < 820 ? 1.4 : 2));
+  });
+})();
+</script>
+
+<!-- TERMINAL FEED SIMULATION & INTERACTIVE EFFECTS -->
+<script>
+(function(){
+  // 1. Live Terminal Log Simulator
+  const feed = document.getElementById('terminalFeed');
+  const tabs = document.querySelectorAll('.t-tab');
+  
+  const simulationLogs = [
+    { tag: 'tag-alex', tagText: 'ALEX AI', msg: 'Lead nou conectat: vizitator interesat de pachetul Web + AI.' },
+    { tag: 'tag-stiri', tagText: 'STIRI BOT', msg: 'Generat rezumat AI pentru 3 știri din Tech & Business.' },
+    { tag: 'tag-whatsapp', tagText: 'WHATSAPP', msg: 'Programare automată salvată în Google Sheets · Client confirmat.' },
+    { tag: 'tag-seo', tagText: 'SEO NEO', msg: 'Verificare scor PageSpeed: 100/100 Mobile & Desktop.' },
+    { tag: 'tag-alex', tagText: 'ALEX AI', msg: 'Răspuns automat livrat în 1.2 secunde.' }
+  ];
+
+  let logIdx = 0;
+  if(feed){
+    setInterval(() => {
+      const now = new Date();
+      const timeStr = `[${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}]`;
+      const item = simulationLogs[logIdx % simulationLogs.length];
+      logIdx++;
+
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      line.innerHTML = `
+        <span class="log-time">${timeStr}</span>
+        <span class="log-tag ${item.tag}">${item.tagText}</span>
+        <span class="log-msg">${item.msg}</span>
+      `;
+      feed.appendChild(line);
+      if(feed.children.length > 6){
+        feed.removeChild(feed.children[0]);
+      }
+    }, 4200);
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // 2. Stat counters on scroll
+  const vals = document.querySelectorAll('.ac-stat-val[data-count]');
+  if(vals.length){
+    const sio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if(!e.isIntersecting) return;
+        sio.unobserve(e.target);
+        const target = +e.target.dataset.count, steps = 60;
+        let cur = 0;
+        const tick = () => {
+          cur = Math.min(target, Math.round(cur + target / steps));
+          e.target.textContent = cur;
+          if(cur < target) setTimeout(tick, 20);
+        };
+        tick();
+      });
+    }, { threshold:.5 });
+    vals.forEach(v => sio.observe(v));
+  }
+})();
+</script>
+
+<script src="assets/nexas-consent.js"></script>
+<!-- Chatbot NEXAS Alex -->
+<script src="/chatbot/nexas-agent.js"></script>
+
+</body>
 </html>
