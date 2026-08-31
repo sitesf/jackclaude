@@ -18,7 +18,7 @@ export const HeroSection: React.FC = () => {
           {/* Stânga: Text + CTA */}
           <div className="order-2 lg:order-1">
             <FadeIn delay={0} duration={0.7} y={40} as="h1" className="hero-heading font-black uppercase tracking-tight leading-[1.05] text-[clamp(2rem,6vw,3.8rem)]">
-              Construim <span className="text-[#B600A8]">viitorul digital</span>
+              Construim viitorul <span className="text-[#B600A8]">digital</span>
             </FadeIn>
 
             <FadeIn delay={0.2} duration={0.7} y={30} as="p" className="text-[#D7E2EA] font-light leading-relaxed text-[clamp(0.95rem,2vw,1.15rem)] mt-6 max-w-lg opacity-75">
