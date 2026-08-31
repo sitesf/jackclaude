@@ -1,7 +1,5 @@
-dist/
 node_modules/
-src/
-*.tsx
-*.ts
-*.config.*
-package*.json
+dist/
+.env
+.env.local
+.DS_Store
