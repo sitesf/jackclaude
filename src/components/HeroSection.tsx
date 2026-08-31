@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
-import { Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SiteNav } from './SiteNav';
 import { FadeIn } from './FadeIn';
+import { NexasLogo } from './NexasLogo';
 import { Spotlight } from './Spotlight';
 import { SpotlightCursor } from './SpotlightCursor';
 import { RobotBoundary } from './RobotBoundary';
@@ -46,9 +46,8 @@ export const HeroSection: React.FC = () => {
               </a>
             </FadeIn>
 
-            <FadeIn delay={0.6} duration={0.7} y={20} as="div" className="flex items-center gap-2 text-[#D7E2EA] mt-12 pt-8 border-t border-[rgba(215,226,234,0.1)]">
-              <Sparkles className="w-4 h-4 text-[#B600A8]" />
-              <span className="text-xs font-semibold uppercase tracking-wider">NEXAS AI</span>
+            <FadeIn delay={0.6} duration={0.7} y={20} as="div" className="flex mt-12 pt-8 border-t border-[rgba(215,226,234,0.1)]">
+              <NexasLogo fontSize="clamp(2rem, 5vw, 3rem)" gap="0.12em" />
             </FadeIn>
           </div>
 
