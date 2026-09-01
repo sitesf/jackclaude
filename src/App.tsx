@@ -12,6 +12,7 @@ import { PricingPage } from './pages/PricingPage';
 import { ContactPage } from './pages/ContactPage';
 import { ProjectPage } from './pages/ProjectPage';
 import { NiroPage } from './pages/NiroPage';
+import { AlexPage } from './pages/AlexPage';
 import { PrivacyPage, TermsPage, CookiesPage } from './pages/LegalPages';
 import { getProject } from './data/projects';
 
@@ -75,6 +76,7 @@ function AppRoutes() {
       <Route path="/termeni" element={<TermsPage />} />
       <Route path="/cookies" element={<CookiesPage />} />
       <Route path="/proiect/niro" element={<NiroPage />} />
+      <Route path="/proiect/alex" element={<AlexPage />} />
       <Route path="/proiect/:slug" element={<ProjectPageWrapper />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

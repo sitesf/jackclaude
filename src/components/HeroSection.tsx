@@ -6,6 +6,7 @@ import { FadeIn } from './FadeIn';
 import { Spotlight } from './Spotlight';
 import { SpotlightCursor } from './SpotlightCursor';
 import { RobotVisual } from './RobotVisual';
+import { RobotBoundary } from './RobotFallback';
 import { prefetchContact } from '../lib/prefetchContact';
 
 export const HeroSection: React.FC = () => {
@@ -54,15 +55,17 @@ export const HeroSection: React.FC = () => {
               <div className="relative overflow-hidden rounded-[28px] border border-[rgba(215,226,234,0.12)] bg-[#0a0a0a] h-[380px] sm:h-[480px] lg:h-[520px]">
                 <Spotlight className="-top-40 -right-40 md:right-0 md:-top-20" fill="#B600A8" />
                 <SpotlightCursor size={300} color="rgba(255,255,255,0.6)" />
-                <Suspense
-                  fallback={
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-10 h-10 rounded-full border-2 border-[#B600A8] border-t-transparent animate-spin" />
-                    </div>
-                  }
-                >
-                  <RobotVisual />
-                </Suspense>
+                <RobotBoundary>
+                  <Suspense
+                    fallback={
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-10 h-10 rounded-full border-2 border-[#B600A8] border-t-transparent animate-spin" />
+                      </div>
+                    }
+                  >
+                    <RobotVisual />
+                  </Suspense>
+                </RobotBoundary>
               </div>
             </FadeIn>
           </div>

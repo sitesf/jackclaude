@@ -7,6 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
+    "deploy": "cp index.src.html index.html && npm run build && rm -rf assets && cp -r dist/assets assets && cp dist/index.html index.html",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
