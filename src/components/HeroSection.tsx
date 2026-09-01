@@ -128,7 +128,7 @@ export const HeroSection: React.FC = () => {
                 Nexas construiește sisteme inteligente de ultimă generație — agenți AI, automatizări complexe și site-uri performante — toate create și optimizate exact după nevoile afacerii tale.
               </FadeIn>
 
-              <FadeIn delay={0.4} duration={0.7} y={20} as="div" className="flex items-center gap-4 flex-wrap mt-10">
+              <FadeIn delay={0.4} duration={0.7} y={20} as="div" className="flex items-center gap-4 flex-wrap mt-10 justify-center sm:justify-start">
                 <Link
                   to="/contact"
                   onMouseEnter={prefetchContact}
