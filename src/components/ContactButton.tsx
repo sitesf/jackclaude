@@ -15,7 +15,7 @@ export const ContactButton: React.FC<ContactButtonProps> = ({ className = '', on
       whileTap={{ scale: 0.95 }}
       className={`glass-btn rounded-full px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-white ${className}`}
     >
-      Contactează-mă
+      Contactează-ne
     </motion.button>
   );
 };
