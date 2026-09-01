@@ -33,33 +33,6 @@ const steps = [
   { title: 'Service-ul confirmă rapid', text: 'Echipa vede instant toate programările într-un singur loc.' },
 ];
 
-const plans = [
-  {
-    name: 'STARTER',
-    price: '200',
-    unit: '€ / lună',
-    desc: 'Ideal pentru service-uri care vor un agent AI de bază, clar și rapid de implementat.',
-    features: ['WhatsApp AI', 'Programări automate', 'Google Sheets', 'Suport tehnic'],
-    featured: false,
-  },
-  {
-    name: 'PRO',
-    price: '500',
-    unit: '€ / lună',
-    desc: 'Soluția potrivită pentru service-uri care vor fluxuri personalizate și răspunsuri avansate.',
-    features: ['AI avansat', 'Flux personalizat', 'Integrări multiple', 'Suport prioritar'],
-    featured: true,
-  },
-  {
-    name: 'PREMIUM',
-    price: '1500',
-    unit: '€ / lună',
-    desc: 'Pentru service-uri care vor automatizare completă, integrare avansată și scalare.',
-    features: ['CRM integrat', 'API personalizat', 'Dashboard dedicat', 'Scalare completă'],
-    featured: false,
-  },
-];
-
 export const NiroPage: React.FC = () => {
   const chatRef = useRef<HTMLDivElement>(null);
 
@@ -179,45 +152,6 @@ export const NiroPage: React.FC = () => {
               <div style={{ fontSize: '3rem', fontWeight: 900, color: 'rgba(255,255,255,.08)', position: 'absolute', right: 20, top: 12 }}>0{i + 1}</div>
               <h4 style={{ marginBottom: 14, fontSize: '1.3rem' }}>{s.title}</h4>
               <p style={{ color: '#9ea6c4', lineHeight: 1.8, fontSize: '.96rem' }}>{s.text}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section style={{ width: 'min(1180px, 92%)', margin: 'auto', padding: '0 0 100px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 70 }}>
-          <span style={{ color: '#8f5cff', fontWeight: 700, letterSpacing: '.12em', fontSize: '.85rem' }}>PREȚURI</span>
-          <h2 style={{ marginTop: 16, fontSize: 'clamp(32px, 5vw, 60px)', lineHeight: 1, letterSpacing: '-.05em', fontWeight: 900 }}>Pachete pentru service-uri auto</h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24, alignItems: 'start' }}>
-          {plans.map((p) => (
-            <div key={p.name} className="niro-card" style={{
-              borderRadius: 30, padding: 42, border: `1px solid ${p.featured ? 'rgba(143,92,255,.5)' : 'rgba(255,255,255,.08)'}`,
-              background: 'rgba(255,255,255,.03)', position: 'relative', overflow: 'hidden', transition: 'all .35s ease',
-              transform: p.featured ? 'scale(1.03)' : undefined,
-              boxShadow: p.featured ? '0 20px 80px rgba(143,92,255,.18)' : undefined,
-            }}>
-              {p.featured && (
-                <div style={{ position: 'absolute', top: 20, right: 20, background: 'linear-gradient(135deg,#8f5cff,#5c6bff)', borderRadius: 999, padding: '4px 12px', fontSize: '.75rem', fontWeight: 700, letterSpacing: '.08em' }}>POPULAR</div>
-              )}
-              <h3 style={{ fontSize: '1.5rem', marginBottom: 16 }}>{p.name}</h3>
-              <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, flexWrap: 'wrap', fontSize: '4rem', fontWeight: 900, letterSpacing: '-.08em', marginBottom: 18, lineHeight: .9 }}>
-                {p.price}
-                <span style={{ fontSize: '1.2rem', opacity: .75, marginBottom: 10, letterSpacing: 0, fontWeight: 400 }}>{p.unit}</span>
-              </div>
-              <p style={{ color: '#9ea6c4', marginBottom: 26, lineHeight: 1.8 }}>{p.desc}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {p.features.map((f) => (
-                  <div key={f} style={{ color: '#dfe4ff', opacity: .9, paddingLeft: 18, position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 0, top: '.65em', width: 6, height: 6, borderRadius: 999, background: '#8f5cff', boxShadow: '0 0 12px rgba(143,92,255,.55)', display: 'inline-block' }} />
-                    {f}
-                  </div>
-                ))}
-              </div>
-              <Link to="/contact" onMouseEnter={prefetchContact} onTouchStart={prefetchContact} className="glass-btn" style={{ display: 'block', marginTop: 30, padding: '13px 22px', borderRadius: 14, color: '#fff', textDecoration: 'none', fontWeight: 700, textAlign: 'center' }}>
-                Solicită demo
-              </Link>
             </div>
           ))}
         </div>
