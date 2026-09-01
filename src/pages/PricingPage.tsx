@@ -49,6 +49,11 @@ const badgeStyle: React.CSSProperties = {
   background: '#0C0C0C',
 };
 
+/** reducere aplicată tuturor pachetelor (0.5 = -50%) */
+const DISCOUNT = 0.5;
+const formatPrice = (value: number) => value.toLocaleString('ro-RO');
+const discountedPrice = (price: string) => Math.round(Number(price) * (1 - DISCOUNT));
+
 const aiPlans = [
   {
     name: 'Agent AI personalizat',
@@ -172,12 +177,22 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
           <p className={`mt-3 font-light leading-relaxed text-sm sm:text-base ${plan.featured ? 'opacity-70' : 'opacity-60'}`}>
             {plan.tagline}
           </p>
-          <div className="mt-8 flex items-end gap-2">
-            <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
-            <span className="font-black leading-none text-5xl sm:text-6xl">
-              &euro;
-              <CountUp value={Number(plan.price)} triggerKey={`${triggerKey}-${plan.name}`} />
-            </span>
+          <div className="mt-8">
+            <div className="flex items-center gap-3">
+              <span className="font-bold leading-none text-2xl sm:text-3xl line-through decoration-2 decoration-[#B600A8] opacity-40">
+                &euro;{formatPrice(Number(plan.price))}
+              </span>
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-full px-3 py-1 bg-[#B600A8] text-white">
+                -50%
+              </span>
+            </div>
+            <div className="mt-2 flex items-end gap-2">
+              <span className="font-light text-xl sm:text-2xl opacity-70">de la</span>
+              <span className="font-black leading-none text-5xl sm:text-6xl">
+                &euro;
+                <CountUp value={discountedPrice(plan.price)} triggerKey={`${triggerKey}-${plan.name}`} />
+              </span>
+            </div>
           </div>
           <ul className="mt-8 flex flex-col gap-3 flex-1">
             {plan.features.map((feature) => (
