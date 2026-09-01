@@ -179,10 +179,10 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
           </p>
           <div className="mt-8">
             <div className="flex items-center gap-3">
-              <span className="font-bold leading-none text-2xl sm:text-3xl line-through decoration-2 decoration-[#B600A8] opacity-40">
+              <span className="font-bold leading-none text-2xl sm:text-3xl line-through decoration-2 decoration-[#00C4E0] opacity-40">
                 &euro;{formatPrice(Number(plan.price))}
               </span>
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-full px-3 py-1 bg-[#B600A8] text-white">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest rounded-full px-3 py-1 bg-[#00C4E0] text-[#0C0C0C]">
                 -50%
               </span>
             </div>
@@ -206,7 +206,10 @@ const PlanGrid: React.FC<{ items: typeof plans; triggerKey?: string }> = ({ item
             to="/contact"
             onMouseEnter={prefetchContact}
             onTouchStart={prefetchContact}
-            className="glass-btn mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white"
+            className={`mt-10 inline-block text-center rounded-full px-8 py-3.5 text-xs sm:text-sm font-medium uppercase tracking-widest text-white ${
+              plan.featured ? 'transition-opacity duration-200 hover:opacity-80' : 'glass-btn'
+            }`}
+            style={plan.featured ? darkButtonStyle : undefined}
           >
             Începe acum
           </Link>
